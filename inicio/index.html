@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Douglas Leão</title>
+  <style>
+    :root {
+      --text:#eaeaea;
+      --red:#cc1f1f;
+    }
+    * {box-sizing:border-box; margin:0; padding:0}
+    body {
+      background:#000; /* fundo base neutro, sem tarja vermelha */
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans";
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      min-height:100vh;
+    }
+
+    /* Header */
+    header {
+      width:100%;
+      padding:30px 16px;
+      text-align:center;
+      background:linear-gradient(to bottom, #050000 0%, #0d0000 20%, #150000 40%, #250000 60%, #3b0000 80%, #550000 100%);
+    }
+    .logo {margin-top:10px; margin-bottom:20px;}
+    .logo img {max-width:280px; height:auto;}
+    h1 {font-size:20px; margin-bottom:25px; font-weight:500;}
+
+    /* Vídeo */
+    .video-container {
+      position:relative;
+      width:100%;
+      max-width:800px;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 0 30px rgba(204,31,31,0.85);
+      border:2px solid rgba(204,31,31,0.9);
+      margin:40px auto 60px;
+    }
+    .video-container iframe {width:100%; height:450px; border:none; display:block;}
+    @media(max-width:600px){.video-container iframe{height:220px}}
+
+    /* === Seção 2 === */
+    .section-professor {
+      width: 100vw;
+      margin: 0;
+      padding: 60px 0;
+      background: #030303; /* 10% mais escuro */
+      position: relative;
+      color: #f5f5f5;
+      overflow: hidden;
+    }
+    .section-professor .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media(max-width: 768px) {
+      .section-professor .container {grid-template-columns: 1fr; text-align: center;}
+      .section-professor img {margin: 0 auto 20px; max-width: 80%; height: auto;}
+      .section-professor .text {text-align: center;}
+    }
+    .section-professor::before {
+      content:"";
+      position:absolute;
+      top:0; left:0; right:0; bottom:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), 
+        linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity:0.4; /* grid mais escuro */
+      pointer-events:none;
+    }
+    .section-professor .img-col img {
+      width:100%;
+      max-width:380px;
+      border-radius:0;
+      box-shadow:none;
+    }
+    .section-professor .text-col h3 {color:var(--red); font-size:20px; margin-bottom:10px; font-weight:600;}
+    .section-professor .text-col h2 {font-size:28px; margin-bottom:5px; line-height:1.2; color:#fff;}
+    .section-professor .text-col span {font-size:16px; display:block; margin-bottom:30px;}
+    .section-professor .icons {list-style:none; padding:0;}
+    .section-professor .icons li {margin-bottom:25px;}
+    .section-professor .icons h4 {
+      font-size:18px;
+      font-weight:600;
+      margin-bottom:6px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:#fff;
+    }
+    .section-professor .icons p {font-size:15px; line-height:1.4; color:#ddd;}
+    .section-professor svg {width:32px; height:32px; fill:var(--red); flex-shrink:0;}
+
+
+@media(max-width: 768px) {
+  .section-professor .container {
+    grid-template-columns: 1fr;
+    text-align: left; /* <-- forçar alinhamento à esquerda */
+  }
+  .section-professor img {
+    margin: 0 auto 20px;
+    max-width: 80%;
+    height: auto;
+  }
+  .section-professor .text {
+    text-align: left; /* garantir que o texto não centralize */
+  }
+}
+
+
+    /* === Seção 3 (Rodapé) === */
+    .section-footer {
+      background:#111;
+      padding:20px 0;
+      width:100vw;
+    }
+    .section-footer .footer-container {
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+    }
+    .footer-left img {
+      max-width:170px;
+      height:auto;
+    }
+    .footer-right {
+      text-align:right;
+      font-size:10px;
+      color:#aaa;
+      line-height:1.6;
+    }
+    .footer-right p {margin:0; text-decoration:underline;}
+
+    /* Mobile centralizado */
+    @media(max-width:768px){
+      .section-footer .footer-container {
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
+      }
+      .footer-left img {margin-bottom:10px;}
+      .footer-right {text-align:center;}
+    }
+	
+	
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://static.wixstatic.com/media/7f5efc_eaa89333210b40cf86ca42d7ecfdcc53~mv2.png" alt="Logo Douglas">
+    </div><br>
+    <h1>Não é dieta. Não é treino. É algo que ninguém te contou ainda…</h1>
+	<br>
+	  <div class="video-container">
+    <iframe src="https://www.youtube.com/embed/was3qDot5w4" title="YouTube video" allowfullscreen></iframe>
+  </div>
+  
+  
+  </header>
+
+
+
+  <!-- Seção 2 -->
+  <section class="section-professor"><br><br>
+    <div class="container">
+      <div class="col img-col">
+        <img src="https://static.wixstatic.com/media/7f5efc_dab67ba329d54135992da07512f6cff4~mv2.png" alt="Douglas Leão">
+      </div>
+      <div class="col text-col">
+        <h3>Apresentamos Seu Professor</h3>
+        <h2>Douglas Leão</h2>
+        <span>Doutor em Educação Física e Nutrição Esportiva</span>
+        <ul class="icons">
+
+          <li>
+            <h4>
+              <svg viewBox="0 0 512 512"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.248-22.627 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.627 0L100.686 260.686c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></svg>
+              Certificação
+            </h4>
+            <p>Especialista em preparação física, nutrição esportiva e saúde de alta performance.</p>
+          </li>
+<li>
+  <h4>
+    <!-- Ícone de Troféu -->
+    <svg viewBox="0 0 576 512">
+      <path d="M552 64H472V24c0-13.3-10.7-24-24-24H128C114.7 0 104 10.7 104 24V64H24C10.7 64 0 74.7 0 88v56c0 66.3 53.7 120 120 120 22.5 0 43.6-6.3 61.5-17.1C206 314.2 246.6 352 296 352h-8c49.4 0 90-37.8 114.5-105.1 17.9 10.8 39 17.1 61.5 17.1 66.3 0 120-53.7 120-120V88c0-13.3-10.7-24-24-24zM120 232c-39.8 0-72-32.2-72-72V112h72v120zm408-72c0 39.8-32.2 72-72 72V112h72v48zM288 400c-61.9 0-112 50.1-112 112 0 0 48 0 112 0s112 0 112 0c0-61.9-50.1-112-112-112z"/>
+    </svg>
+    Referência nº 1
+  </h4>
+  <p>Reconhecido como referência no fisiculturismo e acompanhamento de atletas de alto nível, com títulos nacionais e internacionais.</p>
+</li>
+		  
+          <li>
+            <h4>
+              <svg viewBox="0 0 640 512"><path d="M160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l50.7 0L9.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L256 109.3l0 50.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-128c0-17.7-14.3-32-32-32L160 0zM576 80a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM448 208a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM400 384a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm48 80a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm128 0a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM272 384a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm48 80a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM144 512a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM576 336a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm-48-80a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
+              Sucesso
+            </h4>
+            <p>Responsável por transformar a vida de centenas de milhares de pessoas através de estratégias comprovadas de treino e nutrição.</p>
+          </li>
+        </ul>
+      </div>
+    </div><br>
+  </section>
+
+  <!-- Seção 3 (Rodapé) -->
+  <section class="section-footer">
+    <br><div class="footer-container">
+      <div class="footer-left">
+        <img src="https://static.wixstatic.com/media/7f5efc_eaa89333210b40cf86ca42d7ecfdcc53~mv2.png" alt="Logo Douglas">
+      </div>
+      <div class="footer-right">
+        <p>Políticas de Privacidade</p>
+        <p>Termos de Uso</p>
+      </div>
+    </div><br>
+  </section>
+
+</body>
+</html>
