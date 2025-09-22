@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boas Vindas</title>
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1290378376428374');
+    fbq('track', 'PageView');
+  </script>
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --green:#1f9d3a;
+      --green-dark:#15732b;
+      --red:#cc1f1f;
+      --red-dark:#9d1515;
+      --text:#eaeaea;
+      --bubble:#141419;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 600px at 70% -10%, rgba(204,31,31,.25), transparent 60%) , var(--bg);
+      background-attachment: fixed;
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      display:flex;
+      flex-direction:column;
+      height:100%;
+    }
+    .scroll{
+      flex:1;
+      overflow-y:auto;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      gap:12px;
+      width:100%;
+      max-width:680px;
+      margin:0 auto;
+      padding-bottom:60px; /* espaço no rodapé */
+    }
+    .bubble{max-width:85%; padding:12px 14px; border-radius:16px; line-height:1.35; font-size:15px; position:relative;}
+    .bubble.bot{background:linear-gradient(180deg, var(--red), var(--red-dark)); color:white; align-self:flex-start; border-top-left-radius:4px;}
+    .bubble.user{background:var(--bubble); color:var(--text); align-self:flex-end; border-top-right-radius:4px;}
+    .typing{border-right:2px solid rgba(255,255,255,.85); animation:blink .9s step-end infinite;}
+    @keyframes blink{50%{border-color:transparent}}
+
+    .choices{display:none; gap:10px; align-self:flex-end; justify-content:flex-end}
+    .btn{
+      cursor:pointer; border:1px solid rgba(255,255,255,.2); color:#fff;
+      padding:10px 14px; border-radius:12px; font-size:14px;
+      transition:.3s ease-in-out;
+      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.08);
+      position:relative;
+      overflow:hidden;
+    }
+    .btn::before{
+      content:"";
+      position:absolute;
+      top:0; left:-100%;
+      width:200%; height:100%;
+      background:linear-gradient(120deg, rgba(255,255,255,.15) 0%, rgba(255,255,255,0) 60%);
+      transform:skewX(-20deg);
+      transition:all 0.6s;
+    }
+    .btn:hover::before{left:100%;}
+    .btn:hover{transform:translateY(-2px);}
+
+    .btn.yes{
+      background:linear-gradient(180deg, rgba(31,157,58,0.6), rgba(21,115,43,0.6));
+      border-color:rgba(31,157,58,.7);
+    }
+    .btn.no{
+      background:linear-gradient(180deg, rgba(204,31,31,0.6), rgba(157,21,21,0.6));
+      border-color:rgba(204,31,31,.7);
+    }
+
+    /* Mobile comfort */
+    @media (max-width:480px){
+      .scroll{padding:14px}
+      .bubble{font-size:14px}
+    }
+  </style>
+</head>
+<body>
+  <div id="scroll" class="scroll" aria-live="polite"></div>
+  <audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2025/08/03/audio_1df12d5efc.mp3?filename=computer-mouse-click-02-383961.mp3" preload="auto"></audio>
+
+  <script>
+  (function(){
+    const scroll = document.getElementById('scroll');
+    const clickSound = document.getElementById('clickSound');
+
+    const intro = [
+      'Seja bem vindo(a), fico feliz de te ver por aqui!😀😀',
+      'Responda a estas perguntas rápidas...👍'
+    ];
+
+    const questions = [
+      'Faz ou já fez acompanhamento com Nutricionista ou Personal?',
+      'E acompanhamento de Consultoria Online?',
+      'Tem feito acompanhamento Médico com exames?',
+      'Você tem plano de saúde?',
+      'Usa suplementos ou recursos hormonais?'
+    ];
+
+    const YES_REDIRECT = 'https://wa.me/5562984888498?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20gratuita.';
+    const NO_REDIRECT  = 'https://www.app-startfit.com/';
+
+    let idx = -intro.length;
+    let yesCount = 0;
+
+    function el(tag, cls, text){
+      const e = document.createElement(tag);
+      if(cls) e.className = cls;
+      if(text!==undefined) e.textContent = text;
+      return e;
+    }
+
+    function autoscroll(){
+      scroll.scrollTo({ top: scroll.scrollHeight, behavior: 'smooth' });
+    }
+
+    function typeBotMessage(text, onDone){
+      const b = el('div','bubble bot');
+      const span = el('span','typing','');
+      b.appendChild(span);
+      scroll.appendChild(b);
+      autoscroll();
+
+      let i=0;
+      const speedBase = 22;
+      const jitter = () => Math.random()*18;
+      (function tick(){
+        if(i < text.length){
+          span.textContent = text.slice(0, ++i);
+          autoscroll();
+          setTimeout(tick, speedBase + jitter());
+        } else {
+          span.classList.remove('typing');
+          if(onDone) onDone();
+        }
+      })();
+    }
+
+    function showChoices(){
+      const wrap = el('div','choices');
+      const yes = el('button','btn yes','Sim');
+      const no  = el('button','btn no','Não');
+
+      yes.setAttribute('aria-label','Responder sim');
+      no.setAttribute('aria-label','Responder não');
+
+      yes.addEventListener('click', () => {clickSound.play(); choose(true)});
+      no.addEventListener('click',  () => {clickSound.play(); choose(false)});
+
+      wrap.appendChild(no); wrap.appendChild(yes);
+      scroll.appendChild(wrap);
+      wrap.style.display = 'flex';
+      autoscroll();
+    }
+
+    function pushUserAnswer(ans){
+      const b = el('div','bubble user', ans ? 'Sim' : 'Não');
+      scroll.appendChild(b);
+      autoscroll();
+    }
+
+    function choose(ans){
+      if(ans) yesCount++;
+      const lastChoices = scroll.querySelector('.choices:last-of-type');
+      if(lastChoices) lastChoices.remove();
+
+      pushUserAnswer(ans);
+
+      idx++;
+
+      if(idx < questions.length){
+        setTimeout(() => ask(idx), 350);
+      } else {
+        finish();
+      }
+    }
+
+    function ask(i){
+      if(i < 0){
+        typeBotMessage(intro[i+intro.length], () => {
+          idx++;
+          if(idx < 0){
+            setTimeout(() => ask(idx), 1500);
+          } else {
+            setTimeout(() => ask(0), 1500);
+          }
+        });
+      } else {
+        typeBotMessage(questions[i], showChoices);
+      }
+    }
+
+    function finish(){
+      setTimeout(() => {
+        typeBotMessage('Obrigado pelas respostas!✅', () => {
+          setTimeout(() => {
+            if(yesCount >= 3){    // quantidade de SIM's para qualificar
+              fbq('track', 'Lead');
+              window.location.assign(YES_REDIRECT);
+            } else {
+              window.location.assign(NO_REDIRECT);
+            }
+          }, 900);
+        });
+      }, 350);
+    }
+
+    setTimeout(() => ask(idx), 300);
+  })();
+  </script>
+</body>
+</html>
