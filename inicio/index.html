@@ -249,6 +249,8 @@
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
   var player;
+  var viewContentFired = false;
+
   function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
       events: {
@@ -259,35 +261,20 @@
 
   function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
+      // mostra o botão após 1 segundo
       setTimeout(() => {
         document.getElementById("cta-button").style.display = "inline-block";
-      }, 1000); // pitch do botão
-    }
-  }
-</script>
+      }, 1000);   // BOTÃO APARECE  IMPORTANTE!
 
-
-
-<script>
-  var player;
-  var viewContentFired = false; // evita disparar mais de uma vez
-
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      events: {
-        'onStateChange': onPlayerStateChange
+      // dispara Pixel ViewContent após 3s
+      if (!viewContentFired) {
+        setTimeout(() => {
+          if (player.getCurrentTime() >= 3 && !viewContentFired) {
+            fbq('track', 'ViewContent');
+            viewContentFired = true;
+          }
+        }, 3000);  // PIXEL DISPARA AO DAR PLAY IMPORTANTE!
       }
-    });
-  }
-
-  function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING && !viewContentFired) {
-      setTimeout(() => {
-        if (player.getCurrentTime() >= 3 && !viewContentFired) {
-          fbq('track', 'ViewContent'); // dispara o evento
-          viewContentFired = true;
-        }
-      }, 3000);   //IMPORTANTE! 3 segundos dispara pixel
     }
   }
 </script>
