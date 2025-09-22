@@ -150,7 +150,7 @@
  </style>
 
 
-<!-- Meta Pixel Code IMPORTANTE! -->
+<!-- Meta Pixel Code  IMPORTANTE! --> 
 <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -177,16 +177,34 @@
 
   <header>
     <div class="logo">
-      <img src="https://static.wixstatic.com/media/7f5efc_eaa89333210b40cf86ca42d7ecfdcc53~mv2.png">
+      <img src="https://static.wixstatic.com/media/7f5efc_eaa89333210b40cf86ca42d7ecfdcc53~mv2.png" >
     </div><br><br>
- 
-    <!-- HEADLINE IMPORTANTE! -->
+    
+    
+     <!-- HEADLINE IMPORTANTE! -->
     <h1>O que ninguém te contou sobre emagrecer e ganhar músculos ao mesmo tempo</h1>
-	  
-	  <div class="video-container">
-  <iframe id="player" src="https://www.youtube.com/embed/was3qDot5w4?enablejsapi=1"
-    title="YouTube video" allowfullscreen></iframe>
+
+
+
+
+<div class="video-container">
+<iframe id="player"
+  src="https://www.youtube.com/embed/was3qDot5w4?enablejsapi=1&autoplay=1&mute=1
+  &modestbranding=1&rel=0&controls=0&iv_load_policy=3&showinfo=0"
+  frameborder="0"
+  allow="autoplay; encrypted-media; picture-in-picture"
+  allowfullscreen>
+</iframe>
+
+  <!-- Tarja no topo -->
+  <div class="overlay-top"></div>
+
+  <!-- Tarja embaixo -->
+  <div class="overlay-bottom"></div>
 </div>
+
+
+
 
 
   <!-- Botão oculto inicialmente IMPORTANTE! -->
@@ -238,10 +256,34 @@
   display: block;
 }
   
+/* Tarja superior */
+.overlay-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30%; /* ajusta a altura da tarja */
+  background:  transparent;
+  z-index: 2;
+}
+
+/* Tarja inferior */
+.overlay-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%; /* ajusta a altura da tarja */
+  background:  transparent;
+  z-index: 2;
+}
+
+
+
 </style>
 
 <script>
- 
+
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
   var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -265,7 +307,7 @@
         document.getElementById("cta-button").style.display = "inline-block";
       }, 1000);   // BOTÃO APARECE  IMPORTANTE!
 
-     
+      
       if (!viewContentFired) {
         setTimeout(() => {
           if (player.getCurrentTime() >= 3 && !viewContentFired) {
@@ -288,7 +330,7 @@
   <section class="section-professor"><br><br>
     <div class="container">
       <div class="col img-col">
-        <img src="https://static.wixstatic.com/media/7f5efc_dab67ba329d54135992da07512f6cff4~mv2.png" >
+        <img src="https://static.wixstatic.com/media/7f5efc_dab67ba329d54135992da07512f6cff4~mv2.png">
       </div>
       <div class="col text-col">
         <h3>Apresentamos Seu Doutor</h3>
