@@ -88,7 +88,6 @@
       border-color:rgba(204,31,31,.7);
     }
 
-    /* Mobile comfort */
     @media (max-width:480px){
       .scroll{padding:14px}
       .bubble{font-size:14px}
@@ -104,12 +103,12 @@
     const scroll = document.getElementById('scroll');
     const clickSound = document.getElementById('clickSound');
 
-    const intro = [
+    const intro = [     // IMPORTANTE! FRASE INICIAL
       'Seja bem vindo(a), fico feliz de te ver por aqui!😀😀',
       'Responda a estas perguntas rápidas...👍'
     ];
 
-    const questions = [
+    const questions = [   // IMPORTANTE!   PERGUNTAS QUALIFICATÓRIAS
       'Faz ou já fez acompanhamento com Nutricionista ou Personal?',
       'E acompanhamento de Consultoria Online?',
       'Tem feito acompanhamento Médico com exames?',
@@ -117,8 +116,8 @@
       'Usa suplementos ou recursos hormonais?'
     ];
 
-    const YES_REDIRECT = 'https://wa.me/5562984888498?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20gratuita.';
-    const NO_REDIRECT  = 'https://www.app-startfit.com/';
+    const YES_REDIRECT = 'https://wa.me/5562984888498?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20gratuita.';  // QUALIFICADO   IMPORTANTE! 
+    const NO_REDIRECT  = 'https://www.app-startfit.com/';   // DESQUALIFICADO  IMPORTANTE! 
 
     let idx = -intro.length;
     let yesCount = 0;
@@ -214,7 +213,7 @@
       setTimeout(() => {
         typeBotMessage('Obrigado pelas respostas!✅', () => {
           setTimeout(() => {
-            if(yesCount >= 3){    // quantidade de SIM's para qualificar
+            if(yesCount >= 3){    // IMPORTANTE! quantidade de SIM's para qualificar
               fbq('track', 'CompleteRegistration');
               window.location.assign(YES_REDIRECT);
             } else {
