@@ -184,15 +184,27 @@
     <!-- HEADLINE  IMPORTANTE!-->
    <h1>Não é dieta. Não é treino. É algo que ninguém te contou ainda…</h1>
 	  
+
+
+
+
 <div class="video-container">
-<iframe id="player"
-  src="https://www.youtube.com/embed/was3qDot5w4?enablejsapi=1&autoplay=1&mute=1
-  &modestbranding=1&rel=0&controls=1&iv_load_policy=3&showinfo=0"
-  frameborder="0"
-  allow="autoplay; encrypted-media; picture-in-picture"
-  allowfullscreen>
-</iframe>
+  <iframe id="player"
+    src="https://www.youtube.com/embed/was3qDot5w4?enablejsapi=1&autoplay=1&mute=1&modestbranding=1&rel=0&controls=1&iv_load_policy=3&showinfo=0"
+    frameborder="0"
+    allow="autoplay; encrypted-media; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+
+  <!-- Overlay cobrindo tudo -->
+  <div class="overlay-block"></div>
+  
+  <!-- Janela no centro que permite clique -->
+  <div class="overlay-hole"></div>
 </div>
+
+
+
 
 
   <!-- Botão oculto inicialmente IMPORTANTE! -->
@@ -244,6 +256,33 @@
   display: block;
 }
   
+/* Bloqueia cliques em tudo */
+.overlay-block {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 2;
+}
+
+/* "Buraco" central que permite clique */
+.overlay-hole {
+  position: absolute;
+  top: 25%;   /* ajusta a posição */
+  left: 25%;
+  width: 50%; /* largura do buraco */
+  height: 50%;
+  z-index: 3;
+  background: transparent;
+  pointer-events: none; /* buraco não bloqueia cliques */
+}
+
+
+
+
+
+
 </style>
 
 <script>
