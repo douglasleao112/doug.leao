@@ -14,7 +14,7 @@
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '839138854780074');
-    fbq('track', 'Lead');
+    fbq('track', 'Lead');   // IMPORTANTE! PIXEL
   </script>
   <style>
     :root{
@@ -214,7 +214,7 @@
         typeBotMessage('Obrigado pelas respostas!✅', () => {
           setTimeout(() => {
             if(yesCount >= 3){    // IMPORTANTE! quantidade de SIM's para qualificar
-              fbq('track', 'CompleteRegistration');
+              fbq('track', 'CompleteRegistration');     // IMPORTANTE! pixel MQL
               window.location.assign(YES_REDIRECT);
             } else {
               window.location.assign(NO_REDIRECT);
