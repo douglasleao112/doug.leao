@@ -13,8 +13,8 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1290378376428374');
-    fbq('track', 'PageView');
+    fbq('init', '839138854780074');
+    fbq('track', 'Lead');
   </script>
   <style>
     :root{
@@ -215,7 +215,7 @@
         typeBotMessage('Obrigado pelas respostas!✅', () => {
           setTimeout(() => {
             if(yesCount >= 3){    // quantidade de SIM's para qualificar
-              fbq('track', 'Lead');
+              fbq('track', 'CompleteRegistration');
               window.location.assign(YES_REDIRECT);
             } else {
               window.location.assign(NO_REDIRECT);
