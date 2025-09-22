@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<script>
+  // destinos
+  const links = [
+    "https://typebot.co/doug-consultoria",
+    "https://typebot.co/doug-consultoria2",
+    "https://typebot.co/doug-consultoria3",
+    "https://typebot.co/doug-consultoria4",
+    "https://typebot.co/doug-consultoria5"
+  ];
+  const base = links[Math.floor(Math.random() * links.length)];
+
+  // helpers
+  const parseQS = s => Object.fromEntries(new URLSearchParams(s));
+  const buildQS = o => new URLSearchParams(o).toString();
+  const qsObj = parseQS(location.search);
+  const hashObj = parseQS((location.hash||'').replace(/^#/, ''));
+
+  // tenta decodificar pacote r (Base64 JSON)
+  let pack = {};
+  if (qsObj.r) {
+    try { pack = JSON.parse(atob(qsObj.r)); } catch(e){}
+  }
+
+  // garante utm_* usando backups
+  const ensured = { ...qsObj };
+
+  // preferências: qs.utms > pack > qs.nome/email/whatsapp > hash
+  ensured.utm_source   = qsObj.utm_source   || pack.utm_source   || qsObj.nome     || hashObj.us || '';
+  ensured.utm_medium   = qsObj.utm_medium   || pack.utm_medium   || qsObj.email    || hashObj.um || '';
+  ensured.utm_campaign = qsObj.utm_campaign || pack.utm_campaign || (qsObj.whatsapp|| hashObj.uc || '').replace(/\D/g,'');
+
+  // se tiver nome/email/whatsapp no pack, replica também
+  ensured.nome      = qsObj.nome      || pack.nome      || hashObj.us || ensured.utm_source;
+  ensured.email     = qsObj.email     || pack.email     || hashObj.um || ensured.utm_medium;
+  ensured.whatsapp  = (qsObj.whatsapp || pack.whatsapp || hashObj.uc || ensured.utm_campaign).toString();
+
+  // mantém UTMs originais (o_*) se vieram
+  ['o_utm_source','o_utm_medium','o_utm_campaign','o_utm_content','o_utm_term','o_gclid','o_fbclid']
+    .forEach(k => { if (qsObj[k] && !ensured[k]) ensured[k]=qsObj[k]; });
+
+  // monta destino preservando tudo
+  const sep = base.includes('?') ? '&' : '?';
+  const target = base + sep + buildQS(ensured);
+
+  // redireciona
+  window.location.replace(target);
+  window.__target = target;
+</script>
+</head>
+<body>
+  Se não redirecionar, <a id="fallback" href="#">clique aqui</a>.
+  <script>document.getElementById('fallback').href = window.__target || '#';</script>
+</body>
+</html>
