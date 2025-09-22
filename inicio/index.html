@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Dr. Douglas Leão</title>
   <style>
     :root {
@@ -150,7 +150,7 @@
  </style>
 
 
-<!-- Meta Pixel Code -->
+<!-- Meta Pixel Code  IMPORTANTE! --> 
 <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -177,11 +177,11 @@
 
   <header>
     <div class="logo">
-      <img src="https://static.wixstatic.com/media/7f5efc_eaa89333210b40cf86ca42d7ecfdcc53~mv2.png" alt="Logo Douglas">
+      <img src="https://static.wixstatic.com/media/7f5efc_eaa89333210b40cf86ca42d7ecfdcc53~mv2.png" >
     </div><br><br>
     
     
-    <!-- HEADLINE -->
+    <!-- HEADLINE  IMPORTANTE!-->
    <h1>Não é dieta. Não é treino. É algo que ninguém te contou ainda…</h1>
 	  
 	  <div class="video-container">
@@ -190,12 +190,12 @@
 </div>
 
 
-  <!-- Botão oculto inicialmente -->
+  <!-- Botão oculto inicialmente IMPORTANTE! -->
   <a id="cta-button" href="/quali" >Saiba Mais</a>
 
 
 <style>
-/* Botão fora do vídeo */
+
 #cta-button {
   display: none;
   position: relative;
@@ -213,7 +213,7 @@
   backdrop-filter: blur(6px);
 }
 
-/* animação */
+
 @keyframes pulse {
   0%   { transform: scale(1);   box-shadow: 0 0 20px rgba(255,0,0,0.8);}
   50%  { transform: scale(1.1); box-shadow: 0 0 40px rgba(255,0,0,1);}
@@ -229,12 +229,12 @@
   box-shadow: 0 0 30px rgba(204,31,31,0.85);
   border: 2px solid rgba(204,31,31,0.9);
   margin: 40px auto 60px;
-  aspect-ratio: 16/9; /* mantém proporção horizontal */
+  aspect-ratio: 16/9; 
 }
 
 .video-container iframe {
   width: 100%;
-  height: 100%; /* ocupa a proporção definida */
+  height: 100%; 
   border: none;
   display: block;
 }
@@ -242,7 +242,7 @@
 </style>
 
 <script>
-  // Carrega API do YouTube
+
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
   var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -261,12 +261,12 @@
 
   function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
-      // mostra o botão após 1 segundo
+    
       setTimeout(() => {
         document.getElementById("cta-button").style.display = "inline-block";
       }, 1000);   // BOTÃO APARECE  IMPORTANTE!
 
-      // dispara Pixel ViewContent após 3s
+      
       if (!viewContentFired) {
         setTimeout(() => {
           if (player.getCurrentTime() >= 3 && !viewContentFired) {
@@ -289,7 +289,7 @@
   <section class="section-professor"><br><br>
     <div class="container">
       <div class="col img-col">
-        <img src="https://static.wixstatic.com/media/7f5efc_dab67ba329d54135992da07512f6cff4~mv2.png" alt="Douglas Leão">
+        <img src="https://static.wixstatic.com/media/7f5efc_dab67ba329d54135992da07512f6cff4~mv2.png">
       </div>
       <div class="col text-col">
         <h3>Apresentamos Seu Doutor</h3>
@@ -339,6 +339,45 @@
       </div>
     </div><br>
   </section>
+
+
+  <script>
+  // Bloqueia clique direito
+  document.addEventListener("contextmenu", e => e.preventDefault());
+
+  // Bloqueia teclas específicas
+  document.addEventListener("keydown", e => {
+    if (
+      e.key === "F12" || // DevTools
+      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || // Ctrl+Shift+I/J
+      (e.ctrlKey && (e.key === "U" || e.key === "C" || e.key === "S")) // Ctrl+U, Ctrl+C, Ctrl+S
+    ) {
+      e.preventDefault();
+    }
+  });
+
+  // Bloqueia PrintScreen (básico, mas pode ser burlado)
+  document.addEventListener("keyup", e => {
+    if (e.key === "PrintScreen") {
+      navigator.clipboard.writeText("");
+      alert("Captura de tela desativada.");
+    }
+  });
+
+  // Bloqueia seleção de texto e arrastar imagens
+  document.addEventListener("selectstart", e => e.preventDefault());
+  document.addEventListener("dragstart", e => e.preventDefault());
+
+  // Bloqueia zoom (desktop)
+  document.addEventListener("wheel", e => {
+    if (e.ctrlKey) e.preventDefault();
+  }, { passive: false });
+
+  // Bloqueia zoom (mobile)
+  document.addEventListener("gesturestart", e => e.preventDefault());
+</script>
+
+
 
 </body>
 </html>
