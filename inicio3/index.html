@@ -462,11 +462,11 @@
       // dispara pixel após 3s
       if (!viewContentFired) {
         setTimeout(() => {
-          if (player.getCurrentTime() >= 3 && !viewContentFired) {
+          if (player.getCurrentTime() >= 3 && !viewContentFired) {     // pixel play video    IMPORTANTE!
             fbq('track', 'ViewContent');
             viewContentFired = true;
           }
-        }, 3000);    // pixel play video    IMPORTANTE!
+        }, 1000);  
       }
     }
   }
