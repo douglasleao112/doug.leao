@@ -195,7 +195,7 @@
   allow="autoplay; encrypted-media; picture-in-picture"
   allowfullscreen>
 </iframe>
-
+<div id="progress-bar"></div>
   <!-- Tarja no topo -->
   <div class="overlay-top"></div>
 
@@ -212,6 +212,21 @@
 
 
 <style>
+
+
+
+#progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 8px;
+  width: 0;
+  background: rgba(6, 230, 99, 0.7); /* vermelho com 70% opacidade */
+  transition: width 0.5s linear;
+  z-index: 3;
+}
+
+
 
 #cta-button {
   display: none;
@@ -416,6 +431,48 @@
 
   // Bloqueia zoom (mobile)
   document.addEventListener("gesturestart", e => e.preventDefault());
+
+
+
+
+
+  let duration = 0; // duração total do vídeo
+let progressBar = document.getElementById("progress-bar");
+
+function onPlayerStateChange(event) {
+  if (event.data == YT.PlayerState.PLAYING) {
+    duration = player.getDuration(); // pega duração do vídeo
+
+    // atualiza barra a cada 500ms
+    setInterval(() => {
+      let currentTime = player.getCurrentTime();
+      let percent = calculateProgress(currentTime, duration);
+      progressBar.style.width = percent + "%";
+    }, 500);
+  }
+}
+
+// Função para calcular o avanço especial
+function calculateProgress(currentTime, duration) {
+  if (duration <= 0) return 0;
+
+  let percent = 0;
+
+  if (currentTime <= 60) {
+    // 1º minuto → até 50%
+    percent = (currentTime / 60) * 50;
+  } else if (currentTime <= 120) {
+    // 2º minuto → mais 25% (total 75%)
+    percent = 50 + ((currentTime - 60) / 60) * 25;
+  } else {
+    // restante → 25% finais até 100%
+    let restante = duration - 120;
+    percent = 75 + ((currentTime - 120) / restante) * 25;
+  }
+
+  return Math.min(percent, 100);
+}
+
 </script>
 
 
