@@ -299,11 +299,8 @@
 </style>
 
 
-
-
   
   </header>
-
 
 
   <!-- Seção 2 -->
@@ -455,10 +452,10 @@
       // inicia a barra
       startProgress();
 
-      // mostra o botão CTA após 1s
+      
       setTimeout(() => {
         document.getElementById("cta-button").style.display = "inline-block";
-      }, 1000);
+      }, 10000);   // mostra o botão CTA    IMPORTANTE!
 
       // dispara pixel após 3s
       if (!viewContentFired) {
@@ -467,7 +464,7 @@
             fbq('track', 'ViewContent');
             viewContentFired = true;
           }
-        }, 3000);
+        }, 3000);    // pixel play video    IMPORTANTE!
       }
     }
   }

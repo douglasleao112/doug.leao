@@ -45,6 +45,18 @@
     .video-container iframe {width:100%; height:450px; border:none; display:block;}
     @media(max-width:600px){.video-container iframe{height:220px}}
 
+    .progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 8px;
+  width: 0%;
+  background: rgba(0, 255, 0, 0.7); /* verde com 70% transparência */
+  z-index: 5;
+  transition: width linear;
+}
+
+
     /* === Seção 2 === */
     .section-professor {
       width: 100vw;
@@ -195,7 +207,7 @@
   allow="autoplay; encrypted-media; picture-in-picture"
   allowfullscreen>
 </iframe>
-<div id="progress-bar"></div>
+<div class="progress-bar" id="progressBar"></div>
   <!-- Tarja no topo -->
   <div class="overlay-top"></div>
 
@@ -296,47 +308,7 @@
 
 
 </style>
-
-<script>
-
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  var player;
-  var viewContentFired = false;
-
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      events: {
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
-
-  function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-    
-      setTimeout(() => {
-        document.getElementById("cta-button").style.display = "inline-block";
-      }, 1000);   // BOTÃO APARECE  IMPORTANTE!
-
-      
-      if (!viewContentFired) {
-        setTimeout(() => {
-          if (player.getCurrentTime() >= 3 && !viewContentFired) {
-            fbq('track', 'ViewContent');
-            viewContentFired = true;
-          }
-        }, 3000);  // PIXEL DISPARA AO DAR PLAY IMPORTANTE!
-      }
-    }
-  }
-</script>
-
-
-  
+ 
   </header>
 
 
@@ -432,64 +404,79 @@
   // Bloqueia zoom (mobile)
   document.addEventListener("gesturestart", e => e.preventDefault());
 
-
-
-
-
-
-
-
-let duration = 0; 
-let progressBar = document.getElementById("progress-bar");
-let viewContentFired = false;
-
-function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING) {
-    duration = player.getDuration(); 
-
-    // BOTÃO "Saiba Mais" aparece depois de 1s
-    setTimeout(() => {
-      document.getElementById("cta-button").style.display = "inline-block";
-    }, 1000);
-
-    // Dispara Pixel após 3s
-    if (!viewContentFired) {
-      setTimeout(() => {
-        if (player.getCurrentTime() >= 3 && !viewContentFired) {
-          fbq('track', 'ViewContent');
-          viewContentFired = true;
-        }
-      }, 3000);
-    }
-
-    // Atualiza barra a cada 500ms
-    setInterval(() => {
-      let currentTime = player.getCurrentTime();
-      let percent = calculateProgress(currentTime, duration);
-      progressBar.style.width = percent + "%";
-    }, 500);
-  }
-}
-
-function calculateProgress(currentTime, duration) {
-  if (duration <= 0) return 0;
-
-  let percent = 0;
-
-  if (currentTime <= 60) {
-    percent = (currentTime / 60) * 50; // 1º minuto até 50%
-  } else if (currentTime <= 120) {
-    percent = 50 + ((currentTime - 60) / 60) * 25; // 2º minuto até 75%
-  } else {
-    let restante = duration - 120;
-    percent = 75 + ((currentTime - 120) / restante) * 25; // restante até 100%
-  }
-
-  return Math.min(percent, 100);
-}
-
 </script>
 
+
+
+
+<script>
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  var viewContentFired = false;
+  const progressBar = document.getElementById("progressBar");
+  let totalDuration = 600; // valor padrão até pegar o real
+
+  function startProgress() {
+    // Etapa 1 → 0% até 50% em 60s
+    progressBar.style.transition = "width 60s linear";
+    progressBar.style.width = "50%";
+
+    setTimeout(() => {
+      // Etapa 2 → 50% até 75% em 60s
+      progressBar.style.transition = "width 60s linear";
+      progressBar.style.width = "75%";
+    }, 60000);
+
+    setTimeout(() => {
+      // Etapa 3 → 75% até 100% no tempo restante
+      let remaining = (totalDuration - 120); // segundos
+      if (remaining > 0) {
+        progressBar.style.transition = `width ${remaining}s linear`;
+        progressBar.style.width = "100%";
+      }
+    }, 120000);
+  }
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+
+  function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+      // pega duração real só 1 vez
+      if (totalDuration === 600) {
+        totalDuration = Math.floor(player.getDuration());
+      }
+
+      // inicia a barra
+      startProgress();
+
+      
+      setTimeout(() => {
+        document.getElementById("cta-button").style.display = "inline-block";
+      }, 10000);   // mostra o botão CTA    IMPORTANTE!
+
+      // dispara pixel após 3s
+      if (!viewContentFired) {
+        setTimeout(() => {
+          if (player.getCurrentTime() >= 3 && !viewContentFired) {
+            fbq('track', 'ViewContent');
+            viewContentFired = true;
+          }
+        }, 3000);    // pixel play video    IMPORTANTE!
+      }
+    }
+  }
+</script>
 
 
 </body>
