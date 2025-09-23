@@ -197,7 +197,6 @@
   allowfullscreen>
 </iframe>
 <div id="progress-bar"></div>
-
   <!-- Tarja no topo -->
   <div class="overlay-top"></div>
 
@@ -215,6 +214,8 @@
 
 <style>
 
+
+
 #progress-bar {
   position: absolute;
   bottom: 0;
@@ -225,6 +226,7 @@
   transition: width 0.5s linear;
   z-index: 3;
 }
+
 
 
 #cta-button {
@@ -314,36 +316,24 @@
     });
   }
 
- let progressInterval;
-
-function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING) {
-    duration = player.getDuration(); 
-
-    // BOTÃO "Saiba Mais" aparece depois de 1s
-    setTimeout(() => {
-      document.getElementById("cta-button").style.display = "inline-block";
-    }, 1000);
-
-    // Dispara Pixel após 3s
-    if (!viewContentFired) {
+  function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+    
       setTimeout(() => {
-        if (player.getCurrentTime() >= 3 && !viewContentFired) {
-          fbq('track', 'ViewContent');
-          viewContentFired = true;
-        }
-      }, 3000);
-    }
+        document.getElementById("cta-button").style.display = "inline-block";
+      }, 1000);   // BOTÃO APARECE  IMPORTANTE!
 
-    // evita duplicação do intervalo
-    if (progressInterval) clearInterval(progressInterval);
-    progressInterval = setInterval(() => {
-      let currentTime = player.getCurrentTime();
-      let percent = calculateProgress(currentTime, duration);
-      progressBar.style.width = percent + "%";
-    }, 500);
+      
+      if (!viewContentFired) {
+        setTimeout(() => {
+          if (player.getCurrentTime() >= 3 && !viewContentFired) {
+            fbq('track', 'ViewContent');
+            viewContentFired = true;
+          }
+        }, 3000);  // PIXEL DISPARA AO DAR PLAY IMPORTANTE!
+      }
+    }
   }
-}
 </script>
 
 
@@ -447,68 +437,57 @@ function onPlayerStateChange(event) {
 
 
 
- var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  
 
-  var player;
-  let duration = 0; 
-  let progressBar = document.getElementById("progress-bar");
-  let viewContentFired = false;
 
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      events: {
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
+let duration = 0; 
+let progressBar = document.getElementById("progress-bar");
+let viewContentFired = false;
 
-  function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-      duration = player.getDuration(); 
+function onPlayerStateChange(event) {
+  if (event.data == YT.PlayerState.PLAYING) {
+    duration = player.getDuration(); 
 
-      // BOTÃO "Saiba Mais" aparece depois de 1s
+    // BOTÃO "Saiba Mais" aparece depois de 1s
+    setTimeout(() => {
+      document.getElementById("cta-button").style.display = "inline-block";
+    }, 1000);
+
+    // Dispara Pixel após 3s
+    if (!viewContentFired) {
       setTimeout(() => {
-        document.getElementById("cta-button").style.display = "inline-block";
-      }, 1000);
-
-      // Dispara Pixel após 3s
-      if (!viewContentFired) {
-        setTimeout(() => {
-          if (player.getCurrentTime() >= 3 && !viewContentFired) {
-            fbq('track', 'ViewContent');
-            viewContentFired = true;
-          }
-        }, 3000);
-      }
-
-      // Atualiza barra a cada 500ms
-      setInterval(() => {
-        let currentTime = player.getCurrentTime();
-        let percent = calculateProgress(currentTime, duration);
-        progressBar.style.width = percent + "%";
-      }, 500);
-    }
-  }
-
-  function calculateProgress(currentTime, duration) {
-    if (duration <= 0) return 0;
-
-    let percent = 0;
-
-    if (currentTime <= 60) {
-      percent = (currentTime / 60) * 50; // 1º minuto até 50%
-    } else if (currentTime <= 120) {
-      percent = 50 + ((currentTime - 60) / 60) * 25; // 2º minuto até 75%
-    } else {
-      let restante = duration - 120;
-      percent = 75 + ((currentTime - 120) / restante) * 25; // restante até 100%
+        if (player.getCurrentTime() >= 3 && !viewContentFired) {
+          fbq('track', 'ViewContent');
+          viewContentFired = true;
+        }
+      }, 3000);
     }
 
-    return Math.min(percent, 100);
+    // Atualiza barra a cada 500ms
+    setInterval(() => {
+      let currentTime = player.getCurrentTime();
+      let percent = calculateProgress(currentTime, duration);
+      progressBar.style.width = percent + "%";
+    }, 500);
   }
+}
+
+function calculateProgress(currentTime, duration) {
+  if (duration <= 0) return 0;
+
+  let percent = 0;
+
+  if (currentTime <= 60) {
+    percent = (currentTime / 60) * 50; // 1º minuto até 50%
+  } else if (currentTime <= 120) {
+    percent = 50 + ((currentTime - 60) / 60) * 25; // 2º minuto até 75%
+  } else {
+    let restante = duration - 120;
+    percent = 75 + ((currentTime - 120) / restante) * 25; // restante até 100%
+  }
+
+  return Math.min(percent, 100);
+}
 
 </script>
 
