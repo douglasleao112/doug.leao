@@ -436,14 +436,33 @@
 
 
 
-  let duration = 0; // duração total do vídeo
+
+
+
+let duration = 0; 
 let progressBar = document.getElementById("progress-bar");
+let viewContentFired = false;
 
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING) {
-    duration = player.getDuration(); // pega duração do vídeo
+    duration = player.getDuration(); 
 
-    // atualiza barra a cada 500ms
+    // BOTÃO "Saiba Mais" aparece depois de 1s
+    setTimeout(() => {
+      document.getElementById("cta-button").style.display = "inline-block";
+    }, 1000);
+
+    // Dispara Pixel após 3s
+    if (!viewContentFired) {
+      setTimeout(() => {
+        if (player.getCurrentTime() >= 3 && !viewContentFired) {
+          fbq('track', 'ViewContent');
+          viewContentFired = true;
+        }
+      }, 3000);
+    }
+
+    // Atualiza barra a cada 500ms
     setInterval(() => {
       let currentTime = player.getCurrentTime();
       let percent = calculateProgress(currentTime, duration);
@@ -452,22 +471,18 @@ function onPlayerStateChange(event) {
   }
 }
 
-// Função para calcular o avanço especial
 function calculateProgress(currentTime, duration) {
   if (duration <= 0) return 0;
 
   let percent = 0;
 
   if (currentTime <= 60) {
-    // 1º minuto → até 50%
-    percent = (currentTime / 60) * 50;
+    percent = (currentTime / 60) * 50; // 1º minuto até 50%
   } else if (currentTime <= 120) {
-    // 2º minuto → mais 25% (total 75%)
-    percent = 50 + ((currentTime - 60) / 60) * 25;
+    percent = 50 + ((currentTime - 60) / 60) * 25; // 2º minuto até 75%
   } else {
-    // restante → 25% finais até 100%
     let restante = duration - 120;
-    percent = 75 + ((currentTime - 120) / restante) * 25;
+    percent = 75 + ((currentTime - 120) / restante) * 25; // restante até 100%
   }
 
   return Math.min(percent, 100);
