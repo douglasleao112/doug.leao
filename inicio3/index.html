@@ -463,12 +463,12 @@
 // dispara pixel após 3 segundos reais de vídeo
 if (!viewContentFired) {
   const checkTime = setInterval(() => {
-    if (player.getCurrentTime() >= 3) {
+    if (player.getCurrentTime() >= 3) {    // dispara o pixel play IMPORTANTE!
       fbq('track', 'ViewContent');
       viewContentFired = true;
       clearInterval(checkTime);
     }
-  }, 500); // verifica a cada meio segundo
+  }, 500); 
 }
     
 

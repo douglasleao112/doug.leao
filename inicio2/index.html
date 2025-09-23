@@ -465,16 +465,20 @@
         document.getElementById("cta-button").style.display = "inline-block";
       }, 10000);   // mostra o botão CTA    IMPORTANTE!
 
-      // dispara pixel após 3s
-      if (!viewContentFired) {
-        setTimeout(() => { 
-          if (player.getCurrentTime() >= 3 && !viewContentFired) {     // pixel play video    IMPORTANTE!
-            fbq('track', 'ViewContent');
-            viewContentFired = true;
-          }
-        }, 1000);  
-      }
+
+// dispara pixel após 3 segundos reais de vídeo
+if (!viewContentFired) {
+  const checkTime = setInterval(() => {
+    if (player.getCurrentTime() >= 3) {    // dispara o pixel play IMPORTANTE!
+      fbq('track', 'ViewContent');
+      viewContentFired = true;
+      clearInterval(checkTime);
     }
+  }, 500); 
+}
+    
+
+}
   }
 </script>
 
