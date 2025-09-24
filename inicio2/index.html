@@ -459,10 +459,17 @@
       // inicia a barra
       startProgress();
 
-      
+
+
+
 const checkCTA = setInterval(() => {
-  if (player && player.getCurrentTime() >= 896) {  // mostra o botão CTA
-    document.getElementById("cta-button").style.display = "inline-block";
+  if (player && player.getCurrentTime() >= 896) {     // mostra o botão CTA
+    const ctaButton = document.getElementById("cta-button");
+    ctaButton.style.display = "inline-block";
+
+    // Dispara evento do pixel assim que o botão aparecer
+    fbq('track', 'Contact');  
+
     clearInterval(checkCTA);
   }
 }, 1000);
