@@ -460,9 +460,13 @@
       startProgress();
 
       
-      setTimeout(() => {
-        document.getElementById("cta-button").style.display = "inline-block";
-      }, 10000);   // mostra o botão CTA    IMPORTANTE!
+const checkCTA = setInterval(() => {
+  if (player && player.getCurrentTime() >= 896) {  // mostra o botão CTA
+    document.getElementById("cta-button").style.display = "inline-block";
+    clearInterval(checkCTA);
+  }
+}, 1000);
+
 
 
 // dispara pixel após 3 segundos reais de vídeo
