@@ -116,7 +116,7 @@
       'Usa suplementos ou recursos hormonais?'
     ];
 
-    const YES_REDIRECT = 'https://wa.me/5562984888498?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20uma%20consulta%20gratuita.';  // QUALIFICADO   IMPORTANTE! 
+    const YES_REDIRECT = 'https://api.whatsapp.com/send?phone=556284888498&text=Ol%C3%A1,%20gostaria%20de%20agendar%20uma%20consulta%20gratuita';  // QUALIFICADO   IMPORTANTE! 
     const NO_REDIRECT  = 'https://www.app-startfit.com/';   // DESQUALIFICADO  IMPORTANTE! 
 
     let idx = -intro.length;
@@ -227,5 +227,48 @@
     setTimeout(() => ask(idx), 300);
   })();
   </script>
+
+
+
+
+  <script>
+  // Bloqueia clique direito
+  document.addEventListener("contextmenu", e => e.preventDefault());
+
+  // Bloqueia teclas específicas
+  document.addEventListener("keydown", e => {
+    if (
+      e.key === "F12" || // DevTools
+      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || // Ctrl+Shift+I/J
+      (e.ctrlKey && (e.key === "U" || e.key === "C" || e.key === "S")) // Ctrl+U, Ctrl+C, Ctrl+S
+    ) {
+      e.preventDefault();
+    }
+  });
+
+  // Bloqueia PrintScreen (básico, mas pode ser burlado)
+  document.addEventListener("keyup", e => {
+    if (e.key === "PrintScreen") {
+      navigator.clipboard.writeText("");
+      alert("Captura de tela desativada.");
+    }
+  });
+
+  // Bloqueia seleção de texto e arrastar imagens
+  document.addEventListener("selectstart", e => e.preventDefault());
+  document.addEventListener("dragstart", e => e.preventDefault());
+
+  // Bloqueia zoom (desktop)
+  document.addEventListener("wheel", e => {
+    if (e.ctrlKey) e.preventDefault();
+  }, { passive: false });
+
+  // Bloqueia zoom (mobile)
+  document.addEventListener("gesturestart", e => e.preventDefault());
+
+</script>
+
+
+
 </body>
 </html>
