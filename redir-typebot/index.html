@@ -54,5 +54,21 @@
 <body>
   Se não redirecionar, <a id="fallback" href="#">clique aqui</a>.
   <script>document.getElementById('fallback').href = window.__target || '#';</script>
+
+
+
+  <script>
+  // Captura parâmetros da URL (UTMs)
+  const params = window.location.search;
+
+  if (params) {
+    const ctaBtn = document.getElementById("cta-button");
+    if (ctaBtn) {
+      // Se já tiver "?" no href, usa "&" para concatenar
+      const sep = ctaBtn.href.includes("?") ? "&" : "?";
+      ctaBtn.href += sep + params.substring(1);
+    }
+  }
+</script>
 </body>
 </html>
