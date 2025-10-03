@@ -105,12 +105,12 @@
 
     const intro = [     // IMPORTANTE! FRASE INICIAL
       'Seja bem vindo(a), fico feliz de te ver por aqui!😀😀',
-      'Responda a estas perguntas rápidas...👍'
+      'Responda a estas perguntas rápidas, para poder te ajudar da melhor forma...👍'
     ];
 
     const questions = [   // IMPORTANTE!   PERGUNTAS QUALIFICATÓRIAS
       'Faz ou já fez acompanhamento com Nutricionista ou Personal?',
-      'E acompanhamento de Consultoria Online?',
+      'E acompanhamento de Consultoria Fitness Online?',
       'Tem feito acompanhamento Médico com exames?',
       'Você tem plano de saúde?',
       'Usa suplementos ou recursos hormonais?'
@@ -213,7 +213,7 @@
       setTimeout(() => {
         typeBotMessage('Obrigado pelas respostas!✅', () => {
           setTimeout(() => {
-            if(yesCount >= 3){    // IMPORTANTE! quantidade de SIM's para qualificar
+            if(yesCount >= 2){    // IMPORTANTE! quantidade de SIM's para qualificar
               fbq('track', 'CompleteRegistration');     // IMPORTANTE! pixel MQL
               window.location.assign(YES_REDIRECT);
             } else {
