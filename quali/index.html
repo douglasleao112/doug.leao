@@ -14,7 +14,7 @@
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '839138854780074');
-    fbq('track', 'Lead');   // IMPORTANTE! PIXEL
+    fbq('track', 'PageView');   // IMPORTANTE! PIXEL
   </script>
   <style>
     :root{
@@ -184,6 +184,12 @@
       if(lastChoices) lastChoices.remove();
 
       pushUserAnswer(ans);
+
+  // dispara o evento Lead apenas na primeira resposta IMPORTANTE!
+  if(idx === 0){
+    fbq('track', 'Lead');
+  }
+
 
       idx++;
 
