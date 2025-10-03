@@ -242,7 +242,7 @@ body{
       setTimeout(() => {
         typeBotMessage('Obrigado pelas respostas!✅', () => {
           setTimeout(() => {
-            if(yesCount >= 2){    // IMPORTANTE! quantidade de SIM's para qualificar
+            if(yesCount >= 3){    // IMPORTANTE! quantidade de SIM's para qualificar
               fbq('track', 'CompleteRegistration');     // IMPORTANTE! pixel MQL
               window.location.assign(YES_REDIRECT);
             } else {
@@ -268,8 +268,8 @@ body{
   document.addEventListener("keydown", e => {
     if (
       e.key === "F12" || // DevTools
-      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || // Ctrl+Shift+I/J
-      (e.ctrlKey && (e.key === "U" || e.key === "C" || e.key === "S")) // Ctrl+U, Ctrl+C, Ctrl+S
+      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
+      (e.ctrlKey && (e.key === "U" || e.key === "C" || e.key === "S")) 
     ) {
       e.preventDefault();
     }
