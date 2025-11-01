@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ofertas Black November</title>
+<style>
+  :root{
+    --txt:#ffffff;
+    --accent:#ff2b4d;   /* vermelho do traço */
+    --verde:#00ff99;    /* preço novo */
+    --gold:#ffda3a;     /* coin */
+    --bg:#0c0c0f;       /* fundo solicitado */
+  }
+  *{ box-sizing: border-box; }
+  html, body{
+    height:100%;
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--txt);
+    background: var(--bg);
+  }
+  .wrap{
+    width:100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 24px 16px 28px;
+    text-align: center;
+  }
+
+  /* HEADLINE com traço atrás do texto (e acima do fundo) */
+  .headline{
+    position: relative;
+    display: inline-block;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+  .headline .txt{
+    position: relative; /* acima do traço */
+    z-index: 2;
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: clamp(26px, 7vw, 42px);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: 0 .15em;
+  }
+  .headline .risk{
+    position: absolute;
+    z-index: 1;          /* atrás do texto, acima do fundo */
+    left: 8%;
+    right: 8%;
+    height: clamp(7px, 2.2vw, 12px);
+    bottom: 8%;
+    background: var(--accent);
+    border-radius: 6px;
+    transform: rotate(-2deg);
+    pointer-events: none;
+  }
+  h3.sub{
+    font-size: clamp(14px, 4vw, 18px);
+    margin: 10px 0 22px;
+    color: #cfcfcf;
+    font-weight: normal;
+  }
+
+  /* BOTÕES */
+  .btn{
+    display:block;
+    width:100%;
+    padding: clamp(12px, 5.5vw, 12px);
+    margin: 40px 0;
+    text-align:center;
+    text-decoration:none;
+    color: var(--txt);
+    border: 1.5px solid var(--accent);
+    border-radius: 9999px;
+    background: transparent;
+    transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+    position: relative;  /* p/ posicionar coin */
+    overflow: visible;   /* coin pode sair metade pra fora */
+  }
+  .btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 0 14px rgba(255,43,77,.35);
+    background-color: rgba(255,43,77,.06);
+  }
+
+  .titulo{
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: clamp(22px, 6vw, 34px);
+    display:block;
+    margin-bottom: 8px;
+  }
+  .precos{ font-size: clamp(16px, 4.6vw, 20px); }
+
+  .preco-antigo{
+    position: relative;
+    display: inline-block;
+    color: #bbb;
+    margin: 0 6px;
+  }
+  .preco-antigo::after{
+    content: "";
+    position: absolute;
+    left: 0; top: 50%;
+    width: 0%; height: 2px;
+    background: var(--accent);
+    animation: cortar 1.2s ease forwards;
+  }
+  @keyframes cortar { from{width:0%} to{width:100%} }
+
+  .preco-novo{
+    color: var(--verde);
+    font-weight: bold;
+    margin-left: 6px;
+    font-size: clamp(22px, 7vw, 36px);
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  /* COIN estilo moeda no canto superior direito, metade fora */
+  .coin-bonus{
+    position: absolute;
+    top: -5px;
+    right: 12px;           
+    transform: rotate(5deg);
+    padding: 5px 8px;
+    border-radius: 50px;
+    border: 2px solid #ffea80;
+    background: radial-gradient(circle at 30% 30%, #ffe266 0%, #ffcc33 40%, #d4a017 85%);
+    color: #402f00;
+    font-weight: 900;
+    font-size: 12px;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.4);
+    box-shadow:
+      inset 0 2px 4px rgba(255,255,255,0.4),
+      inset 0 -3px 5px rgba(150,90,0,0.4),
+      0 0 18px rgba(255,215,0,0.5);
+    animation: coinPulse 2s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  @keyframes coinPulse{
+    0%, 100% { transform: rotate(5deg) scale(1); }
+    50%      { transform: rotate(5deg) scale(1.1); }
+  }
+
+  /* CRONÔMETRO */
+  h2.timer-title{
+    font-weight: normal;
+    font-size: 14px;
+    margin: 18px 0 8px 0;
+    color:#d8d8d8;
+  }
+  .countdown{
+    display:flex; justify-content:center; gap:6px;
+    flex-wrap: wrap;
+  }
+  .box{
+    background: rgba(255,255,255,0.06);
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align:center; min-width: 52px;
+  }
+  .box span{ display:block; line-height:1.2; }
+  .number{ font-size: 20px; font-weight: bold; }
+  .label{ font-size: 12px; color:#cfcfcf; }
+
+  /* RESPONSIVO extra para telas muito pequenas */
+  @media (max-width: 360px){
+    .coin-bonus{
+      right: -14px;        /* puxa um pouco pra dentro */
+      padding: 8px 12px;
+      font-size: 12px;
+      transform: rotate(5deg) scale(0.92);
+    }
+    .btn{ padding: 18px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- SLIDE INFINITO -->
+<div class="slider-container">
+  <div class="slider-track">
+    <img src="https://static.wixstatic.com/media/7f5efc_e84ee0a6c57746988d42a08cc8ec65f3~mv2.jpg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_4552cee2f4484546bf003b7759771d45~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_06d10e47822d49ccbc0f32187e2af5bb~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_d7565999f85d499297c03784bf7ef7ac~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_73006a3b73b9449fa3a06cda8b3b5871~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_9ac3e899b5994d909b4abc5c71b59b55~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_740223f02a0243ff93b437764a0a7f80~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_e41a1bf84b5c405fa07553f0c307e780~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_fd20f825600f435ba394adf7d9d3c3d2~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_1c667a39aa3e44b48a216a20f6391ab1~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_a25fd737dd224ff0aa0270d03319532e~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_29a19204fa4f4d02a76d9eaec4027530~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" alt="">
+
+    <!-- Duplicação para loop infinito -->
+    <img src="https://static.wixstatic.com/media/7f5efc_e84ee0a6c57746988d42a08cc8ec65f3~mv2.jpg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_4552cee2f4484546bf003b7759771d45~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_06d10e47822d49ccbc0f32187e2af5bb~mv2.jpeg" alt="">
+    <img src="https://static.wixstatic.com/media/7f5efc_d7565999f85d499297c03784bf7ef7ac~mv2.jpeg" alt="">
+  </div>
+</div>
+
+<style>
+/* SLIDER INFINITO */
+.slider-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  background: #0c0c0f;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.slider-track {
+  display: flex;
+  width: calc(250px * 40); /* número grande pra garantir rolagem */
+  animation: scrollSlide 160s linear infinite;
+}
+
+.slider-track img {
+  width: 250px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 2px;
+  margin: 0 4px;
+  filter: brightness(0.85);
+  transition: transform 0.4s ease;
+}
+
+.slider-track img:hover {
+  transform: scale(1.05);
+  filter: brightness(1);
+}
+
+@keyframes scrollSlide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .slider-track img {
+    width: 160px;
+    height: 100px;
+  }
+  .slider-track {
+    animation: scrollSlide 120s linear infinite;
+  }
+}
+</style>
+
+
+
+  <div class="wrap" id="content">
+    <!-- Headline com traço atrás -->
+    <div class="headline">
+      <span class="txt">30% DE DESCONTO</span>
+      <span class="risk"></span>
+    </div><br><br>
+    <h3 class="sub">Selecione o seu plano:</h3>
+
+    <!-- Botões -->
+    <a class="btn" target="_blank" rel="noopener noreferrer"
+       href="https://chk.eduzz.com/335751?cupom=off30&utm_source=campanha01/11/24">
+      <span class="titulo">TRIMESTRE</span>
+      <span class="precos">de <span class="preco-antigo">R$ 647</span> por <span class="preco-novo">R$ 453</span></span>
+      <span class="coin-bonus">+1 mês</span>
+    </a>
+
+    <a class="btn" target="_blank" rel="noopener noreferrer"
+       href="https://chk.eduzz.com/335753?cupom=off30&utm_source=campanha01/11/24">
+      <span class="titulo">SEMESTRE</span>
+      <span class="precos">de <span class="preco-antigo">R$ 541</span> por <span class="preco-novo">R$ 379</span></span>
+      <span class="coin-bonus">+2 meses</span>
+    </a>
+
+    <a class="btn" target="_blank" rel="noopener noreferrer"
+       href="https://chk.eduzz.com/2101889?cupom=off30&utm_source=campanha01/11/24">
+      <span class="titulo">ANUAL</span>
+      <span class="precos">de <span class="preco-antigo">R$ 438</span> por <span class="preco-novo">R$ 307</span></span>
+      <span class="coin-bonus">+3 meses</span>
+    </a>
+
+    <!-- Cronômetro -->
+    <h2 class="timer-title">Este link é temporário, e expira em:</h2>
+    <div class="countdown" id="countdown">
+      <div class="box"><span class="number" id="hours">00</span><span class="label">Horas</span></div>
+      <div class="box"><span class="number" id="minutes">00</span><span class="label">Mins.</span></div>
+      <div class="box"><span class="number" id="seconds">00</span><span class="label">Seg.</span></div>
+    </div>
+  </div><br><br><br><br>
+
+<script>
+
+  const targetUTC = Date.UTC(2025, 10, 3, 2, 59, 0);
+  const target = new Date(targetUTC);
+
+  const hoursEl = document.getElementById('hours');
+  const minutesEl = document.getElementById('minutes');
+  const secondsEl = document.getElementById('seconds');
+
+  const expiredHTML = `
+    <div class="wrap" style="text-align:center">
+      <p style="font-size:20px;margin:0 0 10px 0;">Que pena, você chegou tarde demais.</p>
+      <p style="font-size:18px;">
+        <a href="https://wa.me/5562984888498?text=Acabei%20perdendo%20a%20oferta%2C%20e%20agora%3F"
+           style="color:#00ff99; text-decoration:underline;">Clique aqui</a>
+      </p>
+    </div>
+  `;
+
+  function atualizarContagem(){
+    const agora = new Date();
+    const diff = target - agora;
+    if(diff <= 0){
+      document.body.innerHTML = expiredHTML;
+      clearInterval(timer);
+      return;
+    }
+    const total = Math.floor(diff/1000);
+    const h = Math.floor(total/3600);
+    const m = Math.floor((total%3600)/60);
+    const s = total%60;
+    hoursEl.textContent = String(h).padStart(2,'0');
+    minutesEl.textContent = String(m).padStart(2,'0');
+    secondsEl.textContent = String(s).padStart(2,'0');
+  }
+  const timer = setInterval(atualizarContagem, 1000);
+  atualizarContagem();
+</script>
+</body>
+</html>
