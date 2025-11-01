@@ -79,13 +79,16 @@
   .card {
     width: 100%;
     margin: 1px 0;
-    transition: transform 0.25s ease;
+    transition: transform 140ms ease;
     border-radius: 10px;
     border: none;
     opacity: 0;
     transform: translateY(15px);
     animation: fadeInUp 1s ease forwards;
   }
+  .card.pressed { 
+  transform: scale(0.96) !important;
+}
 
   .card:nth-of-type(1) { animation-delay: 0.5s; }
   .card:nth-of-type(2) { animation-delay: 0.8s; }
@@ -173,6 +176,43 @@
   })();
   </script>
 
+
+<script>
+  // Zoom ao clicar nos cards com pequeno delay para o efeito aparecer
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('a > img.card').forEach(function (img) {
+      const link = img.parentElement;
+      const open = () => {
+        // abre respeitando o target do link
+        if (link.target === "_blank") {
+          window.open(link.href, "_blank", "noopener");
+        } else {
+          window.location.href = link.href;
+        }
+      };
+
+      // aplica a classe visual no pressionar
+      ["mousedown","touchstart"].forEach(ev => {
+        link.addEventListener(ev, () => img.classList.add("pressed"), { passive: true });
+      });
+
+      // remove classe quando solta/cancela
+      ["mouseup","mouseleave","touchend","touchcancel"].forEach(ev => {
+        link.addEventListener(ev, () => img.classList.remove("pressed"), { passive: true });
+      });
+
+      // intercepta o clique para mostrar o zoom antes de navegar
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        img.classList.add("pressed");
+        setTimeout(() => {
+          img.classList.remove("pressed");
+          open();
+        }, 120); // tempo suficiente para perceber o efeito
+      }, { passive: false });
+    });
+  });
+</script>
 
 
   <script>
