@@ -121,7 +121,7 @@
     <br><br>
 
     <a href="https://dougleao.netlify.app/quali/" target="_blank" rel="noopener">
-      <img class="card" src="https://i.imgur.com/W79SV7v.png">
+      <img class="card" src="https://i.imgur.com/ZZuQejQ.png">
     </a>
 
     <a href="https://appstartfit.com/quiz/" target="_blank" rel="noopener">
@@ -167,5 +167,43 @@
     });
   })();
   </script>
+
+  <script>
+  // Bloqueia clique direito
+  document.addEventListener("contextmenu", e => e.preventDefault());
+
+  // Bloqueia teclas específicas
+  document.addEventListener("keydown", e => {
+    if (
+      e.key === "F12" || // DevTools
+      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
+      (e.ctrlKey && (e.key === "U" || e.key === "C" || e.key === "S")) 
+    ) {
+      e.preventDefault();
+    }
+  });
+
+  // Bloqueia PrintScreen (básico, mas pode ser burlado)
+  document.addEventListener("keyup", e => {
+    if (e.key === "PrintScreen") {
+      navigator.clipboard.writeText("");
+      alert("Captura de tela desativada.");
+    }
+  });
+
+  // Bloqueia seleção de texto e arrastar imagens
+  document.addEventListener("selectstart", e => e.preventDefault());
+  document.addEventListener("dragstart", e => e.preventDefault());
+
+  // Bloqueia zoom (desktop)
+  document.addEventListener("wheel", e => {
+    if (e.ctrlKey) e.preventDefault();
+  }, { passive: false });
+
+  // Bloqueia zoom (mobile)
+  document.addEventListener("gesturestart", e => e.preventDefault());
+
+</script>
+
 </body>
 </html>
