@@ -16,28 +16,28 @@
     fbq('init', '839138854780074');
     fbq('track', 'PageView');   // IMPORTANTE! PIXEL
   </script>
-  <style>
-:root{
-  --bg:#ffffff; /* fundo branco */
-  --green:#1f9d3a;
-  --green-dark:#15732b;
-  --red:#cc1f1f;
-  --red-dark:#9d1515;
-  --text:#111; /* texto escuro, melhor contraste no fundo branco */
-  --bubble:#f0f0f0; /* bolha do usuário (Sim/Não) */
-}
+ <style>
+    :root{
+      --bg:#0b0b0f;
+      --green:#1f9d3a;
+      --green-dark:#15732b;
+      --red:#cc1f1f;
+      --red-dark:#9d1515;
+      --text:#eaeaea;
+      --bubble:#141419;
+    }
     *{box-sizing:border-box}
     html,body{height:100%}
-body{
-  margin:0;
-  background:radial-gradient(800px 400px at 70% -10%, rgba(31,157,58,.15), transparent 70%) , var(--bg);
-  background-attachment: fixed;
-  color:var(--text);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-  display:flex;
-  flex-direction:column;
-  height:100%;
-}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 600px at 70% -10%, rgba(204,31,31,.25), transparent 60%) , var(--bg);
+      background-attachment: fixed;
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      display:flex;
+      flex-direction:column;
+      height:100%;
+    }
     .scroll{
       flex:1;
       overflow-y:auto;
@@ -51,31 +51,9 @@ body{
       margin:0 auto;
       padding-bottom:60px; /* espaço no rodapé */
     }
-    .bubble{
-    max-width:85%; 
-    padding:12px 14px; 
-    border-radius:16px; 
-    line-height:1.35; 
-    font-size:15px; 
-    position:relative;
-    }
-    
- .bubble.bot{
-  background:linear-gradient(180deg, var(--green), var(--green-dark));
-  color:white;
-  align-self:flex-start;
-  border-top-left-radius:4px;
-}
-
-.bubble.user{
-  background:var(--bubble);
-  color:#111;
-  align-self:flex-end;
-  border-top-right-radius:4px;
-}
-
-
-
+    .bubble{max-width:85%; padding:12px 14px; border-radius:16px; line-height:1.35; font-size:15px; position:relative;}
+    .bubble.bot{background:linear-gradient(180deg, var(--red), var(--red-dark)); color:white; align-self:flex-start; border-top-left-radius:4px;}
+    .bubble.user{background:var(--bubble); color:var(--text); align-self:flex-end; border-top-right-radius:4px;}
     .typing{border-right:2px solid rgba(255,255,255,.85); animation:blink .9s step-end infinite;}
     @keyframes blink{50%{border-color:transparent}}
 
@@ -101,15 +79,14 @@ body{
     .btn:hover::before{left:100%;}
     .btn:hover{transform:translateY(-2px);}
 
-.btn.yes{
-  background:linear-gradient(180deg, #1da33c, #168730); /* verde mais escuro */
-  border-color:#0c5b1f;
-}
-
-.btn.no{
-  background:linear-gradient(180deg, #cc2222, #b11a1a); /* vermelho mais escuro */
-  border-color:#6d0d0d;
-}
+    .btn.yes{
+      background:linear-gradient(180deg, rgba(31,157,58,0.6), rgba(21,115,43,0.6));
+      border-color:rgba(31,157,58,.7);
+    }
+    .btn.no{
+      background:linear-gradient(180deg, rgba(204,31,31,0.6), rgba(157,21,21,0.6));
+      border-color:rgba(204,31,31,.7);
+    }
 
     @media (max-width:480px){
       .scroll{padding:14px}
