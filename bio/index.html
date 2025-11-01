@@ -41,13 +41,13 @@
     100% { transform: translateY(0px); }
   }
 
-  /* Animação de fade + leve subida */
+  /* fade + subida */
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Botão com animação */
+  /* botão fade */
   .simple-button {
     display: inline-block;
     width: 90%;
@@ -60,13 +60,13 @@
     border-radius: 10px;
     background: transparent;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
     cursor: pointer;
 
     opacity: 0;
     transform: translateY(15px);
     animation: fadeInUp 1s ease forwards;
-    animation-delay: 0.2s; /* aparece antes dos cards */
+    animation-delay: 0.2s;
   }
 
   .simple-button:hover {
@@ -75,7 +75,7 @@
     transform: scale(1.03);
   }
 
-  /* Cards com fade progressivo */
+  /* cards com fade + zoom ao clicar */
   .card {
     width: 100%;
     margin: 1px 0;
@@ -96,6 +96,11 @@
     box-shadow: none;
   }
 
+  .card:active {
+    transform: scale(0.96);
+    transition: transform 0.1s ease;
+  }
+
   .footer {
     font-size: 11px;
     color: #666;
@@ -110,8 +115,8 @@
 <body>
 
   <div class="container">
-    <img class="top-image" src="https://i.imgur.com/zv2cYbK.png">
-    <img class="arrow" src="https://i.imgur.com/zPQpBP0.png">
+    <img class="top-image" src="https://i.imgur.com/zv2cYbK.png" alt="Douglas Leão">
+    <img class="arrow" src="https://i.imgur.com/zPQpBP0.png" alt="Seta para baixo">
     
     <a id="btnGroup" class="simple-button"
        href="https://chat.whatsapp.com/JFm0CQgvXbnIRcj2xxTYXd"
@@ -121,15 +126,15 @@
     <br><br>
 
     <a href="https://dougleao.netlify.app/quali/" target="_blank" rel="noopener">
-      <img class="card" src="https://i.imgur.com/ZZuQejQ.png">
+      <img class="card" src="https://i.imgur.com/W79SV7v.png" alt="Card 1">
     </a>
 
     <a href="https://appstartfit.com/quiz/" target="_blank" rel="noopener">
-      <img class="card" src="https://i.imgur.com/KWRILKi.png">
+      <img class="card" src="https://i.imgur.com/KWRILKi.png" alt="Card 2">
     </a>
 
     <a href="https://dougleao.netlify.app/mentoria/" target="_blank" rel="noopener">
-      <img class="card" src="https://i.imgur.com/oqbAnyj.png">
+      <img class="card" src="https://i.imgur.com/oqbAnyj.png" alt="Card 3">
     </a>
 
     <div class="footer">
@@ -168,6 +173,8 @@
   })();
   </script>
 
+
+
   <script>
   // Bloqueia clique direito
   document.addEventListener("contextmenu", e => e.preventDefault());
@@ -204,6 +211,5 @@
   document.addEventListener("gesturestart", e => e.preventDefault());
 
 </script>
-
 </body>
 </html>
