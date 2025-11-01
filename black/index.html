@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Oferta Secreta • Black November</title>
+  <style>
+    :root{
+      --bg:#0a0a0f;
+      --ink:#e9e9f1;
+      --muted:#9aa0a6;
+      --accent:#00ffc6;
+      --danger:#ff3b3b;
+      --btn:#15151d;
+      --btn2:#111119;
+      --radius:16px;
+      --speed-typing:42ms; /* texto mais lento */
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; overflow-x:hidden;
+    }
+
+    /* Fundo dark com manchas animadas */
+    .ink{
+      position:fixed; inset:0; overflow:hidden; z-index:-1;
+      background:radial-gradient(40vmax 40vmax at 10% 20%, #111827 0%, transparent 60%),
+                 radial-gradient(35vmax 35vmax at 90% 10%, #0f172a 0%, transparent 60%),
+                 radial-gradient(45vmax 45vmax at 30% 80%, #0b1324 0%, transparent 60%),
+                 radial-gradient(30vmax 30vmax at 85% 75%, #111827 0%, transparent 60%),
+                 #05060a;
+    }
+    .ink::before,.ink::after{
+      content:""; position:absolute; inset:-20vmax; background:
+        radial-gradient(30vmax 30vmax at 20% 30%, #0d1b2a80 0%, transparent 65%),
+        radial-gradient(25vmax 25vmax at 80% 40%, #1b263b66 0%, transparent 65%),
+        radial-gradient(35vmax 35vmax at 40% 80%, #0d132066 0%, transparent 65%);
+      filter: blur(24px);
+      animation: blobs 60s linear infinite;
+    }
+    .ink::after{ animation-duration: 90s; animation-direction: reverse; opacity:.7 }
+    @keyframes blobs{ 0%{transform:translateX(0) translateY(0) scale(1)} 50%{transform:translateX(-6vw) translateY(4vh) scale(1.05)} 100%{transform:translateX(0) translateY(0) scale(1)} }
+
+    /* Container */
+    .wrap{max-width:760px; margin:0 auto; padding:24px; min-height:100dvh; display:grid; place-items:center}
+   .card {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+    h1,h2,h3{margin:0 0 10px}
+    p{color:#cdd2d8; line-height:1.55}
+
+    .type{font-size:clamp(20px, 3vw, 28px); line-height:1.35}
+    .muted{color:var(--muted)}
+
+    .actions {
+  display: flex;
+  justify-content: center; /* centraliza horizontalmente */
+  align-items: center;     /* centraliza verticalmente se necessário */
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  text-align: center;
+  width: 100%;
+}
+
+   .btn {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(180deg,var(--btn),var(--btn2));
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  cursor: pointer;
+  transition: .2s transform, .2s filter, .2s opacity;
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  text-shadow: 0 1px 3px rgba(0,0,0,.6); /* ← sombra sutil no texto */
+}
+ .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+    .btn.primary{border-color:#00ffd0; box-shadow:0 0 0 2px #00ffd044 inset, 0 10px 30px rgba(0,255,208,.08)}
+
+
+    /* Botão verde pulsante exclusivo do Step 1 */
+#unlockBtn {
+  background: linear-gradient(180deg, #00ff99, #00cc7a);
+  border-color: #00ffaa;
+  box-shadow: 0 0 20px rgba(0, 255, 150, 0.4);
+  animation: pulseZoom 2s ease-in-out infinite;
+}
+
+/* Efeito de zoom suave */
+@keyframes pulseZoom {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(0, 255, 150, 0.4);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 35px rgba(0, 255, 150, 0.6);
+  }
+}
+
+
+/* Destaque ATENÇÃO */
+#alertao {
+  color: #00ffd0;
+  font-weight: 900;
+  font-size: clamp(30px, 5vw, 40px); /* maior que antes */
+  text-align: center;
+  letter-spacing: 1.5px;
+  margin: 30px 0 24px 0; /* ↑ espaço acima e abaixo ↑ */
+  text-shadow: 0 2px 6px rgba(0,0,0,.6);
+}
+
+
+
+    .field{margin-top:16px}
+    .input{width:100%; padding:14px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:#0b0b12; color:#fff; outline:none}
+    .hint{font-size:12px; color:#9aa0a6; margin-top:6px}
+
+    .hidden{display:none}
+    .center{text-align:center}
+
+    /* Fade utilities */
+    .fadein{opacity:0; transform:translateY(6px); animation:fadeIn .8s ease forwards}
+    @keyframes fadeIn{to{opacity:1; transform:none}}
+    .fadein-del-1{animation-delay:.4s}
+    .fadein-del-2{animation-delay:.8s}
+    .fadein-del-3{animation-delay:1.2s}
+    .fadein-del-4{animation-delay:1.6s}
+
+    /* Cadeado overlay */
+    .overlay{position:fixed; inset:0; display:grid; place-items:center; background:rgba(0,0,0,.55); opacity:0; pointer-events:none; transition:opacity .35s ease}
+    .overlay.show{opacity:1; pointer-events:auto}
+    .lock{width:120px; opacity:0; transition:opacity 1s ease}
+    .lock.show{opacity:1}
+
+    /* Lista de preços */
+    .price-list{margin:20px 0 6px; display:grid; gap:12px}
+    .price-item{display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border:1px dashed rgba(255,255,255,.12); border-radius:10px; background:#0b0f14a6; opacity:0; transform:translateY(6px)}
+   .price-item.show {
+  animation: fadeIn 1.2s ease forwards; /* antes 0.6s */
+}
+    .price-left{color:#e7ebf3}
+    .price-right{font-weight:800; letter-spacing:.3px}
+    .strike .price-right,.strike .price-left{position:relative}
+    
+    
+    
+    /* Linha de corte mais fina e sutil */
+.strike .price-right::after {
+  content:"";
+  position:absolute;
+  left:0; right:0; top:50%;
+  height:1px; /* antes era 2px */
+  background:#ff3b3b;
+  transform:scaleX(0);
+  transform-origin:left;
+  animation:cut .6s ease forwards;
+}
+@keyframes cut{to{transform:scaleX(1)}}
+
+    .total{margin-top:14px; border-top:2px solid rgba(255,255,255,.1); padding-top:14px; display:flex; justify-content:space-between; align-items:center; opacity:0}
+    .total.show{animation:fadeIn .6s ease forwards}
+
+    .badge{display:inline-block; padding:8px 12px; background:#10231f; border:1px solid #00ffd0; color:#a9fff0; border-radius:999px; font-weight:700; letter-spacing:.2px}
+
+    .boom{color:#a0ffea; font-weight:900; font-size:clamp(24px,3.6vw,34px); text-align:center; letter-spacing:1px}
+
+    /* Confetti canvas */
+    #confetti{position:fixed; inset:0; pointer-events:none}
+
+    /* Links como botões */
+    .btnlink{display:inline-block; text-decoration:none}
+
+
+    /* Ícone do presente */
+.gift {
+  width: 72px; height: 72px; display: block;
+  margin: 0 auto 12px auto;
+  filter: drop-shadow(0 6px 20px rgba(0,255,150,.18));
+}
+
+/* Botão verde pulsando na etapa 5 */
+#s5next{
+  background: linear-gradient(180deg, #00ff99, #00cc7a);
+  border-color: #00ffaa;
+  box-shadow: 0 0 22px rgba(0,255,150,.45);
+  animation: pulseZoom 2s ease-in-out infinite;
+}
+
+/* Reaproveite se já existir; senão, inclua */
+@keyframes pulseZoom{
+  0%,100% { transform: scale(1) }
+  50%     { transform: scale(1.08) }
+}
+
+/* Etapa 4: CTA só aparece no final */
+#step4 .badge,
+#step4 #s4next{
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .6s ease, transform .6s ease;
+  pointer-events: none;
+}
+
+/* Quando texto terminar, mostramos com suavidade */
+#step4.show-cta .badge,
+#step4.show-cta #s4next{
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+
+
+/* Botão da etapa 6 só aparece ao final */
+#step6 .btn.primary.hidden { opacity:0; pointer-events:none; }
+#step6 .btn.primary.show   { opacity:1; pointer-events:auto; transition:opacity .6s ease; }
+
+/* leve espaço entre os itens digitados */
+#bonusList li { margin: 10px 0; }
+
+
+/* Etapa 6: sem marcadores na lista */
+#bonusList{
+  list-style: none;     /* remove • */
+  padding-left: 0;      /* remove recuo padrão */
+  margin: 0;
+  display: grid;
+  gap: 10px;            /* mantém espaçamento entre linhas */
+}
+
+
+/* brilho rápido quando a moeda nasce (leve feedback) */
+@keyframes coinFlash { from { filter:brightness(1.6); } to { filter:brightness(1); } }
+
+
+
+/* cor dourada para os bônus */
+.gold {
+  color: #ffd84d;
+  font-weight: 800;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+  </style>
+</head>
+<body>
+  <div class="ink" aria-hidden="true"></div>
+  <canvas id="confetti"></canvas>
+  <audio id="fx" src="https://cdn.pixabay.com/download/audio/2025/10/12/audio_549cb1e9c3.mp3?filename=fireworks-07-419025.mp3" preload="auto"></audio>
+
+  <div class="wrap">
+   <div id="step1">
+      <div class="type" id="s1text"></div>
+      <div class="actions">
+        <button id="unlockBtn" class="btn primary hidden">DESBLOQUEAR OFERTA</button>
+      </div>
+    </div>
+
+    <div class="card hidden" id="step2">
+      <p class="type">Mas antes, preciso saber com quem estou falando:</p>
+      <div class="field">
+        <input id="nome" class="input" type="text" placeholder="Seu nome" aria-label="Seu nome" required />
+      
+      </div>
+      <div class="actions">
+        <button id="s2next" class="btn primary" disabled>Avançar</button>
+      </div>
+    </div>
+
+    <div class="card hidden" id="step3">
+      <div class="type" id="s3title"></div>
+      <div class="price-list" id="priceList"></div>
+      <div class="total" id="totalRow">
+        <div class="price-left"><strong>Total</strong></div>
+        <div class="price-right"><strong>R$ 2.150/mês</strong></div>
+      </div>
+      <div id="halfMsg" class="type" style="margin-top:14px"></div>
+      <div class="actions">
+        <button id="s3next" class="btn primary hidden">Avançar</button>
+      </div>
+    </div>
+
+    <div class="card hidden" id="step4">
+      <div id="s4text" class="type"></div>
+      <div class="boom fadein-del-2" id="alertao" style="opacity:0">ATENÇÃO!!!</div>
+      <p id="s4more" class="type" style="margin-top:10px"></p>
+      <div class="center" style="margin-top:16px">
+        <div class="badge">Você acabou de ganhar 30% de desconto</div>
+      </div>
+      <div class="actions center" style="justify-content:center">
+        <button id="s4next" class="btn primary">Ativar desconto</button>
+      </div>
+    </div>
+
+<div class="card hidden" id="step5">
+  <img id="bonusIcon" class="gift" src="https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f381.gif" alt="presente">
+  <div id="s5text" class="type">E tem mais beneficios, quer saber quais são?</div>
+  <div id="s5wrap" class="actions center" style="justify-content:center">
+    <button id="s5next" class="btn primary">QUERO BÔNUS!</button>
+  </div>
+</div>
+
+
+<div class="card hidden" id="step6">
+  <ul id="bonusList" style="margin:0; padding-left:18px">
+    <li id="b1" class="type"></li>
+    <li id="b2" class="type"></li>
+    <li id="b3" class="type"></li>
+  </ul>
+  <p class="muted" id="bonusNote" style="margin-top:10px"></p>
+  <div class="actions center" style="justify-content:center">
+    <button id="s6next" class="btn primary hidden">Avançar</button>
+  </div>
+</div>
+
+
+<!-- NOVA Etapa 7 -->
+<div class="card hidden" id="step7a">
+  <div class="type">Você acredita que essa consultoria poderá te ajudar a chegar ao seu objetivo?</div>
+  <div class="actions center" style="justify-content:center">
+    <button id="s7ayes" class="btn primary">Sim</button>
+    <button id="s7ano" class="btn">Não</button>
+  </div>
+</div>
+
+<!-- NOVA Etapa 8 -->
+<div class="card hidden" id="step7b">
+  <div class="type">Você está disposto a seguir o plano em busca dos seus objetivos?</div>
+  <div class="actions center" style="justify-content:center">
+    <button id="s7byes" class="btn primary">Sim</button>
+    <button id="s7bno" class="btn">Talvez</button>
+  </div>
+</div>
+
+
+
+    <div class="card hidden" id="step7">
+      <div class="type" id="s7title"></div>
+      <div class="actions" style="justify-content:center">
+        <a class="btn btnlink primary" href="https://dougleao.netlify.app/30off/">Sim</a>
+        <a class="btn btnlink" href="https://www.youtube.com/watch?v=ur9JHXirUBs">Não</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay do cadeado -->
+  <div class="overlay" id="overlay">
+    <img class="lock" id="lock" alt="cadeado" src="https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f512.gif" />
+  </div>
+
+  <script>
+    /* Utilidades */
+    const sleep = (ms)=> new Promise(r=>setTimeout(r,ms));
+
+    async function typeWriter(el, text, opts={}){
+      const { speed = 58, onWord = null } = opts; // mais lento
+      el.textContent = "";
+      const targetPhrase = opts.targetPhrase || null;
+      let buffer = "";
+      for(let i=0;i<text.length;i++){
+        const ch = text[i];
+        el.textContent += ch;
+        buffer += ch;
+        if(targetPhrase && buffer.endsWith(targetPhrase) && onWord){
+          onWord();
+        }
+        await sleep(speed + Math.random()*25); // jitter suave
+      }
+    }
+
+    /* Confetti curto, sem libs */
+    const confettiCanvas = document.getElementById('confetti');
+    const ctx = confettiCanvas.getContext('2d');
+    let confettiParts = []; let confettiActive = false;
+    function resizeCanvas(){ confettiCanvas.width = innerWidth; confettiCanvas.height = innerHeight }
+    addEventListener('resize', resizeCanvas); resizeCanvas();
+    function burstConfetti(){
+      const colors = [[255,255,255],[0,255,208],[255,59,59],[160,255,234]];
+      const count = 160;
+      for(let i=0;i<count;i++){
+        const angle = Math.random()*Math.PI*2; const speed = Math.random()*6+3;
+        confettiParts.push({
+          x: innerWidth/2, y: innerHeight*0.28,
+          vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed-2,
+          g: 0.12+Math.random()*0.08, s: 3+Math.random()*3, r: Math.random()*Math.PI,
+          c: colors[Math.floor(Math.random()*colors.length)]
+        });
+      }
+      if(!confettiActive){ confettiActive = true; requestAnimationFrame(loopConfetti) }
+      // som
+      const fx = document.getElementById('fx'); fx.currentTime = 0; fx.play().catch(()=>{});
+    }
+    function loopConfetti(){
+      ctx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+      confettiParts.forEach(p=>{
+        p.vy += p.g; p.x += p.vx; p.y += p.vy; p.r += 0.06; 
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
+        const [r,g,b]=p.c; ctx.fillStyle = `rgba(${r},${g},${b},0.9)`;
+        ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*2);
+        ctx.restore();
+      });
+      confettiParts = confettiParts.filter(p=>p.y < innerHeight+40);
+      if(confettiParts.length>0){ requestAnimationFrame(loopConfetti) } else { confettiActive=false }
+    }
+
+
+/* ----------------- FX de MOEDAS no mesmo canvas ----------------- */
+let coinParts = [];
+let coinsActive = false;
+
+function coinsBurstAt(x, y, count = 30) {
+  for (let i = 0; i < count; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 2 + Math.random() * 3.5;
+    coinParts.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 1,
+      g: 0.12 + Math.random() * 0.06,
+      s: 6 + Math.random() * 5,     // tamanho da moeda
+      r: Math.random() * Math.PI,   // rotação
+      life: 60 + Math.random() * 30 // frames
+    });
+  }
+  if (!coinsActive) { coinsActive = true; requestAnimationFrame(loopCoins); }
+}
+
+function loopCoins(){
+  // desenha por cima sem apagar outras partículas (mas redesenha frame-a-frame)
+  ctx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+
+  // desenha confetti se existir
+  if (confettiParts.length){
+    confettiParts.forEach(p=>{
+      p.vy += p.g; p.x += p.vx; p.y += p.vy; p.r += 0.06;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
+      const [r,g,b]=p.c; ctx.fillStyle = `rgba(${r},${g},${b},0.9)`;
+      ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*2);
+      ctx.restore();
+    });
+    confettiParts = confettiParts.filter(p=>p.y < innerHeight+40);
+  }
+
+  // desenha moedas
+  coinParts.forEach(c=>{
+    c.vy += c.g; c.x += c.vx; c.y += c.vy; c.r += 0.04; c.life--;
+    ctx.save();
+    ctx.translate(c.x, c.y);
+    ctx.rotate(c.r);
+    // corpo da moeda
+    ctx.beginPath();
+    ctx.arc(0, 0, c.s, 0, Math.PI*2);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(255,215,0,0.95)';   // dourado
+    ctx.fill();
+    // borda
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(255,235,120,0.9)';
+    ctx.stroke();
+    // brilho
+    ctx.beginPath();
+    ctx.arc(-c.s/3, -c.s/3, c.s/3, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.fill();
+    ctx.restore();
+  });
+  coinParts = coinParts.filter(c => c.life > 0 && c.y < innerHeight + 60);
+
+  if (confettiParts.length || coinParts.length) {
+    requestAnimationFrame(loopCoins);
+  } else {
+    coinsActive = false;
+  }
+}
+
+/* Helper: estoura moedas próximo ao elemento */
+function coinsForElement(el){
+  const r = el.getBoundingClientRect();
+  const x = r.left + r.width * 0.82;    // lado direito do texto
+  const y = r.top + r.height * 0.5;
+  coinsBurstAt(x, y, 26);
+}
+
+/* ----------------- Etapa 6: typewriter com moedas ----------------- */
+const b1 = document.getElementById('b1');
+const b2 = document.getElementById('b2');
+const b3 = document.getElementById('b3');
+const bonusNote = document.getElementById('bonusNote');
+
+function boldAfterTyping(el){
+  let txt = el.textContent;
+  txt = txt
+    .replace('plano trimestral', '<strong>plano trimestral</strong>')
+    .replace('semestral', '<strong>semestral</strong>')
+    .replace('anual', '<strong>anual</strong>')
+    .replace('+1 mês', '<span class="gold">+1 mês</span>')
+    .replace('+2 meses', '<span class="gold">+2 meses</span>')
+    .replace('+3 meses', '<span class="gold">+3 meses</span>');
+  el.innerHTML = txt;
+}
+
+async function typeWithCoins(el, text, triggerPhrase){
+  await typeWriter(el, text, {
+    speed: 48,
+    targetPhrase: triggerPhrase,
+    onWord: () => coinsForElement(el)
+  });
+  boldAfterTyping(el);
+}
+
+async function startStep6(){
+  // limpa e esconde botão
+  [b1,b2,b3,bonusNote].forEach(el=> el.textContent = '');
+  const btn = document.getElementById('s6next');
+  btn.classList.remove('show');
+  btn.classList.add('hidden');
+
+  const lines = [
+    'Ao contratar o plano trimestral você ganha +1 mês.',
+    'No semestral você ganha +2 meses.',
+    'No anual você ganha +3 meses.'
+  ];
+
+  await typeWithCoins(b1, lines[0], '+1 mês');
+  await sleep(300);
+  await typeWithCoins(b2, lines[1], '+2 meses');
+  await sleep(300);
+  await typeWithCoins(b3, lines[2], '+3 meses');
+
+  await sleep(400);
+  await typeWriter(bonusNote, 'Esse mês de bônus pode ser convertido para outra pessoa ou adicionado ao seu plano.', {speed:50});
+
+  // agora mostra o botão
+  await sleep(300);
+  btn.classList.remove('hidden');
+  requestAnimationFrame(()=> btn.classList.add('show'));
+}
+
+
+
+
+
+    /* Navegação */
+    const steps = ['step1','step2','step3','step4','step5','step6','step7a','step7b','step7'];
+
+    function show(id){ steps.forEach(s=>document.getElementById(s).classList.toggle('hidden', s!==id)); }
+
+    /* STEP 1 */
+    const s1text = document.getElementById('s1text');
+    const unlockBtn = document.getElementById('unlockBtn');
+    (async ()=>{
+      show('step1');
+      await typeWriter(s1text, 'Seja muito bem-vindo à oferta secreta de Black November.', {
+        speed: 56,
+        targetPhrase: 'Black November',
+        onWord: ()=> burstConfetti()
+      });
+      unlockBtn.classList.remove('hidden');
+    })();
+
+    /* Cadeado overlay de 1s */
+    const overlay = document.getElementById('overlay');
+    const lock = document.getElementById('lock');
+    unlockBtn.addEventListener('click', async ()=>{
+      overlay.classList.add('show');
+      await sleep(80);
+      lock.classList.add('show');
+      await sleep(1000); // 1s ativo
+      lock.classList.remove('show');
+      overlay.classList.remove('show');
+      await sleep(300);
+      show('step2');
+    });
+
+    /* STEP 2 */
+    const nomeEl = document.getElementById('nome');
+    const s2next = document.getElementById('s2next');
+    nomeEl.addEventListener('input',()=>{
+      s2next.disabled = nomeEl.value.trim().length < 2;
+    });
+    s2next.addEventListener('click', ()=>{
+      show('step3');
+      startStep3();
+    });
+
+    /* STEP 3 */
+    const s3title = document.getElementById('s3title');
+    const priceList = document.getElementById('priceList');
+    const totalRow = document.getElementById('totalRow');
+    const halfMsg = document.getElementById('halfMsg');
+    const s3next = document.getElementById('s3next');
+
+    const items = [
+      ['Plano Alimentar', 'R$ 450'],
+      ['App de Treino com Vídeos', 'R$ 200'],
+      ['Médico Nutrólogo', 'R$ 900'],
+      ['Psicólogo', 'R$ 600']
+    ];
+
+    async function startStep3(){
+      const nome = nomeEl.value.trim();
+      await typeWriter(s3title, `Seja bem-vindo, ${nome}. Agora vamos ver o que você irá receber na Consultoria Esportiva:`, {speed:60});
+      // lista em fade-in sequencial
+      priceList.innerHTML = '';
+      for(let i=0;i<items.length;i++){
+        const row = document.createElement('div');
+        row.className = 'price-item';
+        row.innerHTML = `<div class="price-left">${items[i][0]}:</div><div class="price-right">${items[i][1]}</div>`;
+        priceList.appendChild(row);
+        await sleep(3100);
+        row.classList.add('show');
+      }
+      await sleep(500);
+      totalRow.classList.add('show');
+      await sleep(800);
+      await typeWriter(halfMsg, 'Você não vai precisar pagar nem mesmo a metade disto.', {speed:58});
+
+
+      // riscar apenas os preços (lado direito)
+[...document.querySelectorAll('.price-right')].forEach((el, idx)=>{
+  setTimeout(()=> el.parentElement.classList.add('strike'), idx*150);
+});
+
+// também risca o total
+setTimeout(()=> {
+  totalRow.classList.add('strike');
+}, 600);
+
+
+      // riscar preços com linha vermelha fina
+      [...document.querySelectorAll('.price-item')].forEach((el,idx)=>{
+        setTimeout(()=> el.classList.add('strike'), idx*150);
+      });
+      await sleep(700);
+      s3next.classList.remove('hidden');
+    }
+
+    s3next.addEventListener('click',()=>{ show('step4'); startStep4(); });
+
+    /* STEP 4 */
+    const s4text = document.getElementById('s4text');
+    const alertao = document.getElementById('alertao');
+    const s4more = document.getElementById('s4more');
+    const s4next = document.getElementById('s4next');
+
+async function startStep4(){
+  const step4 = document.getElementById('step4');
+  step4.classList.remove('show-cta'); // garante oculto ao entrar
+
+  const msg = 'A minha consultoria custa R$ 700 e inclui consulta individual (online ou presencial) e suporte 24h via WhatsApp.';
+  await typeWriter(s4text, msg, {speed:60});
+  await sleep(300);
+
+  // "ATENÇÃO!!!"
+  alertao.style.opacity = 1;
+  await sleep(600);
+
+  // Frase final
+  await typeWriter(s4more, 'Você não vai precisar pagar nem sequer isso.', {speed:60});
+
+  // Agora, por último, mostramos selo e botão
+  await sleep(400);
+  step4.classList.add('show-cta');
+}
+
+
+    s4next.addEventListener('click', ()=>{
+  show('step5');
+  // fade-in em sequência
+  const icon = document.getElementById('bonusIcon');
+  const text = document.getElementById('s5text');
+  const wrap = document.getElementById('s5wrap');
+  [icon, text, wrap].forEach((el,i)=>{
+    el.classList.remove('fadein','fadein-del-1','fadein-del-2');
+    void el.offsetWidth; // reseta animação
+    el.classList.add(i===0?'fadein':i===1?'fadein-del-1':'fadein-del-2');
+  });
+});
+
+    /* STEP 5 */
+   document.getElementById('s5next').addEventListener('click', ()=>{
+  show('step6');
+  startStep6(); // ← chama a animação da etapa 6
+});
+
+
+    /* STEP 7a */
+document.getElementById('s6next').addEventListener('click', ()=>{
+  show('step7a');
+});
+
+document.getElementById('s7ayes').addEventListener('click', ()=>{
+  show('step7b');
+});
+document.getElementById('s7ano').addEventListener('click', ()=>{
+  show('step7b');
+});
+
+/* STEP 7b */
+document.getElementById('s7byes').addEventListener('click', ()=>{
+  show('step7');
+  startStep7();
+});
+document.getElementById('s7bno').addEventListener('click', ()=>{
+  show('step7');
+  startStep7();
+});
+
+
+
+    /* STEP 7 */
+    function startStep7(){
+      const nome = nomeEl.value.trim();
+      const s7title = document.getElementById('s7title');
+      typeWriter(s7title, `Tudo bem, ${nome}. Está preparado para acessar adquirir a Consultoria?`, {speed:60});
+    }
+  </script>
+</body>
+</html>
