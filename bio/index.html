@@ -75,7 +75,13 @@
     transform: scale(1.03);
   }
 
-  /* cards com fade + zoom ao clicar */
+  /* cards */
+  .cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .card {
     width: 100%;
     margin: 1px 0;
@@ -86,22 +92,19 @@
     transform: translateY(15px);
     animation: fadeInUp 1s ease forwards;
   }
-  .card.pressed { 
-  transform: scale(0.96) !important;
-}
 
-  .card:nth-of-type(1) { animation-delay: 0.5s; }
-  .card:nth-of-type(2) { animation-delay: 0.8s; }
-  .card:nth-of-type(3) { animation-delay: 1.1s; }
+  /* delays individuais */
+  .cards a:nth-child(1) .card { animation-delay: 0.5s; }
+  .cards a:nth-child(2) .card { animation-delay: 0.8s; }
+  .cards a:nth-child(3) .card { animation-delay: 1.1s; }
 
   .card:hover {
     transform: scale(1.03);
     box-shadow: none;
   }
 
-  .card:active {
-    transform: scale(0.96);
-    transition: transform 0.1s ease;
+  .card.pressed {
+    transform: scale(0.96) !important;
   }
 
   .footer {
@@ -128,17 +131,19 @@
     </a>
     <br><br>
 
-    <a href="https://dougleao.netlify.app/quali/" target="_blank" rel="noopener">
-      <img class="card" src="https://i.imgur.com/ZZuQejQ.png" alt="Card 1">
-    </a>
+    <div class="cards">
+      <a href="https://dougleao.netlify.app/quali/" target="_blank" rel="noopener">
+        <img class="card" src="https://i.imgur.com/ZZuQejQ.png" alt="Card 1">
+      </a>
 
-    <a href="https://appstartfit.com/quiz/" target="_blank" rel="noopener">
-      <img class="card" src="https://i.imgur.com/KWRILKi.png" alt="Card 2">
-    </a>
+      <a href="https://appstartfit.com/quiz/" target="_blank" rel="noopener">
+        <img class="card" src="https://i.imgur.com/KWRILKi.png" alt="Card 2">
+      </a>
 
-    <a href="https://dougleao.netlify.app/mentoria/" target="_blank" rel="noopener">
-      <img class="card" src="https://i.imgur.com/oqbAnyj.png" alt="Card 3">
-    </a>
+      <a href="https://dougleao.netlify.app/mentoria/" target="_blank" rel="noopener">
+        <img class="card" src="https://i.imgur.com/oqbAnyj.png" alt="Card 3">
+      </a>
+    </div>
 
     <div class="footer">
       <b>2025 - Dr. Douglas Leão</b><br>
@@ -147,6 +152,7 @@
     </div>
   </div>
 
+  <!-- Script do botão WhatsApp -->
   <script>
   (function () {
     const CODE = "JFm0CQgvXbnIRcj2xxTYXd";
@@ -176,14 +182,12 @@
   })();
   </script>
 
-
-<script>
-  // Zoom ao clicar nos cards com pequeno delay para o efeito aparecer
+  <!-- Zoom ao clicar nos cards -->
+  <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('a > img.card').forEach(function (img) {
+    document.querySelectorAll('.cards a > img.card').forEach(function (img) {
       const link = img.parentElement;
       const open = () => {
-        // abre respeitando o target do link
         if (link.target === "_blank") {
           window.open(link.href, "_blank", "noopener");
         } else {
@@ -191,65 +195,47 @@
         }
       };
 
-      // aplica a classe visual no pressionar
       ["mousedown","touchstart"].forEach(ev => {
         link.addEventListener(ev, () => img.classList.add("pressed"), { passive: true });
       });
 
-      // remove classe quando solta/cancela
       ["mouseup","mouseleave","touchend","touchcancel"].forEach(ev => {
         link.addEventListener(ev, () => img.classList.remove("pressed"), { passive: true });
       });
 
-      // intercepta o clique para mostrar o zoom antes de navegar
       link.addEventListener("click", function (e) {
         e.preventDefault();
         img.classList.add("pressed");
         setTimeout(() => {
           img.classList.remove("pressed");
           open();
-        }, 120); // tempo suficiente para perceber o efeito
+        }, 120);
       }, { passive: false });
     });
   });
-</script>
+  </script>
 
-
+  <!-- Proteções -->
   <script>
-  // Bloqueia clique direito
   document.addEventListener("contextmenu", e => e.preventDefault());
-
-  // Bloqueia teclas específicas
   document.addEventListener("keydown", e => {
     if (
-      e.key === "F12" || // DevTools
+      e.key === "F12" ||
       (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
-      (e.ctrlKey && (e.key === "U" || e.key === "C" || e.key === "S")) 
-    ) {
-      e.preventDefault();
-    }
+      (e.ctrlKey && (e.key === "U" || e.key === "C" || e.key === "S"))
+    ) e.preventDefault();
   });
-
-  // Bloqueia PrintScreen (básico, mas pode ser burlado)
   document.addEventListener("keyup", e => {
     if (e.key === "PrintScreen") {
       navigator.clipboard.writeText("");
       alert("Captura de tela desativada.");
     }
   });
-
-  // Bloqueia seleção de texto e arrastar imagens
   document.addEventListener("selectstart", e => e.preventDefault());
   document.addEventListener("dragstart", e => e.preventDefault());
-
-  // Bloqueia zoom (desktop)
-  document.addEventListener("wheel", e => {
-    if (e.ctrlKey) e.preventDefault();
-  }, { passive: false });
-
-  // Bloqueia zoom (mobile)
+  document.addEventListener("wheel", e => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
   document.addEventListener("gesturestart", e => e.preventDefault());
+  </script>
 
-</script>
 </body>
 </html>
