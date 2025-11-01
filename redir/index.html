@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Black Oferta</title>
+<script>
+(function() {
+  const CODE = "JFm0CQgvXbnIRcj2xxTYXd";
+
+  // Detecta se é desktop ou celular
+  const isDesktop = window.matchMedia
+    ? window.matchMedia("(min-width: 1025px)").matches
+    : window.innerWidth > 1024;
+
+  // Define o link correto
+  const fallbackUrl = isDesktop
+    ? "https://web.whatsapp.com/accept?code=" + CODE
+    : "https://chat.whatsapp.com/" + CODE + "?mode=wwc";
+
+  // Tenta abrir o app do WhatsApp, senão vai pro link web
+  function redirect() {
+    window.location.href = "whatsapp://chat/?code=" + CODE;
+    setTimeout(() => {
+      window.location.href = fallbackUrl;
+    }, 1200);
+  }
+
+  // Executa ao carregar a página
+  window.onload = redirect;
+})();
+</script>
+</head>
+<body style="margin:0;background:#fff;"></body>
+</html>
