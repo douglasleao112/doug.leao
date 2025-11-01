@@ -68,6 +68,7 @@
     background: transparent;
     text-decoration: none;
     transition: all 0.2s ease;
+    cursor: pointer;
   }
 
   .simple-button:hover {
@@ -91,29 +92,27 @@
 
     <img class="arrow" src="https://i.imgur.com/zPQpBP0.png" alt="Seta para baixo">
     
-
-    <!-- Botão  -->
-    <a class="simple-button" href="https://chat.whatsapp.com/JFm0CQgvXbnIRcj2xxTYXd" target="_blank">
+    <!-- Botão (aciona script no clique) -->
+    <a id="btnGroup" class="simple-button"
+       href="https://chat.whatsapp.com/JFm0CQgvXbnIRcj2xxTYXd"
+       target="_blank" rel="noopener">
       Participe: Grupo da Black Oferta🖤
     </a><br><br>
 
     <!-- Card 1 -->
-    <a href="https://dougleao.netlify.app/quali/" target="_blank">
-      <img class="card" src="https://i.imgur.com/8893Clz.png">
+    <a href="https://dougleao.netlify.app/quali/" target="_blank" rel="noopener">
+      <img class="card" src="https://i.imgur.com/8893Clz.png" alt="Card 1">
     </a>
-
 
     <!-- Card 2 -->
-    <a href="https://appstartfit.com/quiz/" target="_blank">
-      <img class="card" src="https://i.imgur.com/LwKUhuY.png">
+    <a href="https://appstartfit.com/quiz/" target="_blank" rel="noopener">
+      <img class="card" src="https://i.imgur.com/LwKUhuY.png" alt="Card 2">
     </a>
-
 
     <!-- Card 3 -->
-    <a href="https://dougleao.netlify.app/mentoria/" target="_blank">
-      <img class="card" src="https://i.imgur.com/9Tb71tk.png">
+    <a href="https://dougleao.netlify.app/mentoria/" target="_blank" rel="noopener">
+      <img class="card" src="https://i.imgur.com/9Tb71tk.png" alt="Card 3">
     </a>
-
 
     <!-- Rodapé -->
     <div class="footer">
@@ -122,6 +121,45 @@
       Nutricionista Esportivo pelo Colégio Americano de Medicina do Esporte.
     </div>
   </div>
+
+  <!-- Script: detecta device, define link e aciona no clique (sem auto-redirect) -->
+  <script>
+  (function () {
+    const CODE = "JFm0CQgvXbnIRcj2xxTYXd";
+
+    // 1) Detecta desktop vs mobile
+    const isDesktop = window.matchMedia
+      ? window.matchMedia("(min-width: 1025px)").matches
+      : window.innerWidth > 1024;
+
+    // 2) Define o link correto do grupo conforme device
+    const fallbackUrl = isDesktop
+      ? "https://web.whatsapp.com/accept?code=" + CODE
+      : "https://chat.whatsapp.com/" + CODE + "?mode=wwc";
+
+    // 4) Tenta abrir o app; se não, usa o link web (fallback)
+    function openWhatsAppGroup() {
+      // tenta abrir o app nativo
+      window.location.href = "whatsapp://chat/?code=" + CODE;
+
+      // fallback após curto intervalo
+      setTimeout(function () {
+        window.location.href = fallbackUrl;
+      }, 1200);
+    }
+
+    // 5) Aciona ao clicar no botão do grupo (sem auto)
+    document.addEventListener("DOMContentLoaded", function () {
+      const btn = document.getElementById("btnGroup");
+      if (!btn) return;
+
+      btn.addEventListener("click", function (e) {
+        e.preventDefault(); // impede o href padrão
+        openWhatsAppGroup();
+      }, { passive: false });
+    });
+  })();
+  </script>
 
 </body>
 </html>
