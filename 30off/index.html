@@ -10,8 +10,9 @@
     --accent:#ff2b4d;   /* vermelho do traço */
     --verde:#00ff99;    /* preço novo */
     --gold:#ffda3a;     /* coin */
-    --bg:#0c0c0f;       /* fundo solicitado */
+    --bg:#0a0a0f;       /* igual ao quiz */
   }
+
   *{ box-sizing: border-box; }
   html, body{
     height:100%;
@@ -19,7 +20,41 @@
     font-family: Arial, Helvetica, sans-serif;
     color: var(--txt);
     background: var(--bg);
+    overflow-x:hidden; /* evita scroll lateral por causa do fundo */
   }
+
+  /* ===== Fundo dark com manchas animadas (igual ao quiz) ===== */
+  .ink{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-1;
+    background:
+      radial-gradient(40vmax 40vmax at 10% 20%, #111827 0%, transparent 60%),
+      radial-gradient(35vmax 35vmax at 90% 10%, #0f172a 0%, transparent 60%),
+      radial-gradient(45vmax 45vmax at 30% 80%, #0b1324 0%, transparent 60%),
+      radial-gradient(30vmax 30vmax at 85% 75%, #111827 0%, transparent 60%),
+      #05060a;
+  }
+  .ink::before,.ink::after{
+    content:"";
+    position:absolute;
+    inset:-20vmax;
+    background:
+      radial-gradient(30vmax 30vmax at 20% 30%, #0d1b2a80 0%, transparent 65%),
+      radial-gradient(25vmax 25vmax at 80% 40%, #1b263b66 0%, transparent 65%),
+      radial-gradient(35vmax 35vmax at 40% 80%, #0d132066 0%, transparent 65%);
+    filter: blur(24px);
+    animation: blobs 60s linear infinite;
+  }
+  .ink::after{ animation-duration:90s; animation-direction:reverse; opacity:.7; }
+  @keyframes blobs{
+    0%{transform:translateX(0) translateY(0) scale(1)}
+    50%{transform:translateX(-6vw) translateY(4vh) scale(1.05)}
+    100%{transform:translateX(0) translateY(0) scale(1)}
+  }
+  /* =========================================================== */
+
   .wrap{
     width:100%;
     max-width: 520px;
@@ -122,7 +157,7 @@
   .coin-bonus{
     position: absolute;
     top: -5px;
-    right: 12px;           
+    right: 12px;
     transform: rotate(5deg);
     padding: 5px 8px;
     border-radius: 50px;
@@ -176,8 +211,10 @@
     .btn{ padding: 18px; }
   }
 </style>
+
 </head>
 <body>
+<div class="ink" aria-hidden="true"></div>
 
   <!-- SLIDE INFINITO -->
 <div class="slider-container">
@@ -217,7 +254,7 @@
   overflow: hidden;
   width: 100%;
   position: relative;
-  background: #0c0c0f;
+  background: transparent; /* antes: #0c0c0f */
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
