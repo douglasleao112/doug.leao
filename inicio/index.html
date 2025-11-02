@@ -2,502 +2,204 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Dr. Douglas Leão</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Douglas Leão — Nutricionista Esportivo e Treinador</title>
+  <meta name="description" content="Nutricionista Esportivo e Treinador em Goiânia. Emagrecimento, hipertrofia, saúde, qualidade de vida e alta performance.">
   <style>
-    :root {
-      --text:#eaeaea;
-      --red:#cc1f1f;
+    :root{
+      --bg:#f2f2f2;
+      --card:#ffffff;
+      --ink:#3a3a3a;
+      --muted:#6b7280;
+      --brand:#0ea5a4;
+      --cta:#22c55e;
+      --cta-hover:#16a34a;
+      --divider:#e5e7eb;
     }
-    * {box-sizing:border-box; margin:0; padding:0}
-    body {
-      background:#000; /* fundo base neutro, sem tarja vermelha */
-      color:var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans";
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      min-height:100vh;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:#111827;
+      background:var(--bg);
+      line-height:1.55;
     }
-
-    /* Header */
-    header {
-      width:100%;
-      padding:30px 16px;
-      text-align:center;
-      background:linear-gradient(to bottom, #050000 0%, #0d0000 20%, #150000 40%, #250000 60%, #3b0000 80%, #550000 100%);
-    }
-    .logo {margin-top:10px; margin-bottom:20px;}
-    .logo img {max-width:240px; height:auto;}
-    h1 {font-size:20px; margin-bottom:25px; font-weight:500;}
-
-    /* Vídeo */
-    .video-container {
-      position:relative;
-      width:100%;
-      max-width:800px;
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 18px}
+    /* HERO */
+    .card{
+      background:var(--card);
       border-radius:12px;
+      box-shadow:0 10px 30px rgba(0,0,0,.06);
       overflow:hidden;
-      box-shadow:0 0 30px rgba(204,31,31,0.85);
-      border:2px solid rgba(204,31,31,0.9);
-      margin:40px auto 60px;
     }
-    .video-container iframe {width:100%; height:450px; border:none; display:block;}
-    @media(max-width:600px){.video-container iframe{height:220px}}
-
-
-
-.progress-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 8px;
-  width: 0%;
-  background: rgba(0, 255, 0, 0.7); /* verde com 70% transparência */
-  z-index: 5;
-  transition: width linear;
+    .hero{display:grid;grid-template-columns:320px 1fr;gap:36px;padding:36px}
+    .hero img{
+      width:100%;height:380px;object-fit:cover;border-radius:8px;
+    }
+ .hello {
+  display:inline-block;
+  background:#ed152a;
+  color:#fff;
+  font-weight:700;
+  padding:6px 10px;
+  border-radius:4px;
+  margin-bottom:8px;
+  font-size:14px;
+  position:relative;
 }
 
-
-
-    /* === Seção 2 === */
-    .section-professor {
-      width: 100vw;
-      margin: 0;
-      padding: 60px 0;
-      background: #030303; /* 10% mais escuro */
-      position: relative;
-      color: #f5f5f5;
-      overflow: hidden;
-    }
-    .section-professor .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-    @media(max-width: 768px) {
-      .section-professor .container {grid-template-columns: 1fr; text-align: center;}
-      .section-professor img {margin: 0 auto 20px; max-width: 80%; height: auto;}
-      .section-professor .text {text-align: center;}
-    }
-
-    .section-professor .img-col img {
-      width:100%;
-      max-width:380px;
-      border-radius:0;
-      box-shadow:none;
-    }
-    .section-professor .text-col h3 {color:var(--red); font-size:20px; margin-bottom:10px; font-weight:600;}
-    .section-professor .text-col h2 {font-size:28px; margin-bottom:5px; line-height:1.2; color:#fff;}
-    .section-professor .text-col span {font-size:16px; display:block; margin-bottom:30px;}
-    .section-professor .icons {list-style:none; padding:0;}
-    .section-professor .icons li {margin-bottom:25px;}
-    .section-professor .icons h4 {
-      font-size:18px;
-      font-weight:600;
-      margin-bottom:6px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      color:#fff;
-    }
-    .section-professor .icons p {font-size:15px; line-height:1.4; color:#ddd;}
-    .section-professor svg {width:32px; height:32px; fill:var(--red); flex-shrink:0;}
-
-
-@media(max-width: 768px) {
-  .section-professor .container {
-    grid-template-columns: 1fr;
-    text-align: left; /* <-- forçar alinhamento à esquerda */
-  }
-  .section-professor img {
-    margin: 0 auto 20px;
-    max-width: 80%;
-    height: auto;
-  }
-  .section-professor .text {
-    text-align: left; /* garantir que o texto não centralize */
-  }
+.hello::after {
+  content:"";
+  position:absolute;
+  bottom:-6px;
+  left:10px;
+  width:0;
+  height:0;
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-top:6px solid #ed152a;
 }
-
-
-    /* === Seção 3 (Rodapé) === */
-    .section-footer {
-      background:#111;
-      padding:20px 0;
-      width:100vw;
+    h1{margin:0 0 6px 0;font-size:34px;color:#111827}
+    .role{color:var(--muted);margin-bottom:16px}
+    .divider{height:1px;background:var(--divider);margin:14px 0 18px}
+    h2{font-size:18px;margin:0 0 10px 0;color:#374151}
+    .list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+    .list li{display:flex;align-items:center;gap:10px;color:#374151}
+    .chev{
+      width:18px;height:18px;flex:0 0 18px;
+      fill:#6b7280;
     }
-    .section-footer .footer-container {
-      max-width:1200px;
-      margin:0 auto;
-      padding:0 20px;
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
+    .bottom-bar{
+      padding:16px;background:#6b6b6b;color:#fff;display:flex;align-items:center;justify-content:center;gap:18px
     }
-    .footer-left img {
-      max-width:190px;
-      height:auto;
+    .bottom-bar small{opacity:.9}
+    .icons{display:flex;gap:12px}
+    .iconbtn{
+      width:38px;height:38px;border-radius:8px;border:1px solid rgba(255,255,255,.35);
+      display:inline-grid;place-items:center;background:transparent;cursor:pointer;text-decoration:none
     }
-    .footer-right {
-      text-align:right;
-      font-size:12px;
-      color:#aaa;
-      line-height:1.6;
+    .iconbtn svg{width:18px;height:18px;fill:#fff}
+    /* SECTION TEXT + CTA */
+    .block{background:var(--card);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:36px;text-align:center;margin-top:22px}
+    .block h3{margin:0 0 10px 0;font-size:28px}
+    .block p{max-width:820px;margin:8px auto;color:#4b5563}
+    .cta{
+      margin-top:16px;background:var(--cta);color:#fff;border:none;
+      padding:14px 22px;border-radius:10px;font-size:16px;font-weight:700;
+      cursor:pointer;transition:.2s; text-decoration:none; display:inline-block
     }
-    .footer-right p {margin:0; text-decoration:underline;}
-
-    /* Mobile centralizado */
-    @media(max-width:768px){
-      .section-footer .footer-container {
-        flex-direction:column;
-        align-items:center;
-        text-align:center;
-      }
-      .footer-left img {margin-bottom:10px;}
-      .footer-right {text-align:center;}
+    .cta:hover{background:var(--cta-hover)}
+    /* CONTACT GRID */
+    .contact{
+      margin-top:22px;display:grid;grid-template-columns:1.2fr .8fr;gap:22px
     }
-	
- </style>
-
-
-<!-- Meta Pixel Code  IMPORTANTE! --> 
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '839138854780074'); 
-  fbq('track', 'PageView');
-</script>
-<noscript>
-  <img height="1" width="1" style="display:none"
-       src="https://www.facebook.com/tr?id=839138854780074&ev=PageView&noscript=1"/>
-</noscript>
-<!-- End Meta Pixel Code -->
-
-
+    .map iframe{width:100%;height:360px;border:0;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+    .contact-card{
+      background:var(--card);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.06);padding:26px
+    }
+    .contact-card h4{margin:0 0 8px 0;font-size:26px}
+    .contact-card p{color:#4b5563;margin:0 0 14px 0}
+    .info{display:grid;gap:14px}
+    .row{display:flex;align-items:center;gap:12px}
+    .badge{width:38px;height:38px;border-radius:999px;display:grid;place-items:center;background:#e5e7eb}
+    .badge svg{width:18px;height:18px;fill:#374151}
+    .link{color:#1f2937;text-decoration:none}
+    .footer{text-align:center;color:#6b7280;font-size:13px;padding:26px 0}
+    /* MOBILE */
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+      .hero img{height:320px}
+      .contact{grid-template-columns:1fr}
+    }
+  </style>
 </head>
-
-
 <body>
-
-  <header>
-    <div class="logo">
-      <img src="https://static.wixstatic.com/media/7f5efc_eaa89333210b40cf86ca42d7ecfdcc53~mv2.png" >
-    </div><br><br>
-    
-    
-    <!-- HEADLINE  IMPORTANTE!-->
-   <h1>O erro escondido que faz você acumular barriga mesmo quando acha que está fazendo tudo certo…</h1>
-	  
-
-
-
-
-<div class="video-container">
-<iframe id="player"
-  src="https://www.youtube.com/embed/EF995JOo-AQ?enablejsapi=1&autoplay=0&mute=0&modestbranding=1&rel=0&controls=0&iv_load_policy=3&showinfo=0"
-  frameborder="0"
-  allow="autoplay; encrypted-media; picture-in-picture"
-  allowfullscreen>
-</iframe>
-<div class="progress-bar" id="progressBar"></div>
-  <!-- Tarja no topo -->
-  <div class="overlay-top"></div>
-
-  <!-- Tarja embaixo -->
-  <div class="overlay-bottom"></div>
-</div>
-
-
-
-
-
-  <!-- Botão oculto inicialmente IMPORTANTE! -->
-  <a id="cta-button" href="/quali" >AGENDAR AGORA!</a>
-
-
-<style>
-
-#cta-button {
-  display: none;
-  position: relative;
-  top: -20px; /* sobe o botão */
-  padding: 14px 32px;
-  background: rgba(204, 31, 31, 0.9);
-  color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 12px;
-  text-decoration: none;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  animation: pulse 1.5s infinite;
-  backdrop-filter: blur(6px);
-}
-
-
-@keyframes pulse {
-  0%   { transform: scale(1);   box-shadow: 0 0 20px rgba(255,0,0,0.8);}
-  50%  { transform: scale(1.1); box-shadow: 0 0 40px rgba(255,0,0,1);}
-  100% { transform: scale(1);   box-shadow: 0 0 20px rgba(255,0,0,0.8);}
-}
-
-.video-container {
-  position: relative;
-  width: 100%;
-  max-width: 800px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(204,31,31,0.85);
-  border: 2px solid rgba(204,31,31,0.9);
-  margin: 40px auto 60px;
-  aspect-ratio: 16/9; 
-}
-
-.video-container iframe {
-  width: 100%;
-  height: 100%; 
-  border: none;
-  display: block;
-}
-  
-/* Tarja superior */
-.overlay-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 30%; /* ajusta a altura da tarja */
-  background:  transparent;
-  z-index: 2;
-}
-
-/* Tarja inferior */
-.overlay-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 20%; /* ajusta a altura da tarja */
-  background:  transparent;
-  z-index: 2;
-}
-
-
-
-</style>
-
-
-  
-  </header>
-
-
-  <!-- Seção 2 -->
-  <section class="section-professor"><br><br>
-    <div class="container">
-      <div class="col img-col">
-        <img src="https://static.wixstatic.com/media/7f5efc_dab67ba329d54135992da07512f6cff4~mv2.png">
+  <div class="wrap">
+    <!-- HERO -->
+    <section class="card">
+      <div class="hero">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDbO8RLXCwLh7588smgRIZruxypobTMLoPIfMzK0fNoqOhvvEfm_9y8Dk9uhVRKGFlI1_pR8UneFU_hPVF5gYgTavAbKS9HwC17jctya9YKB4xHthtVlAVWKO2c6OAEO81ugs3zcpRwniBrOe-dsmLqr8r1irrgfAQ5w5mipKZzqp-7D4_wz0mYSuMLA/s450/team_2.jpg" alt="Dr. Douglas Leão">
+        <div>
+          <span class="hello">OLÁ</span>
+          <h1>Dr. Douglas Leão</h1>
+          <div class="role">Nutricionista Esportivo e Treinador</div>
+          <div class="divider"></div>
+          <h2>O que você irá encontrar:</h2>
+          <ul class="list">
+            <li><svg class="chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6v12z"/></svg> Emagrecimento</li>
+            <li><svg class="chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6v12z"/></svg> Obesidade</li>
+            <li><svg class="chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6v12z"/></svg> Saúde</li>
+            <li><svg class="chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6v12z"/></svg> Qualidade de Vida</li>
+            <li><svg class="chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6v12z"/></svg> Alta Performance</li>
+            <li><svg class="chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6v12z"/></svg> Hipertrofia</li>
+          </ul>
+        </div>
       </div>
-      <div class="col text-col">
-        <h3>Apresentamos Seu Doutor</h3>
-        <h2>Douglas Leão</h2>
-        <span>Doutor em Educação Física e Nutricionista Esportivo</span>
-        <ul class="icons">
-
-          <li>
-            <h4>
-              <svg viewBox="0 0 512 512"><path d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.248-16.379-6.248-22.627 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.627 0L100.686 260.686c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"/></svg>
-              Certificação
-            </h4>
-            <p>Mais de dez anos de experiência, especialista em treinamento, nutrição esportiva e saúde de alta performance.</p>
-          </li>
-<li>
-  <h4>
-    <!-- Ícone de Troféu -->
-    <svg viewBox="0 0 576 512">
-      <path d="M552 64H472V24c0-13.3-10.7-24-24-24H128C114.7 0 104 10.7 104 24V64H24C10.7 64 0 74.7 0 88v56c0 66.3 53.7 120 120 120 22.5 0 43.6-6.3 61.5-17.1C206 314.2 246.6 352 296 352h-8c49.4 0 90-37.8 114.5-105.1 17.9 10.8 39 17.1 61.5 17.1 66.3 0 120-53.7 120-120V88c0-13.3-10.7-24-24-24zM120 232c-39.8 0-72-32.2-72-72V112h72v120zm408-72c0 39.8-32.2 72-72 72V112h72v48zM288 400c-61.9 0-112 50.1-112 112 0 0 48 0 112 0s112 0 112 0c0-61.9-50.1-112-112-112z"/>
-    </svg>
-    Referência nº 1
-  </h4>
-  <p>Já ajudou centenas de milhares de pessoas a conquistarem o físico desejado.</p>
-</li>
-		  
-          <li>
-            <h4>
-              <svg viewBox="0 0 640 512"><path d="M160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l50.7 0L9.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L256 109.3l0 50.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-128c0-17.7-14.3-32-32-32L160 0zM576 80a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM448 208a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM400 384a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm48 80a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm128 0a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM272 384a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm48 80a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM144 512a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM576 336a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm-48-80a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"/></svg>
-              Sucesso
-            </h4>
-            <p>Ele se tornou uma grande referência com um dos maiores métodos de transformação corporal - chamado RESET METABÓLICO</p>
-          </li>
-        </ul>
+      <div class="bottom-bar">
+        <small>Entre em contato:</small>
+        <div class="icons">
+          <a class="iconbtn" aria-label="WhatsApp" href="https://wa.me/5562984888498" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.45 0 .1 5.35.1 11.94c0 2.1.55 4.15 1.6 5.95L0 24l6.28-1.62a12 12 0 0 0 5.76 1.47h.01c6.59 0 11.94-5.35 11.94-11.94 0-3.18-1.24-6.17-3.47-8.43Zm-8.48 18.4h-.01a10.1 10.1 0 0 1-5.15-1.41l-.37-.22-3.73.96.99-3.64-.24-.37a10.1 10.1 0 1 1 8.51 4.69Zm5.55-7.53c-.3-.15-1.76-.86-2.03-.96-.27-.1-.47-.15-.68.15-.2.3-.78.96-.95 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.46-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.6.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.64-.93-2.25-.25-.6-.5-.52-.68-.53h-.58c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.06 2.88 1.2 3.08.15.2 2.08 3.18 5.04 4.46.7.3 1.25.47 1.68.6.7.22 1.33.19 1.83.12.56-.08 1.76-.72 2.01-1.41.25-.69.25-1.28.18-1.41-.07-.13-.27-.2-.57-.34Z"/></svg>
+          </a>
+          <a class="iconbtn" aria-label="Instagram" href="https://instagram.com/doug.leao" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.2 2.4.4.6.2 1 .5 1.5 1 .5.5.8.9 1 1.5.2.5.3 1.2.4 2.4.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.9-.4 2.4-.2.6-.5 1-1 1.5-.5.5-.9.8-1.5 1-.5.2-1.2.3-2.4.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.2-2.4-.4-.6-.2-1-.5-1.5-1-.5-.5-.8-.9-1-1.5-.2-.5-.3-1.2-.4-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.9.4-2.4.2-.6.5-1 1-1.5.5-.5.9-.8 1.5-1 .5-.2 1.2-.3 2.4-.4C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.1-1 .1-1.6.2-2 .3-.5.2-.8.4-1.1.7-.3.3-.6.6-.7 1.1-.1.4-.2 1-.3 2-.1 1.1-.1 1.5-.1 4.7s0 3.5.1 4.7c.1 1 .2 1.6.3 2 .2.5.4.8.7 1.1.3.3.6.6 1.1.7.4.1 1 .2 2 .3 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1-.1 1.6-.2 2-.3.5-.2.8-.4 1.1-.7.3-.3.6-.6.7-1.1.1-.4.2-1 .3-2 .1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1-.2-1.6-.3-2-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.6-1.1-.7-.4-.1-1-.2-2-.3-1.2-.1-1.6-.1-4.7-.1Zm0 3.1a5.9 5.9 0 1 1 0 11.8 5.9 5.9 0 0 1 0-11.8Zm0 2a3.9 3.9 0 1 0 0 7.8 3.9 3.9 0 0 0 0-7.8Zm5-2.3a1.4 1.4 0 1 1 0 2.8 1.4 1.4 0 0 1 0-2.8Z"/></svg>
+          </a>
+          <a class="iconbtn" aria-label="Email" href="mailto:doug.leaop@gmail.com">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/></svg>
+          </a>
+        </div>
       </div>
-    </div><br>
-  </section>
+    </section>
 
-  <!-- Seção 3 (Rodapé) -->
-  <section class="section-footer">
-    <br><div class="footer-container">
-      <div class="footer-left">
-        <img src="https://static.wixstatic.com/media/7f5efc_eaa89333210b40cf86ca42d7ecfdcc53~mv2.png" alt="Logo Douglas">
+    <!-- BLOCK / CTA -->
+    <section class="block">
+      <h3>Vamos transformar seu sonho em realidade!</h3>
+      <p>Sou o guia definitivo para quem busca emagrecer ou ganhar massa, ajudando você a alcançar resultados reais e duradouros.</p>
+     <br> <p>Com mais de 10 anos de experiência, sou Doutor em Educação Física e Nutrição Esportiva, e já transformei a vida de milhares de pessoas, incluindo atletas campeões.</p>
+     <br> <p>Criarei um plano personalizado para você atingir o corpo e os resultados que sempre quis.</p>
+      <a class="cta" href="https://wa.me/5562984888498" target="_blank" rel="noopener">Agendar Consulta</a>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact">
+      <div class="map">
+        <iframe allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3821.4358310972307!2d-49.2409799!3d-16.705091900000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935ef1abc9965483%3A0x388cdbfcc7234dbb!2sMetropolitan%20Tokyo!5e0!3m2!1spt-BR!2sbr!4v1762048125805!5m2!1spt-BR!2sbr">
+        </iframe>
       </div>
-      <div class="footer-right">
-        <p>Políticas de Privacidade</p>
-        <p>Termos de Uso</p>
+      <div class="contact-card">
+        <h4>Contato</h4>
+        <p>Entre em contato para mais informações sobre planos e atendimentos!</p>
+        <div class="info">
+          <div class="row">
+            <span class="badge">
+              <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.2 2.4.4.6.2 1 .5 1.5 1 .5.5.8.9 1 1.5.2.5.3 1.2.4 2.4.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.9-.4 2.4-.2.6-.5 1-1 1.5-.5.5-.9.8-1.5 1-.5.2-1.2.3-2.4.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.2-2-.3-.6-.2-1-.5-1.5-1-.5-.5-.8-.9-1-1.5-.2-.5-.3-1.2-.4-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.9.4-2.4.2-.5.5-1 1-1.5.5-.5.9-.8 1.5-1 .5-.2 1.2-.3 2-.4C8.4 2.2 8.8 2.2 12 2.2Z"/></svg>
+            </span>
+            <a class="link" href="https://instagram.com/doug.leao" target="_blank" rel="noopener"><strong>Instagram</strong>: @doug.leao</a>
+          </div>
+          <div class="row">
+            <span class="badge">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/></svg>
+            </span>
+            <a class="link" href="mailto:doug.leaop@gmail.com"><strong>Email</strong>: doug.leaop@gmail.com</a>
+          </div>
+          <div class="row">
+            <span class="badge">
+              <svg viewBox="0 0 24 24"><path d="M16 1H8C4.1 1 1 4.1 1 8v8c0 3.9 3.1 7 7 7h8c3.9 0 7-3.1 7-7V8c0-3.9-3.1-7-7-7Zm-4 18a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm5-6.8c-1.7.7-3.1 1.2-5 1.2s-3.3-.5-5-1.2V8h10v4.2Z"/></svg>
+            </span>
+            <a class="link" href="https://wa.me/5562984888498" target="_blank" rel="noopener"><strong>Whatsapp</strong>: (62) 98488 8498</a>
+          </div>
+          <div class="row">
+            <span class="badge">
+              <svg viewBox="0 0 24 24"><path d="M12 2C7 2 2.7 6.2 2.5 11.2c0 3.1 1.5 6 4 7.9V22l3.7-2.1c.6.1 1.3.2 1.9.2 5 0 9.3-4.2 9.5-9.2C21.8 6.2 17.5 2 12 2Z"/></svg>
+            </span>
+            <span><strong>Local</strong>: Metropolitan Torre Tokyo, Goiânia — GO</span>
+          </div>
+        </div>
       </div>
-    </div><br>
-  </section>
+    </section>
 
-
-  <script>
-  // Bloqueia clique direito
-  document.addEventListener("contextmenu", e => e.preventDefault());
-
-  // Bloqueia teclas específicas
-  document.addEventListener("keydown", e => {
-    if (
-      e.key === "F12" || // DevTools
-      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || // Ctrl+Shift+I/J
-      (e.ctrlKey && (e.key === "U" || e.key === "C" || e.key === "S")) // Ctrl+U, Ctrl+C, Ctrl+S
-    ) {
-      e.preventDefault();
-    }
-  });
-
-  // Bloqueia PrintScreen (básico, mas pode ser burlado)
-  document.addEventListener("keyup", e => {
-    if (e.key === "PrintScreen") {
-      navigator.clipboard.writeText("");
-      alert("Captura de tela desativada.");
-    }
-  });
-
-  // Bloqueia seleção de texto e arrastar imagens
-  document.addEventListener("selectstart", e => e.preventDefault());
-  document.addEventListener("dragstart", e => e.preventDefault());
-
-  // Bloqueia zoom (desktop)
-  document.addEventListener("wheel", e => {
-    if (e.ctrlKey) e.preventDefault();
-  }, { passive: false });
-
-  // Bloqueia zoom (mobile)
-  document.addEventListener("gesturestart", e => e.preventDefault());
-</script>
-
-
-
-
-
-<script>
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  var player;
-  var viewContentFired = false;
-  const progressBar = document.getElementById("progressBar");
-  let totalDuration = 600; // valor padrão até pegar o real
-
-  function startProgress() {
-    // Etapa 1 → 0% até 50% em 60s
-    progressBar.style.transition = "width 60s linear";
-    progressBar.style.width = "50%";
-
-    setTimeout(() => {
-      // Etapa 2 → 50% até 75% em 60s
-      progressBar.style.transition = "width 60s linear";
-      progressBar.style.width = "75%";
-    }, 60000);
-
-    setTimeout(() => {
-      // Etapa 3 → 75% até 100% no tempo restante
-      let remaining = (totalDuration - 120); // segundos
-      if (remaining > 0) {
-        progressBar.style.transition = `width ${remaining}s linear`;
-        progressBar.style.width = "100%";
-      }
-    }, 120000);
-  }
-
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      events: {
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
-
-  function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-      // pega duração real só 1 vez
-      if (totalDuration === 600) {
-        totalDuration = Math.floor(player.getDuration());
-      }
-
-      // inicia a barra
-      startProgress();
-
-
-
-
-const checkCTA = setInterval(() => {
-  if (player && player.getCurrentTime() >= 853) {     // mostra o botão CTA
-    const ctaButton = document.getElementById("cta-button");
-    ctaButton.style.display = "inline-block";
-
-    // Dispara evento do pixel assim que o botão aparecer
-    fbq('track', 'Contact');  
-
-    clearInterval(checkCTA);
-  }
-}, 1000);
-
-
-
-
-// dispara pixel após vídeo começar
-if (!viewContentFired) {
-  const checkTime = setInterval(() => {
-    if (player.getCurrentTime() >= 5) {    // dispara o pixel ao dar play IMPORTANTE!
-      fbq('track', 'ViewContent');
-      viewContentFired = true;
-      clearInterval(checkTime);
-    }
-  }, 500); 
-}
-    
-
-}
-  }
-</script>
-
-
-
-<script>
-  // Captura parâmetros da URL (UTMs)
-  const params = window.location.search;
-
-  if (params) {
-    const ctaBtn = document.getElementById("cta-button");
-    if (ctaBtn) {
-      // Se já tiver "?" no href, usa "&" para concatenar
-      const sep = ctaBtn.href.includes("?") ? "&" : "?";
-      ctaBtn.href += sep + params.substring(1);
-    }
-  }
-</script>
-
-
+    <footer class="footer">Todos os direitos reservados | Douglas Leão</footer>
+  </div>
 </body>
 </html>
