@@ -346,8 +346,11 @@ function logStepView(id){
     })();
 
     /* Cadeado */
+const overlay = document.getElementById('overlay');
+const lock = document.getElementById('lock');
+
 unlockBtn.addEventListener('click', async ()=>{
-  await logEvent('unlock_clicked');            // <-- faltava
+  await logEvent('unlock_clicked');
   overlay.classList.add('show'); await sleep(80);
   lock.classList.add('show'); await sleep(1000);
   lock.classList.remove('show'); overlay.classList.remove('show');
