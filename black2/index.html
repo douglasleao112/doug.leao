@@ -210,27 +210,31 @@ function getMeta(extra={}){
 }
 
 /* ====== Envio com sendBeacon + fallback ====== */
-async function logEvent(event, data={}){
+async function logEvent(event, data = {}) {
   const payload = JSON.stringify({ event, ...getMeta(data) });
-  try{
-    const blob = new Blob([payload], {type:'application/json'});
-    if(navigator.sendBeacon){
-      const ok = navigator.sendBeacon(ENDPOINT_URL, blob);
-      if(ok) return;
-    }
+
+  try {
+    // 1) sendBeacon (já evita CORS/preflight)
+    const blob = new Blob([payload], { type: 'text/plain;charset=UTF-8' });
+    if (navigator.sendBeacon && navigator.sendBeacon(ENDPOINT_URL, blob)) return;
+
+    // 2) fetch fallback sem preflight
     await fetch(ENDPOINT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+      method: 'POST',
+      // sem headers, ou se quiser, use:
+      // headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
       body: payload,
-      keepalive:true
+      keepalive: true,
+      mode: 'no-cors'
     });
-  }catch(e){}
+  } catch (e) {}
 }
 
 /* ====== Marcar visualização de etapa ====== */
 function logStepView(id){
   logEvent('step_view', { step:id });
 }
+
 </script>
 
 
