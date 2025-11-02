@@ -174,36 +174,51 @@
 
 
 
-  
-<script>
+  <script>
+/* ID anônimo persistente: localStorage -> cookie (fallback) */
 function getAnonId(){
   const KEY = 'anon_id';
 
-  // localStorage try
+  // tenta localStorage
   try{
     let v = localStorage.getItem(KEY);
     if (!v) {
-      v = (crypto.randomUUID ? crypto.randomUUID() : (Date.now()+Math.random().toString(16).slice(2)));
+      v = (crypto.randomUUID ? crypto.randomUUID()
+           : (Date.now()+Math.random().toString(16).slice(2)));
       localStorage.setItem(KEY, v);
     }
     if (v) return v;
-  }catch(_){} // Safari privado pode quebrar
+  }catch(_){ /* Safari privado pode bloquear */ }
 
-  // cookie fallback
+  // fallback: cookie
   const m = document.cookie.match(/(?:^|;\s*)anon_id=([^;]+)/);
-  if (m) return decodeURIComponent(m[1]);
-  const v = (crypto.randomUUID ? crypto.randomUUID() : (Date.now()+Math.random().toString(16).slice(2)));
-  document.cookie = `anon_id=${encodeURIComponent(v)}; path=/; max-age=${60*60*24*365*2}`;
+  if (m) {
+    const v = decodeURIComponent(m[1]);
+    // tenta espelhar de volta no localStorage quando possível
+    try{ localStorage.setItem(KEY, v); }catch(_){}
+    return v;
+  }
+
+  // cria novo e salva em cookie
+  const v = (crypto.randomUUID ? crypto.randomUUID()
+           : (Date.now()+Math.random().toString(16).slice(2)));
+  document.cookie =
+    `anon_id=${encodeURIComponent(v)}; path=/; max-age=${60*60*24*365*2}; SameSite=Lax; Secure`;
   return v;
 }
 </script>
-<script>
-const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbxg2qa--TtjpQDjO6u2p9ibQERxoz37H0bdFqpoOnPzWuZZ6cwHV3LwRRUqPGimBJ6QYg/exec'; // web app URL
 
-function getMeta(extra={}){
+<script>
+/* ===== Config ===== */
+const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbxg2qa--TtjpQDjO6u2p9ibQERxoz37H0bdFqpoOnPzWuZZ6cwHV3LwRRUqPGimBJ6QYg/exec';
+
+/* Coleta de metadados (UTMs, idioma, etc.) */
+function getMeta(extra = {}){
   const url = new URL(location.href);
-  const utm = Object.fromEntries(['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
-    .map(k=>[k, url.searchParams.get(k)]));
+  const utm = Object.fromEntries(
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+      .map(k => [k, url.searchParams.get(k)])
+  );
 
   return {
     anon_id: getAnonId(),
@@ -218,11 +233,11 @@ function getMeta(extra={}){
   };
 }
 
-async function logEvent(event, data={}){
-  const obj = { event, ...getMeta(data) };
-  const payload = JSON.stringify(obj);
+/* Envio robusto: beacon(FormData) -> fetch(cors) -> GET pixel */
+async function logEvent(event, data = {}){
+  const payload = JSON.stringify({ event, ...getMeta(data) });
 
-  // 1) sendBeacon com FormData (iOS gosta disso)
+  // 1) sendBeacon com FormData (melhor em iOS/Safari)
   try{
     if (navigator.sendBeacon) {
       const fd = new FormData();
@@ -231,7 +246,7 @@ async function logEvent(event, data={}){
     }
   }catch(_){}
 
-  // 2) fetch CORS normal (sem no-cors)
+  // 2) fetch CORS normal (para receber JSON no Apps Script)
   try{
     const r = await fetch(ENDPOINT_URL, {
       method: 'POST',
@@ -242,20 +257,26 @@ async function logEvent(event, data={}){
       cache: 'no-store',
       credentials: 'omit'
     });
-    // se veio 200, ok
     if (r && (r.ok || r.status === 0)) return;
   }catch(_){}
 
-  // 3) Fallback GET “pixel” (funciona até atrás de bloqueios)
+  // 3) fallback GET pixel (passa por bloqueios agressivos)
   try{
     const img = new Image();
-    img.src = ENDPOINT_URL + '?payload=' + encodeURIComponent(payload) + '&t=' + Date.now();
+    img.src = `${ENDPOINT_URL}?payload=${encodeURIComponent(payload)}&t=${Date.now()}`;
   }catch(_){}
 }
 
-// helpers
-function logStepView(step){ logEvent('step_view', { step }); }
+/* Helper: registrar visualização de etapa */
+function logStepView(step){
+  logEvent('step_view', { step });
+}
 </script>
+
+
+
+
+
 
 
   <script>
@@ -388,11 +409,13 @@ unlockBtn.addEventListener('click', async ()=>{
       if(v.length>=1) s2next.classList.remove('hidden'); else s2next.classList.add('hidden');
       s2next.disabled = v.length < 2;
     });
-   s2next.addEventListener('click', ()=>{
+s2next.addEventListener('click', ()=>{
   if(s2next.disabled) return;
   const nome = nomeEl.value.trim();
-  localStorage.setItem('lead_name', nome);         
-  logEvent('name_captured', { name:nome });        
+
+  try { localStorage.setItem('lead_name', nome); } catch(_){}
+  logEvent('name_captured', { name:nome });
+
   show('step3'); startStep3();
   logStepView('step3');
 });
