@@ -375,5 +375,30 @@
   const timer = setInterval(atualizarContagem, 1000);
   atualizarContagem();
 </script>
+
+
+<script>
+(function(){
+  const src = new URL(location.href).searchParams;
+
+  // Coleta utm_* e cupom (fallback: off30)
+  const pass = new URLSearchParams();
+  src.forEach((v,k)=>{ if(/^utm_/i.test(k)) pass.set(k, v); });
+  pass.set('cupom', src.get('cupom') || src.get('coupon') || 'off30');
+
+  // Aplica em todos os botões .btn
+  document.querySelectorAll('a.btn').forEach(a=>{
+    const u = new URL(a.href);
+    // opcional: marcar o plano no utm_content
+    const plano = a.querySelector('.titulo')?.textContent?.trim().toLowerCase();
+    if(plano) u.searchParams.set('utm_content', plano);
+
+    pass.forEach((v,k)=> u.searchParams.set(k, v));
+    a.href = u.toString();
+  });
+})();
+</script>
+
+
 </body>
 </html>
