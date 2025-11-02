@@ -277,7 +277,7 @@
     const s1text = document.getElementById('s1text'), unlockBtn = document.getElementById('unlockBtn');
     (async ()=>{
       show('step1');
-      await typeWriter(s1text, 'ATENÇÃO! Você acaba de acessar à oferta secreta de Black November.', { speed:56, targetPhrase:'Black November', onWord:()=>burstConfetti() });
+      await typeWriter(s1text, '⚠️ATENÇÃO! Você acaba de acessar à oferta secreta de Black November.', { speed:56, targetPhrase:'Black November', onWord:()=>burstConfetti() });
       unlockBtn.classList.remove('hidden');
     })();
 
