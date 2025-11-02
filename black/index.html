@@ -256,7 +256,7 @@
 <body>
   <div class="ink" aria-hidden="true"></div>
   <canvas id="confetti"></canvas>
-  <audio id="fx" src="https://cdn.pixabay.com/download/audio/2025/10/12/audio_549cb1e9c3.mp3?filename=fireworks-07-419025.mp3" preload="auto"></audio>
+  <audio id="fx" src="https://cdn.pixabay.com/download/audio/2025/09/09/audio_3023b9bde2.mp3?filename=pop-402324.mp3" preload="auto"></audio>
 
   <div class="wrap">
    <div id="step1">
@@ -273,7 +273,7 @@
       
       </div>
       <div class="actions">
-        <button id="s2next" class="btn primary" disabled>Avançar</button>
+       <button id="s2next" class="btn primary hidden" disabled>Avançar</button>
       </div>
     </div>
 
@@ -526,9 +526,9 @@ async function startStep6(){
   btn.classList.add('hidden');
 
   const lines = [
-    'Ao contratar o plano trimestral você ganha +1 mês.',
-    'No semestral você ganha +2 meses.',
-    'No anual você ganha +3 meses.'
+    'Ao contratar o plano Trimestral você ganha +1 mês.',
+    'No Semestral você ganha +2 meses.',
+    'No Anual você ganha +3 meses.'
   ];
 
   await typeWithCoins(b1, lines[0], '+1 mês');
@@ -583,15 +583,27 @@ async function startStep6(){
     });
 
     /* STEP 2 */
-    const nomeEl = document.getElementById('nome');
-    const s2next = document.getElementById('s2next');
-    nomeEl.addEventListener('input',()=>{
-      s2next.disabled = nomeEl.value.trim().length < 2;
-    });
-    s2next.addEventListener('click', ()=>{
-      show('step3');
-      startStep3();
-    });
+const nomeEl = document.getElementById('nome');
+const s2next = document.getElementById('s2next');
+
+nomeEl.addEventListener('input', () => {
+  const v = nomeEl.value.trim();
+  // aparece quando começar a digitar
+  if (v.length >= 1) {
+    s2next.classList.remove('hidden');
+  } else {
+    s2next.classList.add('hidden');
+  }
+  // só habilita com 2+ caracteres
+  s2next.disabled = v.length < 2;
+});
+
+// avançar para a etapa 3 quando o botão estiver habilitado
+s2next.addEventListener('click', () => {
+  if (s2next.disabled) return; // segurança
+  show('step3');
+  startStep3();
+});
 
     /* STEP 3 */
     const s3title = document.getElementById('s3title');
@@ -609,7 +621,7 @@ async function startStep6(){
 
     async function startStep3(){
       const nome = nomeEl.value.trim();
-      await typeWriter(s3title, `Seja bem-vindo, ${nome}. Agora vamos ver o que você irá receber na Consultoria Esportiva:`, {speed:60});
+      await typeWriter(s3title, `Seja bem-vindo, ${nome}. Agora vamos ver o que você irá receber na Consultoria Esportiva`, {speed:60});
       // lista em fade-in sequencial
       priceList.innerHTML = '';
       for(let i=0;i<items.length;i++){
@@ -623,7 +635,7 @@ async function startStep6(){
       await sleep(500);
       totalRow.classList.add('show');
       await sleep(800);
-      await typeWriter(halfMsg, 'Você não vai precisar pagar nem mesmo a metade disto.', {speed:58});
+      await typeWriter(halfMsg, 'Você não vai pagar nem a metade disto...', {speed:58});
 
 
       // riscar apenas os preços (lado direito)
