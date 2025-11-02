@@ -36,12 +36,30 @@
     .hero img{
       width:100%;height:380px;object-fit:cover;border-radius:8px;
     }
-    .hello{
-      display:inline-block;
-      background:#ed152a;color:#fff;font-weight:700;
-      padding:6px 10px;border-radius:4px;margin-bottom:8px;font-size:14px;
-    }
-    h1{margin:0 0 6px 0;font-size:36px;color:#111827}
+ .hello {
+  display:inline-block;
+  background:#ed152a;
+  color:#fff;
+  font-weight:700;
+  padding:6px 10px;
+  border-radius:4px;
+  margin-bottom:8px;
+  font-size:14px;
+  position:relative;
+}
+
+.hello::after {
+  content:"";
+  position:absolute;
+  bottom:-6px;
+  left:10px;
+  width:0;
+  height:0;
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-top:6px solid #ed152a;
+}
+    h1{margin:0 0 6px 0;font-size:34px;color:#111827}
     .role{color:var(--muted);margin-bottom:16px}
     .divider{height:1px;background:var(--divider);margin:14px 0 18px}
     h2{font-size:18px;margin:0 0 10px 0;color:#374151}
@@ -136,9 +154,9 @@
     <!-- BLOCK / CTA -->
     <section class="block">
       <h3>Vamos transformar seu sonho em realidade!</h3>
-      <p>Para você que busca emagrecimento ou hipertrofia, eu serei o seu último guia. Com as orientações que irei passar, da mesma forma que mudei a vida de centenas de milhares de pessoas, você irá conquistar resultados nunca antes alcançados.</p>
-      <p>Eu trabalho na área há mais de dez anos, sou Doutor em Educação Física e Nutrição Esportiva. Já ajudei centenas de milhares de pessoas a conquistarem o físico desejado. Trabalho com atletas de Fisiculturismo com dezenas de títulos de nível nacional e internacional, e também sou atleta.</p>
-      <p>Eu vou elaborar um plano para você conquistar os seus resultados!</p>
+      <p>Sou o guia definitivo para quem busca emagrecer ou ganhar massa, ajudando você a alcançar resultados reais e duradouros.</p>
+     <br> <p>Com mais de 10 anos de experiência, sou Doutor em Educação Física e Nutrição Esportiva, e já transformei a vida de milhares de pessoas, incluindo atletas campeões.</p>
+     <br> <p>Criarei um plano personalizado para você atingir o corpo e os resultados que sempre quis.</p>
       <a class="cta" href="https://wa.me/5562984888498" target="_blank" rel="noopener">Agendar Consulta</a>
     </section>
 
