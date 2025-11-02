@@ -346,12 +346,14 @@ function logStepView(id){
     })();
 
     /* Cadeado */
-    const overlay = document.getElementById('overlay'), lock = document.getElementById('lock');
-    unlockBtn.addEventListener('click', async ()=>{
-      overlay.classList.add('show'); await sleep(80); lock.classList.add('show'); await sleep(1000);
-      lock.classList.remove('show'); overlay.classList.remove('show'); await sleep(300); show('step2'); logStepView('step2');
-
-    });
+unlockBtn.addEventListener('click', async ()=>{
+  await logEvent('unlock_clicked');            // <-- faltava
+  overlay.classList.add('show'); await sleep(80);
+  lock.classList.add('show'); await sleep(1000);
+  lock.classList.remove('show'); overlay.classList.remove('show');
+  await sleep(300);
+  show('step2'); logStepView('step2');
+});
 
     /* STEP 2 */
     const nomeEl = document.getElementById('nome'), s2next = document.getElementById('s2next');
@@ -454,7 +456,20 @@ function logStepView(id){
     }
   </script>
 
+<script>
+const s7yesLink = document.getElementById('s7yesLink');
+const s7noLink  = document.getElementById('s7noLink');
 
+s7yesLink.addEventListener('click', ()=>{
+  const nome = localStorage.getItem('lead_name') || (document.getElementById('nome')?.value.trim() || '');
+  logEvent('final_choice', { choice:'sim', name:nome });
+});
+
+s7noLink.addEventListener('click', ()=>{
+  const nome = localStorage.getItem('lead_name') || (document.getElementById('nome')?.value.trim() || '');
+  logEvent('final_choice', { choice:'nao', name:nome });
+});
+</script>
 
 </body>
 </html>
