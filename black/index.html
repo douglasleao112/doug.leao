@@ -172,6 +172,73 @@
     <img class="lock" id="lock" alt="cadeado" src="https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f512.gif" />
   </div>
 
+
+
+  
+
+<script>
+/* ====== CONFIG ====== */
+const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbza4lC1p9FZCcvglx8XjHSXa8J5TuJ-tX_RjOBPsh_GhXt9J1vtkmOi2IU8R_sgQvZtQQ/exec';
+
+/* ====== ID anônimo local ====== */
+function getAnonId(){
+  const k='anon_id';
+  let id = localStorage.getItem(k);
+  if(!id){
+    id = crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random();
+    localStorage.setItem(k,id);
+  }
+  return id;
+}
+
+/* ====== Metadados úteis ====== */
+function getMeta(extra={}){
+  const url = new URL(location.href);
+  const utm = Object.fromEntries(['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+                .map(k=>[k, url.searchParams.get(k)]));
+  return {
+    anon_id: getAnonId(),
+    ts: new Date().toISOString(),
+    tz_offset_min: new Date().getTimezoneOffset(),
+    href: location.href,
+    ref: document.referrer || null,
+    ua: navigator.userAgent,
+    lang: navigator.language,
+    ...utm,
+    ...extra
+  };
+}
+
+/* ====== Envio com sendBeacon + fallback ====== */
+async function logEvent(event, data = {}) {
+  const payload = JSON.stringify({ event, ...getMeta(data) });
+
+  try {
+    // 1) sendBeacon (já evita CORS/preflight)
+    const blob = new Blob([payload], { type: 'text/plain;charset=UTF-8' });
+    if (navigator.sendBeacon && navigator.sendBeacon(ENDPOINT_URL, blob)) return;
+
+    // 2) fetch fallback sem preflight
+    await fetch(ENDPOINT_URL, {
+      method: 'POST',
+      // sem headers, ou se quiser, use:
+      // headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body: payload,
+      keepalive: true,
+      mode: 'no-cors'
+    });
+  } catch (e) {}
+}
+
+/* ====== Marcar visualização de etapa ====== */
+function logStepView(id){
+  logEvent('step_view', { step:id });
+}
+
+</script>
+
+
+
   <script>
     /* Utils */
     const sleep = (ms)=> new Promise(r=>setTimeout(r,ms));
@@ -277,16 +344,23 @@
     const s1text = document.getElementById('s1text'), unlockBtn = document.getElementById('unlockBtn');
     (async ()=>{
       show('step1');
+      logStepView('step1');
       await typeWriter(s1text, '⚠️ATENÇÃO! Você acaba de acessar à oferta secreta de Black November.', { speed:56, targetPhrase:'Black November', onWord:()=>burstConfetti() });
       unlockBtn.classList.remove('hidden');
     })();
 
     /* Cadeado */
-    const overlay = document.getElementById('overlay'), lock = document.getElementById('lock');
-    unlockBtn.addEventListener('click', async ()=>{
-      overlay.classList.add('show'); await sleep(80); lock.classList.add('show'); await sleep(1000);
-      lock.classList.remove('show'); overlay.classList.remove('show'); await sleep(300); show('step2');
-    });
+const overlay = document.getElementById('overlay');
+const lock = document.getElementById('lock');
+
+unlockBtn.addEventListener('click', async ()=>{
+  await logEvent('unlock_clicked');
+  overlay.classList.add('show'); await sleep(80);
+  lock.classList.add('show'); await sleep(1000);
+  lock.classList.remove('show'); overlay.classList.remove('show');
+  await sleep(300);
+  show('step2'); logStepView('step2');
+});
 
     /* STEP 2 */
     const nomeEl = document.getElementById('nome'), s2next = document.getElementById('s2next');
@@ -295,16 +369,22 @@
       if(v.length>=1) s2next.classList.remove('hidden'); else s2next.classList.add('hidden');
       s2next.disabled = v.length < 2;
     });
-    s2next.addEventListener('click', ()=>{
-      if(s2next.disabled) return;
-      show('step3'); startStep3();
-    });
+   s2next.addEventListener('click', ()=>{
+  if(s2next.disabled) return;
+  const nome = nomeEl.value.trim();
+  localStorage.setItem('lead_name', nome);         
+  logEvent('name_captured', { name:nome });        
+  show('step3'); startStep3();
+  logStepView('step3');
+});
 
     /* STEP 3 */
     const s3title = document.getElementById('s3title'), priceList = document.getElementById('priceList'), totalRow = document.getElementById('totalRow'), halfMsg = document.getElementById('halfMsg'), s3next = document.getElementById('s3next');
     const items = [['Plano Alimentar','R$ 450'],['App de Treino com Vídeos','R$ 200'],['Médico Nutrólogo','R$ 900'],['Psicólogo','R$ 600']];
     async function startStep3(){
       const nome = nomeEl.value.trim();
+
+      
       await typeWriter(s3title, `Seja bem-vindo, ${nome}. Agora vamos ver o que você irá receber na Consultoria... 👇`, {speed:60});
       priceList.innerHTML=''; for(let i=0;i<items.length;i++){ const row=document.createElement('div'); row.className='price-item';
         row.innerHTML = `<div class="price-left">${items[i][0]}:</div><div class="price-right">${items[i][1]}</div>`; priceList.appendChild(row); await sleep(3100); row.classList.add('show'); }
@@ -315,7 +395,7 @@
       [...document.querySelectorAll('.price-item')].forEach((el,idx)=>{ setTimeout(()=>el.classList.add('strike'), idx*150); });
       await sleep(700); s3next.classList.remove('hidden');
     }
-    s3next.addEventListener('click',()=>{ show('step4'); startStep4(); });
+    s3next.addEventListener('click', ()=>{ logEvent('s3next_clicked'); show('step4'); startStep4(); logStepView('step4'); });
 
     /* STEP 4 */
     const s4text = document.getElementById('s4text'), alertao = document.getElementById('alertao'), s4more = document.getElementById('s4more'), s4next = document.getElementById('s4next');
@@ -326,14 +406,28 @@
       await typeWriter(s4more,'Você não vai precisar pagar nem sequer isso...',{speed:60});
       await sleep(400); step4.classList.add('show-cta');
     }
-    s4next.addEventListener('click', ()=>{
-      show('step5');
-      const icon = document.getElementById('bonusIcon'), text = document.getElementById('s5text'), wrap = document.getElementById('s5wrap');
-      [icon,text,wrap].forEach((el,i)=>{ el.classList.remove('fadein','fadein-del-1','fadein-del-2'); void el.offsetWidth; el.classList.add(i===0?'fadein':i===1?'fadein-del-1':'fadein-del-2'); });
-    });
+ s4next.addEventListener('click', ()=>{
+  // 1️⃣ registra o clique do botão da etapa 4
+  logEvent('s4next_clicked');
+
+  // 2️⃣ mostra a próxima etapa e registra visualização da etapa 5
+  show('step5');
+  logStepView('step5');
+
+  // 3️⃣ mantém seu efeito visual existente
+  const icon = document.getElementById('bonusIcon'),
+        text = document.getElementById('s5text'),
+        wrap = document.getElementById('s5wrap');
+
+  [icon,text,wrap].forEach((el,i)=>{
+    el.classList.remove('fadein','fadein-del-1','fadein-del-2');
+    void el.offsetWidth; // força o reflow
+    el.classList.add(i===0?'fadein':i===1?'fadein-del-1':'fadein-del-2');
+  });
+});
 
     /* STEP 5 */
-    document.getElementById('s5next').addEventListener('click', ()=>{ show('step6'); startStep6(); });
+    document.getElementById('s5next').addEventListener('click', ()=>{ logEvent('s5next_clicked'); show('step6'); startStep6(); logStepView('step6'); });
 
     /* STEP 7a – typewriter + reveal buttons */
     const s7aText = document.getElementById('s7aText'), s7ayes = document.getElementById('s7ayes'), s7ano = document.getElementById('s7ano');
@@ -343,9 +437,9 @@
       await typeWriter(s7aText, q, {speed:60});
       s7ayes.classList.remove('hidden'); s7ano.classList.remove('hidden');
     }
-    document.getElementById('s6next').addEventListener('click', ()=>{ show('step7a'); startStep7a(); });
-    s7ayes.addEventListener('click', ()=>{ show('step7b'); startStep7b(); });
-    s7ano .addEventListener('click', ()=>{ show('step7b'); startStep7b(); });
+  document.getElementById('s6next').addEventListener('click', ()=>{ logEvent('s6next_clicked'); show('step7a'); startStep7a(); logStepView('step7a'); });
+    s7ayes.addEventListener('click', ()=>{ logEvent('s7a_answer', {ans:'sim'}); show('step7b'); startStep7b(); logStepView('step7b'); });
+    s7ano .addEventListener('click', ()=>{ logEvent('s7a_answer', {ans:'talvez'}); show('step7b'); startStep7b(); logStepView('step7b'); });
 
     /* STEP 7b – typewriter + reveal buttons */
     const s7bText = document.getElementById('s7bText'), s7byes = document.getElementById('s7byes'), s7bno = document.getElementById('s7bno');
@@ -355,8 +449,8 @@
       await typeWriter(s7bText, q, {speed:60});
       s7byes.classList.remove('hidden'); s7bno.classList.remove('hidden');
     }
-    s7byes.addEventListener('click', ()=>{ show('step7'); startStep7(); });
-    s7bno .addEventListener('click', ()=>{ show('step7'); startStep7(); });
+    s7byes.addEventListener('click', ()=>{ logEvent('s7b_answer', {ans:'sim'}); show('step7'); startStep7(); logStepView('step7'); });
+    s7bno .addEventListener('click', ()=>{ logEvent('s7b_answer', {ans:'talvez'}); show('step7'); startStep7(); logStepView('step7'); });
 
     /* STEP 7 (final) – typewriter + reveal links */
     async function startStep7(){
@@ -368,5 +462,21 @@
       s7actions.classList.remove('hidden');
     }
   </script>
+
+<script>
+const s7yesLink = document.getElementById('s7yesLink');
+const s7noLink  = document.getElementById('s7noLink');
+
+s7yesLink.addEventListener('click', ()=>{
+  const nome = localStorage.getItem('lead_name') || (document.getElementById('nome')?.value.trim() || '');
+  logEvent('final_choice', { choice:'sim', name:nome });
+});
+
+s7noLink.addEventListener('click', ()=>{
+  const nome = localStorage.getItem('lead_name') || (document.getElementById('nome')?.value.trim() || '');
+  logEvent('final_choice', { choice:'nao', name:nome });
+});
+</script>
+
 </body>
 </html>
