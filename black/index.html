@@ -173,104 +173,88 @@
   </div>
 
 
-
-  <script>
-/* ID anônimo persistente: localStorage -> cookie (fallback) */
+<script>
 function getAnonId(){
-  const KEY = 'anon_id';
-
-  // tenta localStorage
+  const KEY='anon_id';
   try{
-    let v = localStorage.getItem(KEY);
-    if (!v) {
-      v = (crypto.randomUUID ? crypto.randomUUID()
-           : (Date.now()+Math.random().toString(16).slice(2)));
-      localStorage.setItem(KEY, v);
+    let v=localStorage.getItem(KEY);
+    if(!v){
+      v=(crypto.randomUUID?crypto.randomUUID():(Date.now()+Math.random().toString(16).slice(2)));
+      localStorage.setItem(KEY,v);
     }
-    if (v) return v;
-  }catch(_){ /* Safari privado pode bloquear */ }
-
-  // fallback: cookie
-  const m = document.cookie.match(/(?:^|;\s*)anon_id=([^;]+)/);
-  if (m) {
-    const v = decodeURIComponent(m[1]);
-    // tenta espelhar de volta no localStorage quando possível
-    try{ localStorage.setItem(KEY, v); }catch(_){}
+    if(v) return v;
+  }catch(_){}
+  // cookie fallback
+  const m=document.cookie.match(/(?:^|;\s*)anon_id=([^;]+)/);
+  if(m){
+    const v=decodeURIComponent(m[1]);
+    try{ localStorage.setItem(KEY,v);}catch(_){}
     return v;
   }
-
-  // cria novo e salva em cookie
-  const v = (crypto.randomUUID ? crypto.randomUUID()
-           : (Date.now()+Math.random().toString(16).slice(2)));
-  document.cookie =
-    `anon_id=${encodeURIComponent(v)}; path=/; max-age=${60*60*24*365*2}; SameSite=Lax; Secure`;
+  const v=(crypto.randomUUID?crypto.randomUUID():(Date.now()+Math.random().toString(16).slice(2)));
+  const secure = (location.protocol==='https:') ? '; Secure' : '';
+  document.cookie=`anon_id=${encodeURIComponent(v)}; path=/; max-age=${60*60*24*365*2}; SameSite=Lax${secure}`;
   return v;
 }
-</script>
 
-<script>
-/* ===== Config ===== */
-const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbyV175Qfiryo0kAPlcEprXsOu-ZBCTfm6qf7O9uyr61YTGgQhX6v6bi9OknVtjkvOPp_Q/exec';
+const ENDPOINT_URL='https://script.google.com/macros/s/AKfycbyO8djXpezDmBuCh8rjjcwWU2XHyPPtebk35sp9SxB5m248fFxcRCZDQ0OHoysDwwm_KA/exec';
 
-/* Coleta de metadados (UTMs, idioma, etc.) */
-function getMeta(extra = {}){
-  const url = new URL(location.href);
-  const utm = Object.fromEntries(
-    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
-      .map(k => [k, url.searchParams.get(k)])
-  );
-
+function getMeta(extra={}){
+  const url=new URL(location.href);
+  const utm=Object.fromEntries(['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+    .map(k=>[k,url.searchParams.get(k)]));
   return {
-    anon_id: getAnonId(),
-    ts: new Date().toISOString(),
-    tz_offset_min: new Date().getTimezoneOffset(),
-    href: location.href,
-    ref: document.referrer || null,
-    ua: navigator.userAgent,
-    lang: navigator.language,
+    anon_id:getAnonId(),
+    ts:new Date().toISOString(),
+    tz_offset_min:new Date().getTimezoneOffset(),
+    href:location.href,
+    ref:document.referrer||null,
+    ua:navigator.userAgent,
+    lang:navigator.language,
     ...utm,
     ...extra
   };
 }
 
-/* Envio robusto: beacon(FormData) -> fetch(cors) -> GET pixel */
-async function logEvent(event, data = {}){
-  const payload = JSON.stringify({ event, ...getMeta(data) });
+async function logEvent(event, data={}){
+  const payload=JSON.stringify({event,...getMeta(data)});
 
-  // 1) sendBeacon com FormData (melhor em iOS/Safari)
+  // 1) sendBeacon com BLOB JSON (mais confiável em iOS)
   try{
-    if (navigator.sendBeacon) {
-      const fd = new FormData();
-      fd.append('payload', payload);
-      if (navigator.sendBeacon(ENDPOINT_URL, fd)) return;
+    if(navigator.sendBeacon){
+      const blob=new Blob([payload],{type:'application/json'});
+      if(navigator.sendBeacon(ENDPOINT_URL, blob)) return;
     }
   }catch(_){}
 
-  // 2) fetch CORS normal (para receber JSON no Apps Script)
+  // 2) fetch CORS
   try{
-    const r = await fetch(ENDPOINT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload,
-      keepalive: true,
-      mode: 'cors',
-      cache: 'no-store',
-      credentials: 'omit'
+    const r=await fetch(ENDPOINT_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:payload,
+      keepalive:true,
+      mode:'cors',
+      cache:'no-store',
+      credentials:'omit'
     });
-    if (r && (r.ok || r.status === 0)) return;
+    if(r && r.ok) return;
   }catch(_){}
 
-  // 3) fallback GET pixel (passa por bloqueios agressivos)
+  // 3) GET pixel fallback (passa por bloqueios agressivos)
   try{
-    const img = new Image();
-    img.src = `${ENDPOINT_URL}?payload=${encodeURIComponent(payload)}&t=${Date.now()}`;
+    const img=new Image();
+    img.src=ENDPOINT_URL+'?payload='+encodeURIComponent(payload)+'&t='+(Date.now());
   }catch(_){}
 }
 
-/* Helper: registrar visualização de etapa */
-function logStepView(step){
-  logEvent('step_view', { step });
-}
+// helper
+function logStepView(step){ logEvent('step_view',{step}); }
+
+// dispare um evento inicial para validar mobile
+document.addEventListener('DOMContentLoaded', ()=>{
+  logEvent('page_view');
+});
 </script>
 
 
