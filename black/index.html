@@ -172,6 +172,69 @@
     <img class="lock" id="lock" alt="cadeado" src="https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f512.gif" />
   </div>
 
+
+
+  
+
+<script>
+/* ====== CONFIG ====== */
+const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbyeyczVummFpWG0hSkuSbKoPQa4OpIuTG2SWPO8sWXhi_Gh2XSdc6JCNAyu6Hw26qS8/exec';
+
+/* ====== ID anônimo local ====== */
+function getAnonId(){
+  const k='anon_id';
+  let id = localStorage.getItem(k);
+  if(!id){
+    id = crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random();
+    localStorage.setItem(k,id);
+  }
+  return id;
+}
+
+/* ====== Metadados úteis ====== */
+function getMeta(extra={}){
+  const url = new URL(location.href);
+  const utm = Object.fromEntries(['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+                .map(k=>[k, url.searchParams.get(k)]));
+  return {
+    anon_id: getAnonId(),
+    ts: new Date().toISOString(),
+    tz_offset_min: new Date().getTimezoneOffset(),
+    href: location.href,
+    ref: document.referrer || null,
+    ua: navigator.userAgent,
+    lang: navigator.language,
+    ...utm,
+    ...extra
+  };
+}
+
+/* ====== Envio com sendBeacon + fallback ====== */
+async function logEvent(event, data={}){
+  const payload = JSON.stringify({ event, ...getMeta(data) });
+  try{
+    const blob = new Blob([payload], {type:'application/json'});
+    if(navigator.sendBeacon){
+      const ok = navigator.sendBeacon(ENDPOINT_URL, blob);
+      if(ok) return;
+    }
+    await fetch(ENDPOINT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: payload,
+      keepalive:true
+    });
+  }catch(e){}
+}
+
+/* ====== Marcar visualização de etapa ====== */
+function logStepView(id){
+  logEvent('step_view', { step:id });
+}
+</script>
+
+
+
   <script>
     /* Utils */
     const sleep = (ms)=> new Promise(r=>setTimeout(r,ms));
@@ -391,63 +454,6 @@
     }
   </script>
 
-
-<script>
-/* ====== CONFIG ====== */
-const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbyeyczVummFpWG0hSkuSbKoPQa4OpIuTG2SWPO8sWXhi_Gh2XSdc6JCNAyu6Hw26qS8/exec';
-
-/* ====== ID anônimo local ====== */
-function getAnonId(){
-  const k='anon_id';
-  let id = localStorage.getItem(k);
-  if(!id){
-    id = crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random();
-    localStorage.setItem(k,id);
-  }
-  return id;
-}
-
-/* ====== Metadados úteis ====== */
-function getMeta(extra={}){
-  const url = new URL(location.href);
-  const utm = Object.fromEntries(['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
-                .map(k=>[k, url.searchParams.get(k)]));
-  return {
-    anon_id: getAnonId(),
-    ts: new Date().toISOString(),
-    tz_offset_min: new Date().getTimezoneOffset(),
-    href: location.href,
-    ref: document.referrer || null,
-    ua: navigator.userAgent,
-    lang: navigator.language,
-    ...utm,
-    ...extra
-  };
-}
-
-/* ====== Envio com sendBeacon + fallback ====== */
-async function logEvent(event, data={}){
-  const payload = JSON.stringify({ event, ...getMeta(data) });
-  try{
-    const blob = new Blob([payload], {type:'application/json'});
-    if(navigator.sendBeacon){
-      const ok = navigator.sendBeacon(ENDPOINT_URL, blob);
-      if(ok) return;
-    }
-    await fetch(ENDPOINT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: payload,
-      keepalive:true
-    });
-  }catch(e){}
-}
-
-/* ====== Marcar visualização de etapa ====== */
-function logStepView(id){
-  logEvent('step_view', { step:id });
-}
-</script>
 
 
 </body>
