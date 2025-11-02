@@ -136,7 +136,7 @@
         <li id="b3" class="type"></li>
       </ul>
       <p class="muted" id="bonusNote" style="margin-top:10px"></p>
-      <div class="actions center" style="justify-content:center"><button id="s6next" class="btn primary hidden">Gostei!</button></div>
+      <div class="actions center" style="justify-content:center"><button id="s6next" class="btn primary hidden">GOSTEI!</button></div>
     </div>
 
     <!-- STEP 7a (pergunta 1 com typewriter + reveal) -->
@@ -258,7 +258,7 @@
       [b1,b2,b3,bonusNote].forEach(el=> el.textContent='');
       const btn = document.getElementById('s6next'); btn.classList.remove('show'); btn.classList.add('hidden');
       const lines = [
-        'Ao contratar o plano Trimestral você ganha +1 mês.',
+        'Além dos 30% de desconto, ao contratar o plano Trimestral você ganha +1 mês.',
         'No Semestral você ganha +2 meses.',
         'E para o Anual, você ganha +3 meses.'
       ];
@@ -309,7 +309,7 @@
       priceList.innerHTML=''; for(let i=0;i<items.length;i++){ const row=document.createElement('div'); row.className='price-item';
         row.innerHTML = `<div class="price-left">${items[i][0]}:</div><div class="price-right">${items[i][1]}</div>`; priceList.appendChild(row); await sleep(3100); row.classList.add('show'); }
       await sleep(500); totalRow.classList.add('show'); await sleep(800);
-      await typeWriter(halfMsg,'Mas calma! Você não vai pagar nem a metade disto...',{speed:58});
+      await typeWriter(halfMsg,'🚨 Mas calma! Você não vai pagar nem a metade disto...',{speed:58});
       [...document.querySelectorAll('.price-right')].forEach((el,idx)=>{ setTimeout(()=>el.parentElement.classList.add('strike'), idx*150); });
       setTimeout(()=> totalRow.classList.add('strike'), 600);
       [...document.querySelectorAll('.price-item')].forEach((el,idx)=>{ setTimeout(()=>el.classList.add('strike'), idx*150); });
@@ -321,9 +321,9 @@
     const s4text = document.getElementById('s4text'), alertao = document.getElementById('alertao'), s4more = document.getElementById('s4more'), s4next = document.getElementById('s4next');
     async function startStep4(){
       const step4 = document.getElementById('step4'); step4.classList.remove('show-cta');
-      await typeWriter(s4text,'A minha Consultoria custa R$ 700 e inclui consulta individual e suporte 24h via WhatsApp.',{speed:60});
+      await typeWriter(s4text,'A minha Consultoria custa R$ 700 e inclui tudo isso que foi citado, juntamente com Consulta Individual e suporte 24h via WhatsApp.',{speed:60});
       await sleep(300); alertao.style.opacity=1; await sleep(600);
-      await typeWriter(s4more,'E você não vai precisar pagar nem sequer isso...',{speed:60});
+      await typeWriter(s4more,'Você não vai precisar pagar nem sequer isso...',{speed:60});
       await sleep(400); step4.classList.add('show-cta');
     }
     s4next.addEventListener('click', ()=>{
