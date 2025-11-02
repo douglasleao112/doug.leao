@@ -173,69 +173,93 @@
   </div>
 
 
-
-  
-
 <script>
-/* ====== CONFIG ====== */
-const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbza4lC1p9FZCcvglx8XjHSXa8J5TuJ-tX_RjOBPsh_GhXt9J1vtkmOi2IU8R_sgQvZtQQ/exec';
-
-/* ====== ID anônimo local ====== */
 function getAnonId(){
-  const k='anon_id';
-  let id = localStorage.getItem(k);
-  if(!id){
-    id = crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random();
-    localStorage.setItem(k,id);
+  const KEY='anon_id';
+  try{
+    let v=localStorage.getItem(KEY);
+    if(!v){
+      v=(crypto.randomUUID?crypto.randomUUID():(Date.now()+Math.random().toString(16).slice(2)));
+      localStorage.setItem(KEY,v);
+    }
+    if(v) return v;
+  }catch(_){}
+  // cookie fallback
+  const m=document.cookie.match(/(?:^|;\s*)anon_id=([^;]+)/);
+  if(m){
+    const v=decodeURIComponent(m[1]);
+    try{ localStorage.setItem(KEY,v);}catch(_){}
+    return v;
   }
-  return id;
+  const v=(crypto.randomUUID?crypto.randomUUID():(Date.now()+Math.random().toString(16).slice(2)));
+  const secure = (location.protocol==='https:') ? '; Secure' : '';
+  document.cookie=`anon_id=${encodeURIComponent(v)}; path=/; max-age=${60*60*24*365*2}; SameSite=Lax${secure}`;
+  return v;
 }
 
-/* ====== Metadados úteis ====== */
+const ENDPOINT_URL='https://script.google.com/macros/s/AKfycbzupQPFy-vg7l8Gcg2I1ehilF5JOQzpXoNiL4E-PAH8PrMVIJpTRyh2tDgVOrmid1uY5Q/exec';
+
 function getMeta(extra={}){
-  const url = new URL(location.href);
-  const utm = Object.fromEntries(['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
-                .map(k=>[k, url.searchParams.get(k)]));
+  const url=new URL(location.href);
+  const utm=Object.fromEntries(['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+    .map(k=>[k,url.searchParams.get(k)]));
   return {
-    anon_id: getAnonId(),
-    ts: new Date().toISOString(),
-    tz_offset_min: new Date().getTimezoneOffset(),
-    href: location.href,
-    ref: document.referrer || null,
-    ua: navigator.userAgent,
-    lang: navigator.language,
+    anon_id:getAnonId(),
+    ts:new Date().toISOString(),
+    tz_offset_min:new Date().getTimezoneOffset(),
+    href:location.href,
+    ref:document.referrer||null,
+    ua:navigator.userAgent,
+    lang:navigator.language,
     ...utm,
     ...extra
   };
 }
 
-/* ====== Envio com sendBeacon + fallback ====== */
-async function logEvent(event, data = {}) {
-  const payload = JSON.stringify({ event, ...getMeta(data) });
+async function logEvent(event, data={}){
+  const payload=JSON.stringify({event,...getMeta(data)});
 
-  try {
-    // 1) sendBeacon (já evita CORS/preflight)
-    const blob = new Blob([payload], { type: 'text/plain;charset=UTF-8' });
-    if (navigator.sendBeacon && navigator.sendBeacon(ENDPOINT_URL, blob)) return;
+  // 1) sendBeacon com BLOB JSON (mais confiável em iOS)
+  try{
+    if(navigator.sendBeacon){
+      const blob=new Blob([payload],{type:'application/json'});
+      if(navigator.sendBeacon(ENDPOINT_URL, blob)) return;
+    }
+  }catch(_){}
 
-    // 2) fetch fallback sem preflight
-    await fetch(ENDPOINT_URL, {
-      method: 'POST',
-      // sem headers, ou se quiser, use:
-      // headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-      body: payload,
-      keepalive: true,
-      mode: 'no-cors'
+  // 2) fetch CORS
+  try{
+    const r=await fetch(ENDPOINT_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:payload,
+      keepalive:true,
+      mode:'cors',
+      cache:'no-store',
+      credentials:'omit'
     });
-  } catch (e) {}
+    if(r && r.ok) return;
+  }catch(_){}
+
+  // 3) GET pixel fallback (passa por bloqueios agressivos)
+  try{
+    const img=new Image();
+    img.src=ENDPOINT_URL+'?payload='+encodeURIComponent(payload)+'&t='+(Date.now());
+  }catch(_){}
 }
 
-/* ====== Marcar visualização de etapa ====== */
-function logStepView(id){
-  logEvent('step_view', { step:id });
-}
+// helper
+function logStepView(step){ logEvent('step_view',{step}); }
 
+// dispare um evento inicial para validar mobile
+document.addEventListener('DOMContentLoaded', ()=>{
+  logEvent('page_view');
+});
 </script>
+
+
+
+
 
 
 
@@ -369,11 +393,13 @@ unlockBtn.addEventListener('click', async ()=>{
       if(v.length>=1) s2next.classList.remove('hidden'); else s2next.classList.add('hidden');
       s2next.disabled = v.length < 2;
     });
-   s2next.addEventListener('click', ()=>{
+s2next.addEventListener('click', ()=>{
   if(s2next.disabled) return;
   const nome = nomeEl.value.trim();
-  localStorage.setItem('lead_name', nome);         
-  logEvent('name_captured', { name:nome });        
+
+  try { localStorage.setItem('lead_name', nome); } catch(_){}
+  logEvent('name_captured', { name:nome });
+
   show('step3'); startStep3();
   logStepView('step3');
 });
