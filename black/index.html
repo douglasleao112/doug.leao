@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Oferta Secreta • Black November</title>
   <style>
     :root{
@@ -17,6 +17,15 @@
       --speed-typing:42ms; /* texto mais lento */
     }
 
+input, select, textarea {
+  font-size: 16px !important; /* evita zoom no iOS */
+  touch-action: manipulation; /* melhora resposta ao toque */
+}
+html, body {
+  touch-action: manipulation; /* impede duplo-toque zoom */
+  -ms-touch-action: manipulation;
+}
+    
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
