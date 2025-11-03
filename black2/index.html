@@ -172,92 +172,121 @@
     <img class="lock" id="lock" alt="cadeado" src="https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f512.gif" />
   </div>
 
-
 <script>
+/* --------- ID anônimo (localStorage + cookie fallback) --------- */
 function getAnonId(){
-  const KEY='anon_id';
+  const KEY = 'anon_id';
   try{
-    let v=localStorage.getItem(KEY);
+    let v = localStorage.getItem(KEY);
     if(!v){
-      v=(crypto.randomUUID?crypto.randomUUID():(Date.now()+Math.random().toString(16).slice(2)));
-      localStorage.setItem(KEY,v);
+      v = (crypto.randomUUID ? crypto.randomUUID() : (Date.now()+Math.random().toString(16).slice(2)));
+      localStorage.setItem(KEY, v);
     }
     if(v) return v;
   }catch(_){}
+
   // cookie fallback
-  const m=document.cookie.match(/(?:^|;\s*)anon_id=([^;]+)/);
+  const m = document.cookie.match(/(?:^|;\s*)anon_id=([^;]+)/);
   if(m){
-    const v=decodeURIComponent(m[1]);
-    try{ localStorage.setItem(KEY,v);}catch(_){}
+    const v = decodeURIComponent(m[1]);
+    try{ localStorage.setItem(KEY, v); }catch(_){}
     return v;
   }
-  const v=(crypto.randomUUID?crypto.randomUUID():(Date.now()+Math.random().toString(16).slice(2)));
+  const v = (crypto.randomUUID ? crypto.randomUUID() : (Date.now()+Math.random().toString(16).slice(2)));
   const secure = (location.protocol==='https:') ? '; Secure' : '';
-  document.cookie=`anon_id=${encodeURIComponent(v)}; path=/; max-age=${60*60*24*365*2}; SameSite=Lax${secure}`;
+  document.cookie = `anon_id=${encodeURIComponent(v)}; path=/; max-age=${60*60*24*365*2}; SameSite=Lax${secure}`;
   return v;
 }
 
-const ENDPOINT_URL='https://script.google.com/macros/s/AKfycbzJqlQGYEsJ1TZswlGCwK0MbYtj5gWO61g7yz3luG-OoiOhNIZk69pO7DvHyHF9EPGDDQ/exec';
+/* --------- ENDPOINTS ---------
+   Use SEMPRE a URL direta *.googleusercontent.com do seu Apps Script.
+   Se tiver um proxy (ex: Cloudflare Worker), pode usar no PROXY_URL.  */
+const ENDPOINT_URL = 'https://script.googleusercontent.com/macros/echo/XXXXXXXXXXXXXXXX/exec'; // <-- COLE aqui a SUA URL googleusercontent.com
+const PROXY_URL    = ''; // opcional: ex. 'https://log.seudominio.workers.dev/log'
 
-function getMeta(extra={}){
-  const url=new URL(location.href);
-  const utm=Object.fromEntries(['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
-    .map(k=>[k,url.searchParams.get(k)]));
+/* --------- Metadados (UTM, UA, idioma, etc.) --------- */
+function getMeta(extra = {}){
+  let url;
+  try { url = new URL(location.href); } catch(_){ url = { searchParams: new Map(), href: location.href }; }
+  const utmKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  const utm = Object.fromEntries(utmKeys.map(k => [k, (url.searchParams.get ? url.searchParams.get(k) : null)]));
   return {
-    anon_id:getAnonId(),
-    ts:new Date().toISOString(),
-    tz_offset_min:new Date().getTimezoneOffset(),
-    href:location.href,
-    ref:document.referrer||null,
-    ua:navigator.userAgent,
-    lang:navigator.language,
+    anon_id: getAnonId(),
+    ts: new Date().toISOString(),
+    tz_offset_min: new Date().getTimezoneOffset(),
+    href: location.href,
+    ref: document.referrer || null,
+    ua: navigator.userAgent,
+    lang: navigator.language,
     ...utm,
     ...extra
   };
 }
 
-async function logEvent(event, data={}){
-  const payload=JSON.stringify({event,...getMeta(data)});
-
-  // 1) sendBeacon com BLOB JSON (mais confiável em iOS)
+/* --------- Envio robusto para mobile/webview ---------
+   1) sendBeacon com FormData (funciona melhor em iOS/IG)
+   2) fetch com FormData (sem headers custom → evita preflight)
+   3) pixel GET (fallback)
+   Se falhar para o domínio do Google, tenta PROXY_URL (se definido). */
+async function _postWithStrategies(url, payload){
+  // 1) sendBeacon + FormData
   try{
     if(navigator.sendBeacon){
-      const blob=new Blob([payload],{type:'application/json'});
-      if(navigator.sendBeacon(ENDPOINT_URL, blob)) return;
+      const fd = new FormData();
+      fd.append('payload', payload);
+      if(navigator.sendBeacon(url, fd)) return true;
     }
   }catch(_){}
 
-  // 2) fetch CORS
+  // 2) fetch + FormData (sem headers)
   try{
-    const r=await fetch(ENDPOINT_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:payload,
-      keepalive:true,
-      mode:'cors',
-      cache:'no-store',
-      credentials:'omit'
+    const fd = new FormData();
+    fd.append('payload', payload);
+    const r = await fetch(url, {
+      method: 'POST',
+      body: fd,
+      mode: 'cors',
+      cache: 'no-store',
+      credentials: 'omit',
+      keepalive: true
     });
-    if(r && r.ok) return;
+    if (r && r.ok) return true;
   }catch(_){}
 
-  // 3) GET pixel fallback (passa por bloqueios agressivos)
+  // 3) GET pixel
   try{
-    const img=new Image();
-    img.src=ENDPOINT_URL+'?payload='+encodeURIComponent(payload)+'&t='+(Date.now());
+    const img = new Image();
+    img.src = url + '?payload=' + encodeURIComponent(payload) + '&t=' + Date.now();
+    return true; // não dá para confirmar, mas dispara
   }catch(_){}
+
+  return false;
+}
+
+async function logEvent(event, data = {}){
+  const body = { event, ...getMeta(data) };
+  const payload = JSON.stringify(body);
+
+  // tenta direto no Apps Script (googleusercontent)
+  let ok = await _postWithStrategies(ENDPOINT_URL, payload);
+
+  // se falhou e existe proxy, tenta proxy
+  if(!ok && PROXY_URL){
+    ok = await _postWithStrategies(PROXY_URL, payload);
+  }
+
+  // opcional: debug leve no console
+  // if(!ok) console.warn('logEvent falhou em todas as estratégias', body);
 }
 
 // helper
-function logStepView(step){ logEvent('step_view',{step}); }
+function logStepView(step){ logEvent('step_view', { step }); }
 
-// dispare um evento inicial para validar mobile
+// dispara um evento inicial
 document.addEventListener('DOMContentLoaded', ()=>{
   logEvent('page_view');
 });
 </script>
-
-
 
 
 
