@@ -175,8 +175,7 @@
 
 
 
-  
-<script>
+  <script>
 /* --------- ID anônimo (localStorage + cookie fallback) --------- */
 function getAnonId(){
   const KEY = 'anon_id';
@@ -205,15 +204,20 @@ function getAnonId(){
 /* --------- ENDPOINTS ---------
    Use SEMPRE a URL direta *.googleusercontent.com do seu Apps Script.
    Se tiver um proxy (ex: Cloudflare Worker), pode usar no PROXY_URL.  */
-const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbzJqlQGYEsJ1TZswlGCwK0MbYtj5gWO61g7yz3luG-OoiOhNIZk69pO7DvHyHF9EPGDDQ/exec'; // <-- COLE aqui a SUA URL googleusercontent.com
-const PROXY_URL    = ''; // opcional: ex. 'https://log.seudominio.workers.dev/log'
+const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbwOA6SpCMV2866aaCZZaxpeaPtqz5rjn_M0ZQEhFl_d9DSQYNcEHlYTcGfGWrnf1FK7tA/exec';
+const PROXY_URL    = ''; // opcional
 
-/* --------- Metadados (UTM, UA, idioma, etc.) --------- */
+/* --------- Metadados (UTM, UA, idioma, etc.) + NAME global --------- */
 function getMeta(extra = {}){
   let url;
   try { url = new URL(location.href); } catch(_){ url = { searchParams: new Map(), href: location.href }; }
   const utmKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
   const utm = Object.fromEntries(utmKeys.map(k => [k, (url.searchParams.get ? url.searchParams.get(k) : null)]));
+
+  // tenta pegar nome salvo localmente para anexar em TODOS os eventos
+  let storedName = '';
+  try { storedName = localStorage.getItem('lead_name') || ''; } catch(_) {}
+
   return {
     anon_id: getAnonId(),
     ts: new Date().toISOString(),
@@ -222,16 +226,17 @@ function getMeta(extra = {}){
     ref: document.referrer || null,
     ua: navigator.userAgent,
     lang: navigator.language,
+    // se extra.name vier, usa ele; senão usa o armazenado
+    name: (extra.name ?? storedName) || '',
     ...utm,
     ...extra
   };
 }
 
 /* --------- Envio robusto para mobile/webview ---------
-   1) sendBeacon com FormData (funciona melhor em iOS/IG)
-   2) fetch com FormData (sem headers custom → evita preflight)
-   3) pixel GET (fallback)
-   Se falhar para o domínio do Google, tenta PROXY_URL (se definido). */
+   1) sendBeacon com FormData
+   2) fetch com FormData (sem headers custom)
+   3) pixel GET (fallback) */
 async function _postWithStrategies(url, payload){
   // 1) sendBeacon + FormData
   try{
@@ -261,7 +266,7 @@ async function _postWithStrategies(url, payload){
   try{
     const img = new Image();
     img.src = url + '?payload=' + encodeURIComponent(payload) + '&t=' + Date.now();
-    return true; // não dá para confirmar, mas dispara
+    return true; // disparamos mesmo sem confirmação
   }catch(_){}
 
   return false;
@@ -278,9 +283,7 @@ async function logEvent(event, data = {}){
   if(!ok && PROXY_URL){
     ok = await _postWithStrategies(PROXY_URL, payload);
   }
-
-  // opcional: debug leve no console
-  // if(!ok) console.warn('logEvent falhou em todas as estratégias', body);
+  // opcional: console.debug('logEvent', event, ok, body);
 }
 
 // helper
