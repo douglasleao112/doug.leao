@@ -13,10 +13,12 @@
     text-align: center;
   }
 
-  .container {
+  .container{
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
+    perspective: 900px;            /* ativa 3D */
+    perspective-origin: 50% 40%;
   }
 
   .top-image {
@@ -47,7 +49,7 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* botão fade */
+  /* BOTÃO — estilo base */
   .simple-button {
     display: inline-block;
     width: 90%;
@@ -60,22 +62,21 @@
     border-radius: 10px;
     background: transparent;
     text-decoration: none;
-    transition: all 0.25s ease;
     cursor: pointer;
 
     opacity: 0;
     transform: translateY(15px);
     animation: fadeInUp 1s ease forwards;
     animation-delay: 0.2s;
+
+    /* otimizações p/ animação */
+    will-change: transform, color, background;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transition: transform 220ms ease, color 220ms ease, background 220ms ease;
   }
 
-  .simple-button:hover {
-    background: #000;
-    color: #fff;
-    transform: scale(1.03);
-  }
-
-  /* cards */
+  /* CARDS — estilos base (fora do @media) */
   .cards {
     display: flex;
     flex-direction: column;
@@ -85,12 +86,16 @@
   .card {
     width: 100%;
     margin: 1px 0;
-    transition: transform 140ms ease;
     border-radius: 10px;
     border: none;
     opacity: 0;
     transform: translateY(15px);
     animation: fadeInUp 1s ease forwards;
+
+    will-change: transform;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transition: transform 220ms ease;
   }
 
   /* delays individuais */
@@ -98,12 +103,21 @@
   .cards a:nth-child(2) .card { animation-delay: 0.8s; }
   .cards a:nth-child(3) .card { animation-delay: 1.1s; }
 
-  .card:hover {
-    transform: scale(1.03);
-    box-shadow: none;
+  /* HOVER 3D — só onde existe hover */
+  @media (hover:hover){
+    .simple-button:hover{
+      transform: translateZ(28px) scale(1.06);
+      background: #000;
+      color: #fff;
+    }
+    .card:hover{
+      transform: translateZ(32px) scale(1.06);
+      box-shadow: none;
+    }
   }
 
-  .card.pressed {
+  /* Pressionado (click/touch) */
+  .card.pressed{
     transform: scale(0.96) !important;
   }
 
@@ -117,6 +131,7 @@
     animation-delay: 1.5s;
   }
 </style>
+
 </head>
 <body>
 
