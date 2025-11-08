@@ -366,7 +366,7 @@ function parseDeadline(){
     const d = parseRelative(q.get('in'));
     if(!isNaN(+d)) return d;
   }
-  // Fallback (edite aqui se quiser um padrão fixo)
+  // MUDAR DATA E HORA
   return new Date('2025-11-09T23:59:00'); // fuso local
 }
 
