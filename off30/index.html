@@ -331,6 +331,7 @@
     <!-- Cronômetro -->
     <h2 class="timer-title">Este link é temporário, e expira em:</h2>
     <div class="countdown" id="countdown">
+      <div class="box" id="daysBox" style="display:none"><span class="number" id="days">00</span><span class="label">Dias</span></div>
       <div class="box"><span class="number" id="hours">00</span><span class="label">Horas</span></div>
       <div class="box"><span class="number" id="minutes">00</span><span class="label">Mins.</span></div>
       <div class="box"><span class="number" id="seconds">00</span><span class="label">Seg.</span></div>
@@ -338,43 +339,81 @@
   </div><br><br><br><br>
 
 <script>
-                          //Ano, Mes, Dia, hora, min, seg
-  const targetUTC = Date.UTC(2025, 11, 8, 2, 59, 0);
-  const target = new Date(targetUTC);
+/* ====== DEADLINE FLEXÍVEL ======
+   Use ?until=2025-11-08T02:59   (data/hora local do visitante)
+   ou  ?in=2d12h30m              (relativo: dias/horas/minutos, qualquer combinação)
+   Fallback: valor fixo abaixo. 
+*/
+function parseRelative(str){
+  // aceita "2d12h30m", "45m", "3h", etc.
+  const m = { d:0, h:0, m:0, s:0 };
+  (str.match(/\d+\s*d/gi)||[]).forEach(x=>m.d += +x.replace(/\D/g,''));
+  (str.match(/\d+\s*h/gi)||[]).forEach(x=>m.h += +x.replace(/\D/g,''));
+  (str.match(/\d+\s*m(?!s)/gi)||[]).forEach(x=>m.m += +x.replace(/\D/g,''));
+  (str.match(/\d+\s*s/gi)||[]).forEach(x=>m.s += +x.replace(/\D/g,''));
+  const now = new Date();
+  return new Date(now.getTime() + (((m.d*24+m.h)*60 + m.m)*60 + m.s)*1000);
+}
 
-  const hoursEl = document.getElementById('hours');
-  const minutesEl = document.getElementById('minutes');
-  const secondsEl = document.getElementById('seconds');
-
-  const expiredHTML = `
-    <div class="wrap" style="text-align:center">
-      <p style="font-size:20px;margin:0 0 10px 0;">Que pena, você chegou tarde demais.</p>
-      <p style="font-size:18px;">
-        <a href="https://wa.me/5562984888498?text=Acabei%20perdendo%20a%20oferta%2C%20e%20agora%3F"
-           style="color:#00ff99; text-decoration:underline;">Clique aqui</a>
-      </p>
-    </div>
-  `;
-
-  function atualizarContagem(){
-    const agora = new Date();
-    const diff = target - agora;
-    if(diff <= 0){
-      document.body.innerHTML = expiredHTML;
-      clearInterval(timer);
-      return;
-    }
-    const total = Math.floor(diff/1000);
-    const h = Math.floor(total/3600);
-    const m = Math.floor((total%3600)/60);
-    const s = total%60;
-    hoursEl.textContent = String(h).padStart(2,'0');
-    minutesEl.textContent = String(m).padStart(2,'0');
-    secondsEl.textContent = String(s).padStart(2,'0');
+function parseDeadline(){
+  const q = new URL(location.href).searchParams;
+  if(q.has('until')){
+    // aceita "YYYY-MM-DDTHH:MM" (interpreta no fuso local do visitante)
+    const d = new Date(q.get('until'));
+    if(!isNaN(+d)) return d;
   }
-  const timer = setInterval(atualizarContagem, 1000);
-  atualizarContagem();
+  if(q.has('in')){
+    const d = parseRelative(q.get('in'));
+    if(!isNaN(+d)) return d;
+  }
+  // Fallback (edite aqui se quiser um padrão fixo)
+  return new Date('2025-12-08T02:59:00'); // fuso local
+}
+
+const target = parseDeadline();
+const daysEl    = document.getElementById('days');
+const daysBox   = document.getElementById('daysBox');
+const hoursEl   = document.getElementById('hours');
+const minutesEl = document.getElementById('minutes');
+const secondsEl = document.getElementById('seconds');
+
+const expiredHTML = `
+  <div class="wrap" style="text-align:center">
+    <p style="font-size:20px;margin:0 0 10px 0;">Que pena, você chegou tarde demais.</p>
+    <p style="font-size:18px;">
+      <a href="https://wa.me/5562984888498?text=Acabei%20perdendo%20a%20oferta%2C%20e%20agora%3F"
+         style="color:#00ff99; text-decoration:underline;">Clique aqui</a>
+    </p>
+  </div>
+`;
+
+function atualizarContagem(){
+  const diff = +target - +new Date();
+  if(diff <= 0){
+    document.body.innerHTML = expiredHTML;
+    clearInterval(timer);
+    return;
+  }
+  const total = Math.floor(diff/1000);
+  const d = Math.floor(total / 86400);
+  const h = Math.floor((total % 86400) / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+
+  if (d > 0){
+    daysBox.style.display = '';
+    daysEl.textContent = String(d).padStart(2,'0');
+  } else {
+    daysBox.style.display = 'none';
+  }
+  hoursEl.textContent   = String(h).padStart(2,'0');
+  minutesEl.textContent = String(m).padStart(2,'0');
+  secondsEl.textContent = String(s).padStart(2,'0');
+}
+const timer = setInterval(atualizarContagem, 1000);
+atualizarContagem();
 </script>
+
 
 
 <script>
@@ -399,6 +438,40 @@
 })();
 </script>
 
+<div id="deadlinePicker" style="display:none; position:fixed; right:12px; bottom:12px; background:#111827; border:1px solid rgba(255,255,255,.1); padding:12px; border-radius:10px; font-size:14px;">
+  <label>Definir expiração:</label><br>
+  <input id="dlInput" type="datetime-local" style="margin:6px 0; background:#0b1324; color:#fff; border:1px solid #333; padding:6px; border-radius:6px;">
+  <button id="dlApply" style="margin-left:6px; padding:6px 10px; border-radius:6px; border:1px solid #00ffc6; background:#0b1324; color:#00ffc6; cursor:pointer;">Aplicar</button>
+  <div style="opacity:.7; margin-top:6px">Também funciona <code>?in=2d12h30m</code> ou <code>?until=YYYY-MM-DDTHH:MM</code>.</div>
+</div>
+
+<script>
+// Mostra o picker se ?set=1
+(function(){
+  const q = new URL(location.href).searchParams;
+  if(q.get('set') === '1'){
+    const box = document.getElementById('deadlinePicker');
+    const input = document.getElementById('dlInput');
+    const btn = document.getElementById('dlApply');
+    box.style.display = 'block';
+
+    // Prefill com o target atual (em local)
+    const pad = n=>String(n).padStart(2,'0');
+    const t = target;
+    const localISO = `${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}T${pad(t.getHours())}:${pad(t.getMinutes())}`;
+    input.value = localISO;
+
+    btn.addEventListener('click', ()=>{
+      const v = input.value; // "YYYY-MM-DDTHH:MM"
+      if(!v) return;
+      const url = new URL(location.href);
+      url.searchParams.delete('in');
+      url.searchParams.set('until', v);
+      location.href = url.toString();
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
