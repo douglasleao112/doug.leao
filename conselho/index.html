@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    // Captura os parâmetros da URL atual
+    const params = new URLSearchParams(window.location.search);
+    const utms = [];
+
+    // Lista de parâmetros que você quer repassar
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'cupom'].forEach(key => {
+      if (params.has(key)) {
+        utms.push(`${key}=${encodeURIComponent(params.get(key))}`);
+      }
+    });
+
+    // Monta o link final com os parâmetros
+    const destino = '404';
+    const redirectUrl = utms.length ? `${destino}?${utms.join('&')}` : destino;
+
+    // Faz o redirecionamento
+    window.location.href = redirectUrl;
+  </script>
+</head>
+</html>
