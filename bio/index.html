@@ -152,35 +152,7 @@
     </div>
   </div>
 
-  <!-- Script do botão WhatsApp -->
-  <script>
-  (function () {
-    const CODE = "JFm0CQgvXbnIRcj2xxTYXd";
-    const isDesktop = window.matchMedia
-      ? window.matchMedia("(min-width: 1025px)").matches
-      : window.innerWidth > 1024;
 
-    const fallbackUrl = isDesktop
-      ? "https://web.whatsapp.com/accept?code=" + CODE
-      : "https://chat.whatsapp.com/" + CODE + "?mode=wwc";
-
-    function openWhatsAppGroup() {
-      window.location.href = "whatsapp://chat/?code=" + CODE;
-      setTimeout(function () {
-        window.location.href = fallbackUrl;
-      }, 1200);
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const btn = document.getElementById("btnGroup");
-      if (!btn) return;
-      btn.addEventListener("click", function (e) {
-        e.preventDefault();
-        openWhatsAppGroup();
-      }, { passive: false });
-    });
-  })();
-  </script>
 
   <!-- Zoom ao clicar nos cards -->
   <script>
