@@ -2,25 +2,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <script>
-    // Captura os parâmetros da URL atual
-    const params = new URLSearchParams(window.location.search);
-    const utms = [];
-
-    // Lista de parâmetros que você quer repassar
-    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'cupom'].forEach(key => {
-      if (params.has(key)) {
-        utms.push(`${key}=${encodeURIComponent(params.get(key))}`);
-      }
-    });
-
-    // Monta o link final com os parâmetros
-    const destino = 'https://forms.gle/CWkwNaoPTw7h46kcA';
-    const redirectUrl = utms.length ? `${destino}?${utms.join('&')}` : destino;
-
-    // Faz o redirecionamento
-    window.location.href = redirectUrl;
-  </script>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="0; URL='https://www.sympla.com.br/evento/chave-mestra/3242472'" />
+<title>Redirecionando...</title>
 </head>
+<body>
+<p>Redirecionando...</p>
+</body>
 </html>
