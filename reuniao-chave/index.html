@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contato</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #0f0f0f, #1a1a1a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avatar-wrapper {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff0066, #ffcc00, #00f2ff);
+      padding: 4px;
+    }
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #111;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+      background: #25d366;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.03);
+      opacity: 0.9;
+    }
+
+    .name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Douglas -->
+    <div class="card">
+      <div class="avatar-wrapper">
+        <img 
+          src="https://i.imgur.com/WWlHQy1.jpeg" 
+          alt="Douglas Leão"
+          class="avatar"
+        />
+      </div>
+     
+      <a 
+        class="btn" 
+        href="https://wa.me/5562984888498?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20minha%20reuni%C3%A3o"
+        target="_blank"
+      >
+        Falar com Dr. Douglas Leão
+      </a>
+    </div>
+
+    <!-- Victor -->
+    <div class="card">
+      <div class="avatar-wrapper">
+        <img 
+          src="https://i.imgur.com/yHkQiB4.jpeg" 
+          alt="Victor Alamino"
+          class="avatar"
+        />
+      </div>
+  
+      <a 
+        class="btn" 
+        href="https://wa.me/5562998658125?text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20minha%20reuni%C3%A3o"
+        target="_blank"
+      >
+        Falar com Victor Alamino
+      </a>
+    </div>
+
+  </div>
+</body>
+</html>
