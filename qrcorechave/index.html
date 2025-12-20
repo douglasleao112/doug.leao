@@ -36,7 +36,7 @@
       display:flex;
       flex-direction:column;
       gap:12px;
-      align-items:stretch; /* garante que os filhos estiquem */
+      align-items:stretch;
     }
 
     .btn{
@@ -56,6 +56,7 @@
     .btn:hover{ transform:scale(1.03); opacity:.9; }
 
     .btn-event{ background:#ff9800; }
+    .btn-meeting{ background:#3f51b5; }
 
     .footer{ margin-top:8px; font-size:14px; opacity:.6; }
   </style>
@@ -65,7 +66,19 @@
   <div class="container">
 
     <img src="https://i.imgur.com/uDyrrWD.png" alt="Logo" class="logo"/>
-<br>
+    <br>
+
+
+      <!-- Reunião -->
+    <div class="section">
+      <h2>Agende uma reunião</h2>
+      <a class="btn btn-meeting" href="https://dougleao.com/reuniao-chave/" target="_blank">
+        Agendar agora
+      </a>
+    </div>
+
+
+    
     <!-- Comunidade -->
     <div class="section">
       <h1>Faça parte da comunidade</h1>
@@ -73,7 +86,13 @@
         Entrar no grupo do WhatsApp
       </a>
     </div>
-<br>
+
+    <br>
+
+  
+
+    <br>
+
     <!-- Evento -->
     <div class="section">
       <h2>Próximo evento Alphaville</h2>
