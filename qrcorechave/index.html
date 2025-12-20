@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -29,6 +33,12 @@
       display: flex;
       flex-direction: column;
       gap: 32px;
+      align-items: center;
+    }
+
+    .logo {
+      width: 90px;
+      margin-bottom: 10px;
     }
 
     h1 {
@@ -44,6 +54,7 @@
     .date {
       font-size: 16px;
       opacity: 0.8;
+      margin-bottom: 8px;
     }
 
     .btn {
@@ -57,6 +68,7 @@
       color: #ffffff;
       background: #25d366;
       transition: transform 0.15s ease, opacity 0.15s ease;
+      text-align: center;
     }
 
     .btn:hover {
@@ -68,8 +80,15 @@
       background: #ff9800;
     }
 
+    .section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
     .footer {
-      margin-top: 12px;
+      margin-top: 8px;
       font-size: 14px;
       opacity: 0.6;
     }
@@ -79,8 +98,15 @@
 <body>
   <div class="container">
 
+    <!-- Logo -->
+    <img 
+      src="https://i.imgur.com/uDyrrWD.png" 
+      alt="Logo"
+      class="logo"
+    />
+
     <!-- Comunidade -->
-    <div>
+    <div class="section">
       <h1>Faça parte da comunidade</h1>
       <a 
         class="btn" 
@@ -90,7 +116,8 @@
         Entrar no grupo do WhatsApp
       </a>
     </div>
-<br>
+
+
     <!-- Evento -->
     <div>
       <h2>Próximo evento Alphaville</h2>
