@@ -115,9 +115,9 @@
     <!-- STEP 4 -->
     <div class="card hidden" id="step4">
       <div id="s4text" class="type"></div>
-      <div class="boom fadein-del-2" id="alertao" style="opacity:0">vEJA SÓ...</div>
+      <div class="boom fadein-del-2" id="alertao" style="opacity:0">VEJA SÓ...</div>
       <p id="s4more" class="type" style="margin-top:10px"></p>
-      <div class="center" style="margin-top:16px"><div class="badge">Você acabou de ganhar 70% de desconto</div></div>
+      <div class="center" style="margin-top:16px"><div class="badge">VOCÊ ACABA DE GANHAR 70% DE DESCONTO</div></div>
       <div class="actions center" style="justify-content:center"><button id="s4next" class="btn primary">ATIVAR DESCONTO</button></div>
     </div>
 
@@ -387,7 +387,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       const lines = [
         'Além dos 70% de desconto, ao contratar o plano Trimestral você ganha +15 dias',
         'No Semestral você ganha +1 mês.',
-        'E para o Anual, você ganha +2 meses.'
+        'Para o Anual, você ganha +2 meses.'
       ];
       await typeWithCoins(b1, lines[0], '+15 dias'); await sleep(300);
       await typeWithCoins(b2, lines[1], '+1 mês'); await sleep(300);
@@ -463,7 +463,7 @@ s2next.addEventListener('click', ()=>{
     const s4text = document.getElementById('s4text'), alertao = document.getElementById('alertao'), s4more = document.getElementById('s4more'), s4next = document.getElementById('s4next');
     async function startStep4(){
       const step4 = document.getElementById('step4'); step4.classList.remove('show-cta');
-      await typeWriter(s4text,'Minha consultoria custou R$ 700 ao longo de todo 2025. Agora, estou lançando um formato mais acessível, que dispensa a consulta de vídeo...',{speed:60});
+      await typeWriter(s4text,'Minha consultoria custa R$ 700 e agora, estou lançando um formato mais acessível, que dispensa a consulta de vídeo...',{speed:60});
       await sleep(300); alertao.style.opacity=1; await sleep(600);
       await typeWriter(s4more,'Neste novo formato, você responderá um formulário com as mesmas perguntas da consulta.',{speed:60});
       await sleep(400); step4.classList.add('show-cta');
