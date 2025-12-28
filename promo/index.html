@@ -93,7 +93,7 @@
     <!-- STEP 1 -->
     <div id="step1">
       <div class="type" id="s1text"></div>
-      <div class="actions"><button id="unlockBtn" class="btn primary hidden">DESBLOQUEAR OFERTA</button></div>
+      <div class="actions"><button id="unlockBtn" class="btn primary hidden">DESBLOQUEAR AGORA!</button></div>
     </div>
 
     <!-- STEP 2 -->
@@ -107,7 +107,7 @@
     <div class="card hidden" id="step3">
       <div class="type" id="s3title"></div>
       <div class="price-list" id="priceList"></div>
-      <div class="total" id="totalRow"><div class="price-left"><strong>Total</strong></div><div class="price-right"><strong>R$ 2.150/mês</strong></div></div>
+      <div class="total" id="totalRow"><div class="price-left"><strong>Total</strong></div><div class="price-right"><strong>R$ 2.450/mês</strong></div></div>
       <div id="halfMsg" class="type" style="margin-top:14px"></div>
       <div class="actions"><button id="s3next" class="btn primary hidden">Avançar</button></div>
     </div>
@@ -117,7 +117,7 @@
       <div id="s4text" class="type"></div>
       <div class="boom fadein-del-2" id="alertao" style="opacity:0">ATENÇÃO!!!</div>
       <p id="s4more" class="type" style="margin-top:10px"></p>
-      <div class="center" style="margin-top:16px"><div class="badge">Você acabou de ganhar 30% de desconto</div></div>
+      <div class="center" style="margin-top:16px"><div class="badge">Você acabou de ganhar 70% de desconto</div></div>
       <div class="actions center" style="justify-content:center"><button id="s4next" class="btn primary">ATIVAR DESCONTO</button></div>
     </div>
 
@@ -161,7 +161,7 @@
     <div class="card hidden" id="step7">
       <div class="type" id="s7title"></div>
       <div class="actions hidden" id="s7actions" style="justify-content:center">
-        <a id="s7yesLink" class="btn btnlink primary" href="https://dougleao.netlify.app/30off/">Sim</a>
+        <a id="s7yesLink" class="btn btnlink primary" href="https://www.dougleao.com.br/formulario">Sim</a>
         <a id="s7noLink" class="btn btnlink" href="https://wa.me/5562984888498?text=Ol%C3%A1%2C%20restaram%20algumas%20d%C3%BAvidas">Não</a>
       </div>
     </div>
@@ -374,7 +374,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     function boldAfterTyping(el){
       let txt = el.textContent;
       txt = txt.replace('plano Trimestral','<strong>plano Trimestral</strong>').replace('Semestral','<strong>Semestral</strong>').replace('Anual','<strong>Anual</strong>')
-               .replace('+1 mês','<span class="gold">+1 mês</span>').replace('+2 meses','<span class="gold">+2 meses</span>').replace('+3 meses','<span class="gold">+3 meses</span>');
+               .replace('+15 dias','<span class="gold">+15 dias</span>').replace('+1 mês','<span class="gold">+1 mês</span>').replace('+2 meses','<span class="gold">+2 meses</span>');
       el.innerHTML = txt;
     }
     async function typeWithCoins(el, text, triggerPhrase){
@@ -385,14 +385,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
       [b1,b2,b3,bonusNote].forEach(el=> el.textContent='');
       const btn = document.getElementById('s6next'); btn.classList.remove('show'); btn.classList.add('hidden');
       const lines = [
-        'Além dos 30% de desconto, ao contratar o plano Trimestral você ganha +1 mês.',
-        'No Semestral você ganha +2 meses.',
-        'E para o Anual, você ganha +3 meses.'
+        'Além dos 70% de desconto, ao contratar o plano Trimestral você ganha +15 dias',
+        'No Semestral você ganha +1 mês.',
+        'E para o Anual, você ganha +2 meses.'
       ];
-      await typeWithCoins(b1, lines[0], '+1 mês'); await sleep(300);
-      await typeWithCoins(b2, lines[1], '+2 meses'); await sleep(300);
-      await typeWithCoins(b3, lines[2], '+3 meses'); await sleep(400);
-      await typeWriter(bonusNote, 'Esse mês de bônus pode ser convertido para outra pessoa ou adicionado ao seu plano.', {speed:50});
+      await typeWithCoins(b1, lines[0], '+15 dias'); await sleep(300);
+      await typeWithCoins(b2, lines[1], '+1 mês'); await sleep(300);
+      await typeWithCoins(b3, lines[2], '+2 meses'); await sleep(400);
+      await typeWriter(bonusNote, 'Essa condição especial ficará disponível somente este ano de 2025. Você pode contratar para iniciar depois!', {speed:50});
       await sleep(300); btn.classList.remove('hidden'); requestAnimationFrame(()=>btn.classList.add('show'));
     }
 
@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     (async ()=>{
       show('step1');
       logStepView('step1');
-      await typeWriter(s1text, '⚠️ATENÇÃO! Você acaba de acessar à oferta secreta de Black November.', { speed:56, targetPhrase:'Black November', onWord:()=>burstConfetti() });
+      await typeWriter(s1text, '⚠️ATENÇÃO! Você acaba de acessar à oferta secreta da Consultoria Online.', { speed:56, targetPhrase:'Consultoria Online', onWord:()=>burstConfetti() });
       unlockBtn.classList.remove('hidden');
     })();
 
@@ -442,12 +442,12 @@ s2next.addEventListener('click', ()=>{
 
     /* STEP 3 */
     const s3title = document.getElementById('s3title'), priceList = document.getElementById('priceList'), totalRow = document.getElementById('totalRow'), halfMsg = document.getElementById('halfMsg'), s3next = document.getElementById('s3next');
-    const items = [['Plano Alimentar','R$ 450'],['App de Treino com Vídeos','R$ 200'],['Médico Nutrólogo','R$ 900'],['Psicólogo','R$ 600']];
+    const items = [['Plano Alimentar','R$ 700'],['App de Treino com Vídeos','R$ 700'],['Suporte Médico','R$ 900'],['Suporte 24h WhatsApp','R$ 150']];
     async function startStep3(){
       const nome = nomeEl.value.trim();
 
       
-      await typeWriter(s3title, `Seja bem-vindo, ${nome}. Agora vamos ver o que você irá receber na Consultoria... 👇`, {speed:60});
+      await typeWriter(s3title, `Seja bem-vindo, ${nome}. Em 2025 a minha Consultoria foi assim... 👇`, {speed:60});
       priceList.innerHTML=''; for(let i=0;i<items.length;i++){ const row=document.createElement('div'); row.className='price-item';
         row.innerHTML = `<div class="price-left">${items[i][0]}:</div><div class="price-right">${items[i][1]}</div>`; priceList.appendChild(row); await sleep(3100); row.classList.add('show'); }
       await sleep(500); totalRow.classList.add('show'); await sleep(800);
@@ -463,9 +463,9 @@ s2next.addEventListener('click', ()=>{
     const s4text = document.getElementById('s4text'), alertao = document.getElementById('alertao'), s4more = document.getElementById('s4more'), s4next = document.getElementById('s4next');
     async function startStep4(){
       const step4 = document.getElementById('step4'); step4.classList.remove('show-cta');
-      await typeWriter(s4text,'A minha Consultoria custa R$ 700 e inclui tudo isso que foi citado, juntamente com Consulta Individual e suporte 24h via WhatsApp.',{speed:60});
+      await typeWriter(s4text,'Minha consultoria custou R$ 700 ao longo de todo 2025. Agora, estou lançando um formato mais acessível, que dispensa a consulta de vídeo...',{speed:60});
       await sleep(300); alertao.style.opacity=1; await sleep(600);
-      await typeWriter(s4more,'Você não vai precisar pagar nem sequer isso...',{speed:60});
+      await typeWriter(s4more,'Você responderá a um questionário com as mesmas perguntas da consulta.',{speed:60});
       await sleep(400); step4.classList.add('show-cta');
     }
  s4next.addEventListener('click', ()=>{
@@ -507,7 +507,7 @@ s2next.addEventListener('click', ()=>{
     const s7bText = document.getElementById('s7bText'), s7byes = document.getElementById('s7byes'), s7bno = document.getElementById('s7bno');
     async function startStep7b(){
       s7byes.classList.add('hidden'); s7bno.classList.add('hidden'); s7bText.textContent='';
-      const q = 'Você está disposto a seguir o plano corretamente?';
+      const q = 'Você está disposto a fazer diferente em 2026?';
       await typeWriter(s7bText, q, {speed:60});
       s7byes.classList.remove('hidden'); s7bno.classList.remove('hidden');
     }
