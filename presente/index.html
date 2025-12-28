@@ -451,7 +451,7 @@ s2next.addEventListener('click', ()=>{
       priceList.innerHTML=''; for(let i=0;i<items.length;i++){ const row=document.createElement('div'); row.className='price-item';
         row.innerHTML = `<div class="price-left">${items[i][0]}:</div><div class="price-right">${items[i][1]}</div>`; priceList.appendChild(row); await sleep(3100); row.classList.add('show'); }
       await sleep(500); totalRow.classList.add('show'); await sleep(800);
-      await typeWriter(halfMsg,'🚨 Mas calma! Você não vai pagar nem a metade disto...',{speed:58});
+      await typeWriter(halfMsg,'🚨 Mas calma! Esse é o valor que eu entrego, Você não vai pagar nem a metade disto...',{speed:58});
       [...document.querySelectorAll('.price-right')].forEach((el,idx)=>{ setTimeout(()=>el.parentElement.classList.add('strike'), idx*150); });
       setTimeout(()=> totalRow.classList.add('strike'), 600);
       [...document.querySelectorAll('.price-item')].forEach((el,idx)=>{ setTimeout(()=>el.classList.add('strike'), idx*150); });
