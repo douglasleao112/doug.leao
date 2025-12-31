@@ -331,7 +331,7 @@
     <!-- Cronômetro -->
     <h2 class="timer-title">Este link é temporário, e expira em:</h2>
     <div class="countdown" id="countdown">
-      <!-- <div class="box" id="daysBox" style="display:none"><span class="number" id="days">00</span><span class="label">Dias</span></div> -->
+      <div class="box" id="daysBox" style="display:none"><span class="number" id="days"> </span><span class="label"> </span></div>
       <div class="box"><span class="number" id="hours">00</span><span class="label">Horas</span></div>
       <div class="box"><span class="number" id="minutes">00</span><span class="label">Mins.</span></div>
       <div class="box"><span class="number" id="seconds">00</span><span class="label">Seg.</span></div>
@@ -367,7 +367,7 @@ function parseDeadline(){
     if(!isNaN(+d)) return d;
   }
   // MUDAR DATA E HORA
-  return new Date('2025-12-29T23:59:00'); // fuso local
+  return new Date('2026-12-29T23:59:00'); // fuso local
 }
 
 const target = parseDeadline();
