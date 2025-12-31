@@ -340,7 +340,7 @@
 
 
 <script>
-const FORCE_OFF = true; // true = tira do ar     false = fica no ar
+const FORCE_OFF = false; // true = tira do ar     false = fica no ar
 </script>
 
 <script>
@@ -348,10 +348,10 @@ const FORCE_OFF = true; // true = tira do ar     false = fica no ar
   if (FORCE_OFF) {
     document.body.innerHTML = `
       <div class="wrap" style="text-align:center">
-        <p style="font-size:20px;margin:0 0 10px 0;">Esta oferta foi encerrada.</p>
+        <p style="font-size:20px;margin:0 0 10px 0;">Que pena, você chegou tarde demais!</p>
         <p style="font-size:18px;">
-          <a href="https://wa.me/5562984888498"
-             style="color:#00ff99; text-decoration:underline;">Falar no WhatsApp</a>
+          <a href="https://wa.me/5562984888498?text=Acabei%20perdendo%20a%20oferta%2C%20e%20agora%3F"
+             style="color:#00ff99; text-decoration:underline;">Entrar em contato</a>
         </p>
       </div>
     `;
