@@ -331,7 +331,7 @@
     <!-- Cronômetro -->
     <h2 class="timer-title">Este link é temporário, e expira em:</h2>
     <div class="countdown" id="countdown">
-     
+      <div class="box" id="daysBox" style="display:none"><span class="number" id="days">00</span><span class="label">Dias</span></div>
       <div class="box"><span class="number" id="hours">00</span><span class="label">Horas</span></div>
       <div class="box"><span class="number" id="minutes">00</span><span class="label">Mins.</span></div>
       <div class="box"><span class="number" id="seconds">00</span><span class="label">Seg.</span></div>
@@ -339,81 +339,119 @@
   </div><br><br><br><br>
 
 <script>
-/* ====== DEADLINE FLEXÍVEL ======
-   Use ?until=2025-11-08T02:59   (data/hora local do visitante)
-   ou  ?in=2d12h30m              (relativo: dias/horas/minutos, qualquer combinação)
-   Fallback: valor fixo abaixo. 
+/* ====== EXPIRA EM 24H APÓS O PRIMEIRO ACESSO (LOCALSTORAGE) ======
+   Regras:
+   - Se tiver ?until= ou ?in= na URL, usa isso (e salva como expiração).
+   - Se não tiver, cria expiração = agora + 24h no primeiro acesso e salva.
+   - Countdown sempre mostra o tempo restante para essa expiração salva.
 */
-function parseRelative(str){
-  // aceita "2d12h30m", "45m", "3h", etc.
-  const m = { d:0, h:0, m:0, s:0 };
-  (str.match(/\d+\s*d/gi)||[]).forEach(x=>m.d += +x.replace(/\D/g,''));
-  (str.match(/\d+\s*h/gi)||[]).forEach(x=>m.h += +x.replace(/\D/g,''));
-  (str.match(/\d+\s*m(?!s)/gi)||[]).forEach(x=>m.m += +x.replace(/\D/g,''));
-  (str.match(/\d+\s*s/gi)||[]).forEach(x=>m.s += +x.replace(/\D/g,''));
-  const now = new Date();
-  return new Date(now.getTime() + (((m.d*24+m.h)*60 + m.m)*60 + m.s)*1000);
-}
+(function () {
+  const LS_KEY = 'black_offer_expires_at_v1'; // pode trocar o nome se quiser
 
-function parseDeadline(){
-  const q = new URL(location.href).searchParams;
-  if(q.has('until')){
-    // aceita "YYYY-MM-DDTHH:MM" (interpreta no fuso local do visitante)
-    const d = new Date(q.get('until'));
-    if(!isNaN(+d)) return d;
+  function parseRelative(str){
+    const m = { d:0, h:0, m:0, s:0 };
+    (str.match(/\d+\s*d/gi)||[]).forEach(x=>m.d += +x.replace(/\D/g,''));
+    (str.match(/\d+\s*h/gi)||[]).forEach(x=>m.h += +x.replace(/\D/g,''));
+    (str.match(/\d+\s*m(?!s)/gi)||[]).forEach(x=>m.m += +x.replace(/\D/g,''));
+    (str.match(/\d+\s*s/gi)||[]).forEach(x=>m.s += +x.replace(/\D/g,''));
+    const now = new Date();
+    return new Date(now.getTime() + (((m.d*24+m.h)*60 + m.m)*60 + m.s)*1000);
   }
-  if(q.has('in')){
-    const d = parseRelative(q.get('in'));
-    if(!isNaN(+d)) return d;
+
+  function setExpiryAndReturn(dateObj){
+    try{
+      localStorage.setItem(LS_KEY, String(+dateObj));
+    }catch(e){}
+    return dateObj;
   }
-  // MUDAR DATA E HORA
-  return new Date('2026-12-29T23:59:00'); // fuso local
-}
 
-const target = parseDeadline();
-const daysEl    = document.getElementById('days');
-const daysBox   = document.getElementById('daysBox');
-const hoursEl   = document.getElementById('hours');
-const minutesEl = document.getElementById('minutes');
-const secondsEl = document.getElementById('seconds');
-
-const expiredHTML = `
-  <div class="wrap" style="text-align:center">
-    <p style="font-size:20px;margin:0 0 10px 0;">Que pena, você chegou tarde demais.</p>
-    <p style="font-size:18px;">
-      <a href="https://wa.me/5562984888498?text=Acabei%20perdendo%20a%20oferta%2C%20e%20agora%3F"
-         style="color:#00ff99; text-decoration:underline;">Clique aqui</a>
-    </p>
-  </div>
-`;
-
-function atualizarContagem(){
-  const diff = +target - +new Date();
-  if(diff <= 0){
-    document.body.innerHTML = expiredHTML;
-    clearInterval(timer);
-    return;
+  function getSavedExpiry(){
+    try{
+      const v = localStorage.getItem(LS_KEY);
+      if(!v) return null;
+      const ms = Number(v);
+      if(!isFinite(ms)) return null;
+      const d = new Date(ms);
+      if(isNaN(+d)) return null;
+      return d;
+    }catch(e){
+      return null;
+    }
   }
-  const total = Math.floor(diff/1000);
-  const d = Math.floor(total / 86400);
-  const h = Math.floor((total % 86400) / 3600);
-  const m = Math.floor((total % 3600) / 60);
-  const s = total % 60;
 
-  if (d > 0){
-    daysBox.style.display = '';
-    daysEl.textContent = String(d).padStart(2,'0');
-  } else {
-    daysBox.style.display = 'none';
+  function parseDeadline(){
+    const q = new URL(location.href).searchParams;
+
+    // 1) Override via URL (e salva)
+    if(q.has('until')){
+      const d = new Date(q.get('until'));
+      if(!isNaN(+d)) return setExpiryAndReturn(d);
+    }
+    if(q.has('in')){
+      const d = parseRelative(q.get('in'));
+      if(!isNaN(+d)) return setExpiryAndReturn(d);
+    }
+
+    // 2) Já tem expiração salva
+    const saved = getSavedExpiry();
+    if(saved) return saved;
+
+    // 3) Primeiro acesso: cria 24h
+    const now = Date.now();
+    const expires = new Date(now + 24*60*60*1000);
+    return setExpiryAndReturn(expires);
   }
-  hoursEl.textContent   = String(h).padStart(2,'0');
-  minutesEl.textContent = String(m).padStart(2,'0');
-  secondsEl.textContent = String(s).padStart(2,'0');
-}
-const timer = setInterval(atualizarContagem, 1000);
-atualizarContagem();
+
+  // deixa "target" global para o picker (?set=1) continuar funcionando
+  window.target = parseDeadline();
+
+  const daysEl    = document.getElementById('days');
+  const daysBox   = document.getElementById('daysBox');
+  const hoursEl   = document.getElementById('hours');
+  const minutesEl = document.getElementById('minutes');
+  const secondsEl = document.getElementById('seconds');
+
+  const expiredHTML = `
+    <div class="wrap" style="text-align:center">
+      <p style="font-size:20px;margin:0 0 10px 0;">Que pena, você chegou tarde demais.</p>
+      <p style="font-size:18px;">
+        <a href="https://wa.me/5562984888498?text=Acabei%20perdendo%20a%20oferta%2C%20e%20agora%3F"
+           style="color:#00ff99; text-decoration:underline;">Clique aqui</a>
+      </p>
+    </div>
+  `;
+
+  function atualizarContagem(){
+    const diff = +window.target - Date.now();
+
+    if(diff <= 0){
+      try{ localStorage.removeItem(LS_KEY); }catch(e){}
+      document.body.innerHTML = expiredHTML;
+      clearInterval(window.__timer24h);
+      return;
+    }
+
+    const total = Math.floor(diff/1000);
+    const d = Math.floor(total / 86400);
+    const h = Math.floor((total % 86400) / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+
+    if (d > 0){
+      daysBox.style.display = '';
+      daysEl.textContent = String(d).padStart(2,'0');
+    } else {
+      daysBox.style.display = 'none';
+    }
+    hoursEl.textContent   = String(h).padStart(2,'0');
+    minutesEl.textContent = String(m).padStart(2,'0');
+    secondsEl.textContent = String(s).padStart(2,'0');
+  }
+
+  window.__timer24h = setInterval(atualizarContagem, 1000);
+  atualizarContagem();
+})();
 </script>
-
 
 
 <script>
