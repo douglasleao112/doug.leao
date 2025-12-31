@@ -338,15 +338,28 @@
     </div>
   </div><br><br><br><br>
 
+
 <script>
-/* ====== EXPIRA EM 24H APÓS O PRIMEIRO ACESSO (LOCALSTORAGE) ======
-   Regras:
-   - Se tiver ?until= ou ?in= na URL, usa isso (e salva como expiração).
-   - Se não tiver, cria expiração = agora + 24h no primeiro acesso e salva.
-   - Countdown sempre mostra o tempo restante para essa expiração salva.
-*/
-(function () {
-  const LS_KEY = 'black_offer_expires_at_v1'; // pode trocar o nome se quiser
+const FORCE_OFF = false; // true = tira do ar
+</script>
+
+<script>
+(() => {
+  if (FORCE_OFF) {
+    document.body.innerHTML = `
+      <div class="wrap" style="text-align:center">
+        <p style="font-size:20px;margin:0 0 10px 0;">Esta oferta foi encerrada.</p>
+        <p style="font-size:18px;">
+          <a href="https://wa.me/5562984888498"
+             style="color:#00ff99; text-decoration:underline;">Falar no WhatsApp</a>
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  /* ====== EXPIRA EM 24H APÓS O PRIMEIRO ACESSO (LOCALSTORAGE) ====== */
+  const LS_KEY = 'black_offer_expires_at_v1';
 
   function parseRelative(str){
     const m = { d:0, h:0, m:0, s:0 };
@@ -359,9 +372,7 @@
   }
 
   function setExpiryAndReturn(dateObj){
-    try{
-      localStorage.setItem(LS_KEY, String(+dateObj));
-    }catch(e){}
+    try{ localStorage.setItem(LS_KEY, String(+dateObj)); }catch(e){}
     return dateObj;
   }
 
@@ -374,15 +385,12 @@
       const d = new Date(ms);
       if(isNaN(+d)) return null;
       return d;
-    }catch(e){
-      return null;
-    }
+    }catch(e){ return null; }
   }
 
   function parseDeadline(){
     const q = new URL(location.href).searchParams;
 
-    // 1) Override via URL (e salva)
     if(q.has('until')){
       const d = new Date(q.get('until'));
       if(!isNaN(+d)) return setExpiryAndReturn(d);
@@ -392,17 +400,13 @@
       if(!isNaN(+d)) return setExpiryAndReturn(d);
     }
 
-    // 2) Já tem expiração salva
     const saved = getSavedExpiry();
     if(saved) return saved;
 
-    // 3) Primeiro acesso: cria 24h
-    const now = Date.now();
-    const expires = new Date(now + 24*60*60*1000);
+    const expires = new Date(Date.now() + 24*60*60*1000);
     return setExpiryAndReturn(expires);
   }
 
-  // deixa "target" global para o picker (?set=1) continuar funcionando
   window.target = parseDeadline();
 
   const daysEl    = document.getElementById('days');
@@ -423,7 +427,6 @@
 
   function atualizarContagem(){
     const diff = +window.target - Date.now();
-
     if(diff <= 0){
       try{ localStorage.removeItem(LS_KEY); }catch(e){}
       document.body.innerHTML = expiredHTML;
@@ -452,7 +455,6 @@
   atualizarContagem();
 })();
 </script>
-
 
 <script>
 (function(){
