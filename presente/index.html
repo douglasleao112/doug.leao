@@ -173,6 +173,67 @@
   </div>
 
 
+<script>
+/* ===============================
+   EXPIRAÇÃO DA OFERTA (EDITE AQUI)
+   Formato: DD/MM/AAAA - HH:MM
+   Timezone: usa o horário do dispositivo do usuário
+================================= */
+const OFFER_EXPIRES_AT = '01/01/2026 - 9:00';
+
+/* Link e mensagem do WhatsApp */
+const LATE_WPP_LINK = 'https://wa.me/5562984888498?text=Ol%C3%A1%2C%20eu%20perdi%20a%20oferta';
+
+/* Converte "DD/MM/AAAA - HH:MM" para Date */
+function parseBrDateTime(str){
+  // aceita "DD/MM/AAAA - HH:MM" ou "DD/MM/AAAA HH:MM"
+  const cleaned = String(str).replace(' - ', ' ').trim();
+  const m = cleaned.match(/^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}):(\d{2})$/);
+  if(!m) return null;
+  const [, dd, mm, yyyy, HH, MM] = m;
+  // new Date(yyyy, mm-1, dd, HH, MM) => horário local do usuário
+  return new Date(Number(yyyy), Number(mm) - 1, Number(dd), Number(HH), Number(MM), 0, 0);
+}
+
+/* Mostra tela de expirado */
+function renderExpired(){
+  document.documentElement.style.background = '#0a0a0f';
+  document.body.innerHTML = `
+    <div style="min-height:100vh;display:grid;place-items:center;padding:24px;background:#0a0a0f;color:#e9e9f1;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial;">
+      <div style="max-width:720px;width:100%;text-align:center;">
+        <div style="font-size:clamp(22px,3vw,30px);font-weight:900;letter-spacing:.2px;margin-bottom:10px;">
+          Que pena, você chegou tarde demais.
+        </div>
+        <div style="color:rgba(233,233,241,.72);font-size:16px;line-height:1.5;margin-bottom:18px;">
+          Entre em contato para ver se ainda consigo te ajudar.
+        </div>
+        <a href="${LATE_WPP_LINK}"
+           style="display:inline-block;text-decoration:none;background:linear-gradient(180deg,#00ff99,#00cc7a);color:#07110c;
+                  font-weight:900;padding:14px 18px;border-radius:12px;border:1px solid rgba(0,255,170,.55);
+                  box-shadow:0 10px 28px rgba(0,255,150,.18);">
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+/* Checagem de expiração (bloqueia antes de iniciar o funil) */
+(function gateByDate(){
+  const exp = parseBrDateTime(OFFER_EXPIRES_AT);
+  if(!exp){
+    // Se você errar o formato, não bloqueia (pra não derrubar a página)
+    console.warn('Formato inválido em OFFER_EXPIRES_AT. Use "DD/MM/AAAA - HH:MM"');
+    return;
+  }
+  const now = new Date();
+  if(now.getTime() > exp.getTime()){
+    // opcional: logar evento antes de bloquear (se sua função existir)
+    try { if (typeof logEvent === 'function') logEvent('offer_expired', { expires_at: OFFER_EXPIRES_AT }); } catch(_) {}
+    renderExpired();
+  }
+})();
+</script>
 
 
   <script>
