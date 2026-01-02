@@ -1,8 +1,605 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; URL='https://dougleao.com/presente/?utm_source=pessoal'" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Oferta Secreta • Consultoria Online</title>
+  <style>
+    :root{
+      --bg:#0a0a0f; --ink:#e9e9f1; --muted:#9aa0a6; --accent:#00ffc6; --danger:#ff3b3b;
+      --btn:#15151d; --btn2:#111119; --radius:16px; --speed-typing:42ms;
+    }
+    input,select,textarea{ font-size:16px !important; touch-action:manipulation }
+    html,body{ touch-action:manipulation; -ms-touch-action:manipulation; height:100% }
+    *{ box-sizing:border-box }
+    body{ margin:0; background:var(--bg); color:var(--ink); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; overflow-x:hidden }
+
+    .ink{ position:fixed; inset:0; overflow:hidden; z-index:-1;
+      background:radial-gradient(40vmax 40vmax at 10% 20%, #111827 0%, transparent 60%),
+                 radial-gradient(35vmax 35vmax at 90% 10%, #0f172a 0%, transparent 60%),
+                 radial-gradient(45vmax 45vmax at 30% 80%, #0b1324 0%, transparent 60%),
+                 radial-gradient(30vmax 30vmax at 85% 75%, #111827 0%, transparent 60%), #05060a; }
+    .ink::before,.ink::after{ content:""; position:absolute; inset:-20vmax;
+      background:radial-gradient(30vmax 30vmax at 20% 30%, #0d1b2a80 0%, transparent 65%),
+                 radial-gradient(25vmax 25vmax at 80% 40%, #1b263b66 0%, transparent 65%),
+                 radial-gradient(35vmax 35vmax at 40% 80%, #0d132066 0%, transparent 65%);
+      filter:blur(24px); animation:blobs 60s linear infinite; }
+    .ink::after{ animation-duration:90s; animation-direction:reverse; opacity:.7 }
+    @keyframes blobs{ 0%{transform:translateX(0) translateY(0) scale(1)} 50%{transform:translateX(-6vw) translateY(4vh) scale(1.05)} 100%{transform:translateX(0) translateY(0) scale(1)} }
+
+    .wrap{ max-width:760px; margin:0 auto; padding:24px; min-height:100dvh; display:grid; place-items:center }
+    .card{ background:none; border:none; box-shadow:none; padding:0 }
+    .type{ font-size:clamp(20px,3vw,28px); line-height:1.35 }
+    .muted{ color:var(--muted) }
+
+    .actions{ display:flex; justify-content:center; align-items:center; gap:14px; flex-wrap:wrap; margin-top:22px; text-align:center; width:100% }
+    .btn{ appearance:none; border:1px solid rgba(255,255,255,.12); background:linear-gradient(180deg,var(--btn),var(--btn2));
+      color:#fff; padding:14px 18px; border-radius:12px; font-weight:700; letter-spacing:.2px; cursor:pointer;
+      transition:.2s transform,.2s filter,.2s opacity; box-shadow:0 6px 20px rgba(0,0,0,.25); text-shadow:0 1px 3px rgba(0,0,0,.6) }
+    .btn:hover{ transform:translateY(-1px) } .btn:active{ transform:translateY(0) }
+    .btn.primary{ border-color:#00ffd0; box-shadow:0 0 0 2px #00ffd044 inset, 0 10px 30px rgba(0,255,208,.08) }
+
+    #unlockBtn{ background:linear-gradient(180deg,#00ff99,#00cc7a); border-color:#00ffaa; box-shadow:0 0 20px rgba(0,255,150,.4); animation:pulseZoom 2s ease-in-out infinite }
+    @keyframes pulseZoom{ 0%,100%{ transform:scale(1); box-shadow:0 0 20px rgba(0,255,150,.4) } 50%{ transform:scale(1.08); box-shadow:0 0 35px rgba(0,255,150,.6) } }
+
+    #alertao{ color:#00ffd0; font-weight:900; font-size:clamp(30px,5vw,40px); text-align:center; letter-spacing:1.5px; margin:30px 0 24px; text-shadow:0 2px 6px rgba(0,0,0,.6) }
+
+    .field{ margin-top:16px } .input{ width:100%; padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:#0b0b12; color:#fff; outline:none }
+    .hidden{ display:none } .center{text-align:center}
+
+    .fadein{ opacity:0; transform:translateY(6px); animation:fadeIn .8s ease forwards }
+    @keyframes fadeIn{ to{ opacity:1; transform:none } }
+    .fadein-del-1{ animation-delay:.4s } .fadein-del-2{ animation-delay:.8s } .fadein-del-3{ animation-delay:1.2s } .fadein-del-4{ animation-delay:1.6s }
+
+    .overlay{ position:fixed; inset:0; display:grid; place-items:center; background:rgba(0,0,0,.55); opacity:0; pointer-events:none; transition:opacity .35s ease }
+    .overlay.show{ opacity:1; pointer-events:auto }
+    .lock{ width:120px; opacity:0; transition:opacity 1s ease } .lock.show{ opacity:1 }
+
+    .price-list{ margin:20px 0 6px; display:grid; gap:12px }
+    .price-item{ display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border:1px dashed rgba(255,255,255,.12); border-radius:10px; background:#0b0f14a6; opacity:0; transform:translateY(6px) }
+    .price-item.show{ animation:fadeIn 1.2s ease forwards }
+    .price-left{ color:#e7ebf3 } .price-right{ font-weight:800; letter-spacing:.3px }
+    .strike .price-right,.strike .price-left{ position:relative }
+    .strike .price-right::after{ content:""; position:absolute; left:0; right:0; top:50%; height:1px; background:#ff3b3b; transform:scaleX(0); transform-origin:left; animation:cut .6s ease forwards }
+    @keyframes cut{ to{ transform:scaleX(1) } }
+    .total{ margin-top:14px; border-top:2px solid rgba(255,255,255,.1); padding-top:14px; display:flex; justify-content:space-between; align-items:center; opacity:0 }
+    .total.show{ animation:fadeIn .6s ease forwards }
+
+    .badge{ display:inline-block; padding:8px 12px; background:#10231f; border:1px solid #00ffd0; color:#a9fff0; border-radius:999px; font-weight:700; letter-spacing:.2px }
+    .boom{ color:#a0ffea; font-weight:900; font-size:clamp(24px,3.6vw,34px); text-align:center; letter-spacing:1px }
+    #confetti{ position:fixed; inset:0; pointer-events:none }
+    .btnlink{ display:inline-block; text-decoration:none }
+
+    .gift{ width:72px; height:72px; display:block; margin:0 auto 12px; filter:drop-shadow(0 6px 20px rgba(0,255,150,.18)) }
+    #s5next{ background:linear-gradient(180deg,#00ff99,#00cc7a); border-color:#00ffaa; box-shadow:0 0 22px rgba(0,255,150,.45); animation:pulseZoom 2s ease-in-out infinite }
+
+    #step4 .badge,#step4 #s4next{ opacity:0; transform:translateY(6px); transition:opacity .6s ease, transform .6s ease; pointer-events:none }
+    #step4.show-cta .badge,#step4.show-cta #s4next{ opacity:1; transform:none; pointer-events:auto }
+
+    #step6 .btn.primary.hidden{ opacity:0; pointer-events:none }
+    #step6 .btn.primary.show{ opacity:1; pointer-events:auto; transition:opacity .6s ease }
+
+    #bonusList{ list-style:none; padding-left:0; margin:0; display:grid; gap:10px }
+    @keyframes coinFlash{ from{ filter:brightness(1.6) } to{ filter:brightness(1) } }
+    .gold{ color:#ffd84d; font-weight:800; text-shadow:0 0 8px rgba(255,215,0,.5) }
+  </style>
 </head>
+<body>
+  <div class="ink" aria-hidden="true"></div>
+  <canvas id="confetti"></canvas>
+  <audio id="fx" src="https://cdn.pixabay.com/download/audio/2025/09/09/audio_3023b9bde2.mp3?filename=pop-402324.mp3" preload="auto"></audio>
+
+  <div class="wrap">
+    <!-- STEP 1 -->
+    <div id="step1">
+      <div class="type" id="s1text"></div>
+      <div class="actions"><button id="unlockBtn" class="btn primary hidden">DESBLOQUEAR AGORA!</button></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="card hidden" id="step2">
+      <p class="type">Mas antes, preciso saber com quem estou falando:</p>
+      <div class="field"><input id="nome" class="input" type="text" placeholder="NOME COMPLETO" aria-label="NOME COMPLETO" required /></div>
+      <div class="actions"><button id="s2next" class="btn primary hidden" disabled>Avançar</button></div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="card hidden" id="step3">
+      <div class="type" id="s3title"></div>
+      <div class="price-list" id="priceList"></div>
+      <div class="total" id="totalRow"><div class="price-left"><strong>Total</strong></div><div class="price-right"><strong>R$ 1.700/mês</strong></div></div>
+      <div id="halfMsg" class="type" style="margin-top:14px"></div>
+      <div class="actions"><button id="s3next" class="btn primary hidden">Avançar</button></div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="card hidden" id="step4">
+      <div id="s4text" class="type"></div>
+      <div class="boom fadein-del-2" id="alertao" style="opacity:0">VEJA SÓ...</div>
+      <p id="s4more" class="type" style="margin-top:10px"></p>
+      <div class="center" style="margin-top:16px"><div class="badge">VOCÊ ACABA DE GANHAR 70% DE DESCONTO</div></div>
+      <div class="actions center" style="justify-content:center"><button id="s4next" class="btn primary">ATIVAR DESCONTO</button></div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="card hidden" id="step5">
+      <img id="bonusIcon" class="gift" src="https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f381.gif" alt="presente">
+      <div id="s5text" class="type">Peraí... tem mais beneficios, quer saber quais são?</div>
+      <div id="s5wrap" class="actions center" style="justify-content:center"><button id="s5next" class="btn primary">QUERO BÔNUS!</button></div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="card hidden" id="step6">
+      <ul id="bonusList" style="margin:0">
+        <li id="b1" class="type"></li>
+        <li id="b2" class="type"></li>
+        <li id="b3" class="type"></li>
+      </ul>
+      <p class="muted" id="bonusNote" style="margin-top:10px"></p>
+      <div class="actions center" style="justify-content:center"><button id="s6next" class="btn primary hidden">GOSTEI!</button></div>
+    </div>
+
+    <!-- STEP 7a (pergunta 1 com typewriter + reveal) -->
+    <div class="card hidden" id="step7a">
+      <div class="type" id="s7aText"></div>
+      <div class="actions center" id="s7aActions" style="justify-content:center">
+        <button id="s7ayes" class="btn primary hidden">Sim</button>
+        <button id="s7ano" class="btn hidden">Talvez</button>
+      </div>
+    </div>
+
+    <!-- STEP 7b (pergunta 2 com typewriter + reveal) -->
+    <div class="card hidden" id="step7b">
+      <div class="type" id="s7bText"></div>
+      <div class="actions center" id="s7bActions" style="justify-content:center">
+        <button id="s7byes" class="btn primary hidden">Sim</button>
+        <button id="s7bno" class="btn hidden">Talvez</button>
+      </div>
+    </div>
+
+    <!-- STEP 7 (final com typewriter + reveal) -->
+    <div class="card hidden" id="step7">
+      <div class="type" id="s7title"></div>
+      <div class="actions hidden" id="s7actions" style="justify-content:center">
+        <a id="s7yesLink" class="btn btnlink primary" href="https://www.dougleao.com.br/formulario">Sim</a>
+        <a id="s7noLink" class="btn btnlink" href="https://wa.me/5562984888498?text=Ol%C3%A1%2C%20restaram%20algumas%20d%C3%BAvidas">Não</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay do cadeado -->
+  <div class="overlay" id="overlay">
+    <img class="lock" id="lock" alt="cadeado" src="https://images.emojiterra.com/google/noto-emoji/animated-emoji/1f512.gif" />
+  </div>
+
+
+<script>
+/* ===============================
+   EXPIRAÇÃO DA OFERTA (EDITE AQUI)
+   Formato: DD/MM/AAAA - HH:MM
+   Timezone: usa o horário do dispositivo do usuário
+================================= */
+const OFFER_EXPIRES_AT = '04/01/2025 - 23:59';
+
+/* Link e mensagem do WhatsApp */
+const LATE_WPP_LINK = 'https://wa.me/5562984888498?text=Ol%C3%A1%2C%20eu%20perdi%20a%20oferta';
+
+/* Converte "DD/MM/AAAA - HH:MM" para Date */
+function parseBrDateTime(str){
+  // aceita "DD/MM/AAAA - HH:MM" ou "DD/MM/AAAA HH:MM"
+  const cleaned = String(str).replace(' - ', ' ').trim();
+  const m = cleaned.match(/^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}):(\d{2})$/);
+  if(!m) return null;
+  const [, dd, mm, yyyy, HH, MM] = m;
+  // new Date(yyyy, mm-1, dd, HH, MM) => horário local do usuário
+  return new Date(Number(yyyy), Number(mm) - 1, Number(dd), Number(HH), Number(MM), 0, 0);
+}
+
+/* Mostra tela de expirado */
+function renderExpired(){
+  document.documentElement.style.background = '#0a0a0f';
+  document.body.innerHTML = `
+    <div style="min-height:100vh;display:grid;place-items:center;padding:24px;background:#0a0a0f;color:#e9e9f1;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial;">
+      <div style="max-width:720px;width:100%;text-align:center;">
+        <div style="font-size:clamp(22px,3vw,30px);font-weight:900;letter-spacing:.2px;margin-bottom:10px;">
+          Que pena, você chegou tarde demais.
+        </div>
+        <div style="color:rgba(233,233,241,.72);font-size:16px;line-height:1.5;margin-bottom:18px;">
+          Entre em contato para ver se ainda consigo te ajudar.
+        </div>
+        <a href="${LATE_WPP_LINK}"
+           style="display:inline-block;text-decoration:none;background:linear-gradient(180deg,#00ff99,#00cc7a);color:#07110c;
+                  font-weight:900;padding:14px 18px;border-radius:12px;border:1px solid rgba(0,255,170,.55);
+                  box-shadow:0 10px 28px rgba(0,255,150,.18);">
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+/* Checagem de expiração (bloqueia antes de iniciar o funil) */
+(function gateByDate(){
+  const exp = parseBrDateTime(OFFER_EXPIRES_AT);
+  if(!exp){
+    // Se você errar o formato, não bloqueia (pra não derrubar a página)
+    console.warn('Formato inválido em OFFER_EXPIRES_AT. Use "DD/MM/AAAA - HH:MM"');
+    return;
+  }
+  const now = new Date();
+  if(now.getTime() > exp.getTime()){
+    // opcional: logar evento antes de bloquear (se sua função existir)
+    try { if (typeof logEvent === 'function') logEvent('offer_expired', { expires_at: OFFER_EXPIRES_AT }); } catch(_) {}
+    renderExpired();
+  }
+})();
+</script>
+
+
+  <script>
+/* --------- ID anônimo (localStorage + cookie fallback) --------- */
+function getAnonId(){
+  const KEY = 'anon_id';
+  try{
+    let v = localStorage.getItem(KEY);
+    if(!v){
+      v = (crypto.randomUUID ? crypto.randomUUID() : (Date.now()+Math.random().toString(16).slice(2)));
+      localStorage.setItem(KEY, v);
+    }
+    if(v) return v;
+  }catch(_){}
+
+  // cookie fallback
+  const m = document.cookie.match(/(?:^|;\s*)anon_id=([^;]+)/);
+  if(m){
+    const v = decodeURIComponent(m[1]);
+    try{ localStorage.setItem(KEY, v); }catch(_){}
+    return v;
+  }
+  const v = (crypto.randomUUID ? crypto.randomUUID() : (Date.now()+Math.random().toString(16).slice(2)));
+  const secure = (location.protocol==='https:') ? '; Secure' : '';
+  document.cookie = `anon_id=${encodeURIComponent(v)}; path=/; max-age=${60*60*24*365*2}; SameSite=Lax${secure}`;
+  return v;
+}
+
+/* --------- ENDPOINTS ---------
+   Use SEMPRE a URL direta *.googleusercontent.com do seu Apps Script.
+   Se tiver um proxy (ex: Cloudflare Worker), pode usar no PROXY_URL.  */
+const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbzUze5_ToJkat1eJ9T6M3_e-a0u4wm00_5o-TLV6Ln7kO1b4-1PE0DwA2Yd5ojm801vSg/exec';
+const PROXY_URL    = ''; // opcional
+
+/* --------- Metadados (UTM, UA, idioma, etc.) + NAME global --------- */
+function getMeta(extra = {}){
+  let url;
+  try { url = new URL(location.href); } catch(_){ url = { searchParams: new Map(), href: location.href }; }
+  const utmKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  const utm = Object.fromEntries(utmKeys.map(k => [k, (url.searchParams.get ? url.searchParams.get(k) : null)]));
+
+  // tenta pegar nome salvo localmente para anexar em TODOS os eventos
+  let storedName = '';
+  try { storedName = localStorage.getItem('lead_name') || ''; } catch(_) {}
+
+  return {
+    anon_id: getAnonId(),
+    ts: new Date().toISOString(),
+    tz_offset_min: new Date().getTimezoneOffset(),
+    href: location.href,
+    ref: document.referrer || null,
+    ua: navigator.userAgent,
+    lang: navigator.language,
+    // se extra.name vier, usa ele; senão usa o armazenado
+    name: (extra.name ?? storedName) || '',
+    ...utm,
+    ...extra
+  };
+}
+
+/* --------- Envio robusto para mobile/webview ---------
+   1) sendBeacon com FormData
+   2) fetch com FormData (sem headers custom)
+   3) pixel GET (fallback) */
+async function _postWithStrategies(url, payload){
+  // 1) sendBeacon + FormData
+  try{
+    if(navigator.sendBeacon){
+      const fd = new FormData();
+      fd.append('payload', payload);
+      if(navigator.sendBeacon(url, fd)) return true;
+    }
+  }catch(_){}
+
+  // 2) fetch + FormData (sem headers)
+  try{
+    const fd = new FormData();
+    fd.append('payload', payload);
+    const r = await fetch(url, {
+      method: 'POST',
+      body: fd,
+      mode: 'cors',
+      cache: 'no-store',
+      credentials: 'omit',
+      keepalive: true
+    });
+    if (r && r.ok) return true;
+  }catch(_){}
+
+  // 3) GET pixel
+  try{
+    const img = new Image();
+    img.src = url + '?payload=' + encodeURIComponent(payload) + '&t=' + Date.now();
+    return true; // disparamos mesmo sem confirmação
+  }catch(_){}
+
+  return false;
+}
+
+async function logEvent(event, data = {}){
+  const body = { event, ...getMeta(data) };
+  const payload = JSON.stringify(body);
+
+  // tenta direto no Apps Script (googleusercontent)
+  let ok = await _postWithStrategies(ENDPOINT_URL, payload);
+
+  // se falhou e existe proxy, tenta proxy
+  if(!ok && PROXY_URL){
+    ok = await _postWithStrategies(PROXY_URL, payload);
+  }
+  // opcional: console.debug('logEvent', event, ok, body);
+}
+
+// helper
+function logStepView(step){ logEvent('step_view', { step }); }
+
+// dispara um evento inicial
+document.addEventListener('DOMContentLoaded', ()=>{
+  logEvent('page_view');
+});
+</script>
+
+
+
+
+
+  <script>
+    /* Utils */
+    const sleep = (ms)=> new Promise(r=>setTimeout(r,ms));
+    async function typeWriter(el, text, opts={}){
+      const { speed = 58, onWord = null, targetPhrase = null } = opts;
+      el.textContent = "";
+      let buffer = "";
+      for(let i=0;i<text.length;i++){
+        const ch = text[i];
+        el.textContent += ch;
+        buffer += ch;
+        if(targetPhrase && buffer.endsWith(targetPhrase) && onWord){ onWord(); }
+        await sleep(speed + Math.random()*25);
+      }
+    }
+
+    /* Confetti (abreviado) */
+    const confettiCanvas = document.getElementById('confetti');
+    const ctx = confettiCanvas.getContext('2d');
+    let confettiParts = [], confettiActive = false;
+    function resizeCanvas(){ confettiCanvas.width = innerWidth; confettiCanvas.height = innerHeight }
+    addEventListener('resize', resizeCanvas); resizeCanvas();
+    function burstConfetti(){
+      const colors = [[255,255,255],[0,255,208],[255,59,59],[160,255,234]];
+      for(let i=0;i<160;i++){
+        const a = Math.random()*Math.PI*2, s = Math.random()*6+3;
+        confettiParts.push({ x:innerWidth/2, y:innerHeight*0.28, vx:Math.cos(a)*s, vy:Math.sin(a)*s-2, g:0.12+Math.random()*0.08, s:3+Math.random()*3, r:Math.random()*Math.PI, c:colors[Math.floor(Math.random()*colors.length)] });
+      }
+      if(!confettiActive){ confettiActive = true; requestAnimationFrame(loopConfetti) }
+      const fx = document.getElementById('fx'); fx.currentTime = 0; fx.play().catch(()=>{});
+    }
+    function loopConfetti(){
+      ctx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+      confettiParts.forEach(p=>{ p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.r+=0.06;
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
+        const [r,g,b]=p.c; ctx.fillStyle = `rgba(${r},${g},${b},0.9)`; ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*2); ctx.restore();
+      });
+      confettiParts = confettiParts.filter(p=>p.y < innerHeight+40);
+      if(confettiParts.length){ requestAnimationFrame(loopConfetti) } else { confettiActive=false }
+    }
+
+    /* Coins (compartilha canvas) */
+    let coinParts = [], coinsActive = false;
+    function coinsBurstAt(x, y, count = 30) {
+      for (let i=0;i<count;i++){
+        const a=Math.random()*Math.PI*2, s=2+Math.random()*3.5;
+        coinParts.push({ x,y, vx:Math.cos(a)*s, vy:Math.sin(a)*s-1, g:0.12+Math.random()*0.06, s:6+Math.random()*5, r:Math.random()*Math.PI, life:60+Math.random()*30 });
+      }
+      if (!coinsActive) { coinsActive = true; requestAnimationFrame(loopCoins); }
+    }
+    function loopCoins(){
+      ctx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
+      if (confettiParts.length){ /* redesenha confetti */ }
+      coinParts.forEach(c=>{ c.vy+=c.g; c.x+=c.vx; c.y+=c.vy; c.r+=0.04; c.life--;
+        ctx.save(); ctx.translate(c.x,c.y); ctx.rotate(c.r);
+        ctx.beginPath(); ctx.arc(0,0,c.s,0,Math.PI*2); ctx.closePath();
+        ctx.fillStyle='rgba(255,215,0,0.95)'; ctx.fill();
+        ctx.lineWidth=1; ctx.strokeStyle='rgba(255,235,120,0.9)'; ctx.stroke();
+        ctx.beginPath(); ctx.arc(-c.s/3,-c.s/3,c.s/3,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.fill();
+        ctx.restore();
+      });
+      coinParts = coinParts.filter(c => c.life>0 && c.y < innerHeight+60);
+      if (confettiParts.length || coinParts.length) requestAnimationFrame(loopCoins); else coinsActive=false;
+    }
+    function coinsForElement(el){
+      const r = el.getBoundingClientRect();
+      const x = r.left + r.width * 0.82, y = r.top + r.height * 0.5;
+      coinsBurstAt(x, y, 26);
+    }
+
+    /* Etapa 6 */
+    const b1 = document.getElementById('b1'), b2 = document.getElementById('b2'), b3 = document.getElementById('b3'), bonusNote = document.getElementById('bonusNote');
+    function boldAfterTyping(el){
+      let txt = el.textContent;
+      txt = txt.replace('plano Trimestral','<strong>plano Trimestral</strong>').replace('Semestral','<strong>Semestral</strong>').replace('Anual','<strong>Anual</strong>')
+               .replace('+15 dias','<span class="gold">+15 dias</span>').replace('+1 mês','<span class="gold">+1 mês</span>').replace('+2 meses','<span class="gold">+2 meses</span>');
+      el.innerHTML = txt;
+    }
+    async function typeWithCoins(el, text, triggerPhrase){
+      await typeWriter(el, text, { speed:48, targetPhrase:triggerPhrase, onWord:()=>coinsForElement(el) });
+      boldAfterTyping(el);
+    }
+    async function startStep6(){
+      [b1,b2,b3,bonusNote].forEach(el=> el.textContent='');
+      const btn = document.getElementById('s6next'); btn.classList.remove('show'); btn.classList.add('hidden');
+      const lines = [
+        'Além dos 70% de desconto, ao contratar o plano Trimestral você ganha +15 dias',
+        'No Semestral você ganha +1 mês.',
+        'Para o Anual, você ganha +2 meses.'
+      ];
+      await typeWithCoins(b1, lines[0], '+15 dias'); await sleep(300);
+      await typeWithCoins(b2, lines[1], '+1 mês'); await sleep(300);
+      await typeWithCoins(b3, lines[2], '+2 meses'); await sleep(400);
+      await typeWriter(bonusNote, 'Essa condição especial ficará disponível somente este ano de 2025, e você pode contratar para iniciar depois!', {speed:50});
+      await sleep(300); btn.classList.remove('hidden'); requestAnimationFrame(()=>btn.classList.add('show'));
+    }
+
+    /* Navegação base */
+    const steps = ['step1','step2','step3','step4','step5','step6','step7a','step7b','step7'];
+    function show(id){ steps.forEach(s=>document.getElementById(s).classList.toggle('hidden', s!==id)); }
+
+    /* STEP 1 */
+    const s1text = document.getElementById('s1text'), unlockBtn = document.getElementById('unlockBtn');
+    (async ()=>{
+      show('step1');
+      logStepView('step1');
+      await typeWriter(s1text, '⚠️ATENÇÃO! Você acaba de acessar à oferta secreta da Consultoria Online.', { speed:56, targetPhrase:'Consultoria Online', onWord:()=>burstConfetti() });
+      unlockBtn.classList.remove('hidden');
+    })();
+
+    /* Cadeado */
+const overlay = document.getElementById('overlay');
+const lock = document.getElementById('lock');
+
+unlockBtn.addEventListener('click', async ()=>{
+  await logEvent('unlock_clicked');
+  overlay.classList.add('show'); await sleep(80);
+  lock.classList.add('show'); await sleep(1000);
+  lock.classList.remove('show'); overlay.classList.remove('show');
+  await sleep(300);
+  show('step2'); logStepView('step2');
+});
+
+    /* STEP 2 */
+    const nomeEl = document.getElementById('nome'), s2next = document.getElementById('s2next');
+    nomeEl.addEventListener('input', ()=>{
+      const v = nomeEl.value.trim();
+      if(v.length>=1) s2next.classList.remove('hidden'); else s2next.classList.add('hidden');
+      s2next.disabled = v.length < 2;
+    });
+s2next.addEventListener('click', ()=>{
+  if(s2next.disabled) return;
+  const nome = nomeEl.value.trim();
+
+  try { localStorage.setItem('lead_name', nome); } catch(_){}
+  logEvent('name_captured', { name:nome });
+
+  show('step3'); startStep3();
+  logStepView('step3');
+});
+
+    /* STEP 3 */
+    const s3title = document.getElementById('s3title'), priceList = document.getElementById('priceList'), totalRow = document.getElementById('totalRow'), halfMsg = document.getElementById('halfMsg'), s3next = document.getElementById('s3next');
+    const items = [['Plano Alimentar','R$ 350'],['App de Treino com Vídeos','R$ 300'],['Suporte Médico','R$ 900'],['Suporte 24h WhatsApp','R$ 150']];
+    async function startStep3(){
+      const nome = nomeEl.value.trim();
+
+      
+      await typeWriter(s3title, `Seja bem-vindo, ${nome}. Se eu fosse cobrar pelo que eu entrego, seria assim... 👇`, {speed:60});
+      priceList.innerHTML=''; for(let i=0;i<items.length;i++){ const row=document.createElement('div'); row.className='price-item';
+        row.innerHTML = `<div class="price-left">${items[i][0]}:</div><div class="price-right">${items[i][1]}</div>`; priceList.appendChild(row); await sleep(3100); row.classList.add('show'); }
+      await sleep(500); totalRow.classList.add('show'); await sleep(800);
+      await typeWriter(halfMsg,'🚨 Mas calma! Esse é o valor que eu entrego, Você não vai pagar nem a metade disto...',{speed:58});
+      [...document.querySelectorAll('.price-right')].forEach((el,idx)=>{ setTimeout(()=>el.parentElement.classList.add('strike'), idx*150); });
+      setTimeout(()=> totalRow.classList.add('strike'), 600);
+      [...document.querySelectorAll('.price-item')].forEach((el,idx)=>{ setTimeout(()=>el.classList.add('strike'), idx*150); });
+      await sleep(700); s3next.classList.remove('hidden');
+    }
+    s3next.addEventListener('click', ()=>{ logEvent('s3next_clicked'); show('step4'); startStep4(); logStepView('step4'); });
+
+    /* STEP 4 */
+    const s4text = document.getElementById('s4text'), alertao = document.getElementById('alertao'), s4more = document.getElementById('s4more'), s4next = document.getElementById('s4next');
+    async function startStep4(){
+      const step4 = document.getElementById('step4'); step4.classList.remove('show-cta');
+      await typeWriter(s4text,'Minha consultoria custa R$ 700 e agora, estou lançando um formato mais acessível, que dispensa a consulta de vídeo...',{speed:60});
+      await sleep(300); alertao.style.opacity=1; await sleep(600);
+      await typeWriter(s4more,'Neste novo formato, você responderá um formulário com as mesmas perguntas da consulta.',{speed:60});
+      await sleep(400); step4.classList.add('show-cta');
+    }
+ s4next.addEventListener('click', ()=>{
+  // 1️⃣ registra o clique do botão da etapa 4
+  logEvent('s4next_clicked');
+
+  // 2️⃣ mostra a próxima etapa e registra visualização da etapa 5
+  show('step5');
+  logStepView('step5');
+
+  // 3️⃣ mantém seu efeito visual existente
+  const icon = document.getElementById('bonusIcon'),
+        text = document.getElementById('s5text'),
+        wrap = document.getElementById('s5wrap');
+
+  [icon,text,wrap].forEach((el,i)=>{
+    el.classList.remove('fadein','fadein-del-1','fadein-del-2');
+    void el.offsetWidth; // força o reflow
+    el.classList.add(i===0?'fadein':i===1?'fadein-del-1':'fadein-del-2');
+  });
+});
+
+    /* STEP 5 */
+    document.getElementById('s5next').addEventListener('click', ()=>{ logEvent('s5next_clicked'); show('step6'); startStep6(); logStepView('step6'); });
+
+    /* STEP 7a – typewriter + reveal buttons */
+    const s7aText = document.getElementById('s7aText'), s7ayes = document.getElementById('s7ayes'), s7ano = document.getElementById('s7ano');
+    async function startStep7a(){
+      s7ayes.classList.add('hidden'); s7ano.classList.add('hidden'); s7aText.textContent='';
+      const q = 'Você acredita que essa Consultoria poderá te ajudar a chegar ao seu objetivo?';
+      await typeWriter(s7aText, q, {speed:60});
+      s7ayes.classList.remove('hidden'); s7ano.classList.remove('hidden');
+    }
+  document.getElementById('s6next').addEventListener('click', ()=>{ logEvent('s6next_clicked'); show('step7a'); startStep7a(); logStepView('step7a'); });
+    s7ayes.addEventListener('click', ()=>{ logEvent('s7a_answer', {ans:'sim'}); show('step7b'); startStep7b(); logStepView('step7b'); });
+    s7ano .addEventListener('click', ()=>{ logEvent('s7a_answer', {ans:'talvez'}); show('step7b'); startStep7b(); logStepView('step7b'); });
+
+    /* STEP 7b – typewriter + reveal buttons */
+    const s7bText = document.getElementById('s7bText'), s7byes = document.getElementById('s7byes'), s7bno = document.getElementById('s7bno');
+    async function startStep7b(){
+      s7byes.classList.add('hidden'); s7bno.classList.add('hidden'); s7bText.textContent='';
+      const q = 'Você está disposto a fazer diferente em 2026?';
+      await typeWriter(s7bText, q, {speed:60});
+      s7byes.classList.remove('hidden'); s7bno.classList.remove('hidden');
+    }
+    s7byes.addEventListener('click', ()=>{ logEvent('s7b_answer', {ans:'sim'}); show('step7'); startStep7(); logStepView('step7'); });
+    s7bno .addEventListener('click', ()=>{ logEvent('s7b_answer', {ans:'talvez'}); show('step7'); startStep7(); logStepView('step7'); });
+
+    /* STEP 7 (final) – typewriter + reveal links */
+    async function startStep7(){
+      const nome = nomeEl.value.trim();
+      const s7title = document.getElementById('s7title');
+      const s7actions = document.getElementById('s7actions');
+      s7actions.classList.add('hidden'); s7title.textContent='';
+      await typeWriter(s7title, `Tudo bem, ${nome}. Está preparado para acessar os planos da Consultoria?`, {speed:60});
+      s7actions.classList.remove('hidden');
+    }
+  </script>
+
+<script>
+const s7yesLink = document.getElementById('s7yesLink');
+const s7noLink  = document.getElementById('s7noLink');
+
+s7yesLink.addEventListener('click', ()=>{
+  const nome = localStorage.getItem('lead_name') || (document.getElementById('nome')?.value.trim() || '');
+  logEvent('final_choice', { choice:'sim', name:nome });
+});
+
+s7noLink.addEventListener('click', ()=>{
+  const nome = localStorage.getItem('lead_name') || (document.getElementById('nome')?.value.trim() || '');
+  logEvent('final_choice', { choice:'nao', name:nome });
+});
+</script>
+
+</body>
 </html>
