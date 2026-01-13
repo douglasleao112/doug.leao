@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Iron Society</title>
+
+  <style>
+    :root { color-scheme: dark; }
+    html, body{
+      height:100%;
+      margin:0;
+      background:#000;
+      font-family:"Times New Roman", Times, serif;
+      overflow:hidden;
+      -webkit-text-size-adjust:100%;
+    }
+
+    .wrap{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:24px;
+      box-sizing:border-box;
+    }
+
+    .stack{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:16px;
+      width:100%;
+      max-width:900px;
+    }
+
+    .fade{
+      opacity:0;
+      transition: opacity 1400ms ease;
+      user-select:none;
+      text-wrap: balance;
+    }
+    .fade.show{ opacity:1; }
+
+    .verse{
+      font-size: clamp(18px, 3.6vw, 38px);
+      line-height: 1.25;
+      font-style: italic;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .ref{
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      color: rgba(255,255,255,0.62);
+      margin-top: -4px;
+    }
+
+    .instruction{
+      font-size: clamp(18px, 3.2vw, 34px);
+      line-height: 1.25;
+      font-style: italic;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .qrWrap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-top: 4px;
+    }
+
+    /* QR pequeno e discreto */
+    .qr{
+      width: 92px;
+      height: 92px;
+      opacity: 0.82;
+      border-radius: 2px;
+      image-rendering: pixelated;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.55);
+    }
+
+    /* Em telas muito pequenas, reduzir ainda mais */
+    @media (max-width: 360px){
+      .qr{ width: 78px; height: 78px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap" aria-label="Iron Society">
+    <section class="stack">
+      <div id="verse" class="fade verse">
+        "Portanto, deixará o homem seu pai e sua mãe, e apegar-se-á à sua mulher, e serão ambos uma só carne."
+      </div>
+
+      <div id="ref" class="fade ref">Gênesis 2:24</div>
+
+      <div id="instruction" class="fade instruction">
+        “Nenhuma decisão relevante é tomada sozinho.<br>
+        Prossiga apenas com quem caminha ao seu lado.”
+      </div>
+
+      <div id="qrWrap" class="fade qrWrap" aria-hidden="true">
+        <img class="qr" src="https://i.imgur.com/33Defql.png" alt="">
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const $verse = document.getElementById("verse");
+    const $ref = document.getElementById("ref");
+    const $instruction = document.getElementById("instruction");
+    const $qrWrap = document.getElementById("qrWrap");
+
+    const show = (el) => el.classList.add("show");
+    const hide = (el) => el.classList.remove("show");
+
+    const REF_DELAY_MS = 1000;      // 1s após o verso
+    const VERSE_HOLD_MS = 15000;     // mantém verso/ref por 5s
+    const NEXT_FADE_GAP = 1000;      // respiro pequeno entre cenas
+
+    (function init(){
+      show($verse);
+      setTimeout(() => {
+        show($ref);
+      }, REF_DELAY_MS);
+     setTimeout(() => {
+        hide($verse);
+        hide($ref);
+
+        setTimeout(() => {
+          show($instruction);
+
+         setTimeout(() => {
+            show($qrWrap);
+          }, 900);
+
+        }, NEXT_FADE_GAP);
+
+      }, VERSE_HOLD_MS);
+    })();
+  </script>
+</body>
+</html>
