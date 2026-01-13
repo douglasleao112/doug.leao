@@ -52,13 +52,12 @@
       text-wrap: balance;
     }
 
-    /* ✅ garante que iOS não estilize como “telefone/link” */
-    .phrase, .phrase *{
-      text-decoration: none !important;
-      -webkit-text-decoration: none !important;
-      -webkit-text-decoration-line: none !important;
-      pointer-events: none;
-    }
+.phrase, .phrase *{
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  -webkit-text-decoration-line: none !important;
+  pointer-events: none;
+}
 
     /* Campo quadrado, linha fina, discreto */
     .code{
