@@ -31,79 +31,43 @@
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:18px;
+      gap:16px;
       width:100%;
-      max-width:820px;
+      max-width:520px;
     }
 
-    .fade{
-      opacity:0;
-      transition: opacity 1400ms ease;
+    .phrase{
+      font-size: clamp(22px, 4.2vw, 44px);
+      line-height:1.2;
+      font-style: italic;
+      color:#f2f2f2;
       user-select:none;
       text-wrap: balance;
     }
-    .fade.show{ opacity:1; }
 
-    .intro{
-      font-size: clamp(22px, 4.2vw, 44px);
-      font-style: italic;
-      line-height: 1.2;
+    /* Campo quadrado, linha fina, discreto */
+    .code{
+      width: 109px;
+      height: 44px;
+      box-sizing:border-box;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 2px;
+      outline: none;
       color: rgba(255,255,255,0.92);
-    }
-.pairRow{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap: 12px;             
-  width:100%;
-  flex-wrap: nowrap;    
-}
-
-    .swap{
-      font-size: 16px;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 0.06em;
-      user-select:none;
+      font-family:"Times New Roman", Times, serif;
+      font-size: 18px;
+      letter-spacing: 0.22em;
+      text-align:center;
+      padding: 0 12px;
+      caret-color: rgba(255,255,255,0.65);
     }
 
-    /* Botões minimalistas, aço/ferro, quadrados */
-.btn{
-  width: clamp(140px, 42vw, 220px);
-  padding: 10px 12px;
-  border-radius: 2px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: linear-gradient(145deg, rgba(190,190,190,0.18), rgba(90,90,90,0.18));
-  color: rgba(255,255,255,0.90);
-  font-family:"Times New Roman", Times, serif;
-  font-size: 17px;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  user-select:none;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.10),
-    inset 0 -1px 0 rgba(0,0,0,0.35),
-    0 8px 18px rgba(0,0,0,0.55);
-  transition: transform 120ms ease, background 300ms ease, border-color 300ms ease;
-}
-
-.stack{
-  overflow: visible;
-}
-    .btn:hover{
-      background: linear-gradient(145deg, rgba(210,210,210,0.20), rgba(110,110,110,0.20));
-      border-color: rgba(255,255,255,0.24);
-    }
-    .btn:active{ transform: translateY(1px); }
-
-    /* Texto final */
-    .finalText{
-      font-size: clamp(22px, 4vw, 46px);
-      font-style: italic;
-      line-height: 1.2;
-      color: rgba(255,255,255,0.92);
+    .code:focus{
+      border-color: rgba(255,255,255,0.34);
     }
 
-    /* Botão avançar final */
+    /* Botão quadrado, pequeno, aço/ferro. Só aparece quando correto */
     .advance{
       opacity:0;
       pointer-events:none;
@@ -122,7 +86,7 @@
         inset 0 1px 0 rgba(255,255,255,0.15),
         inset 0 -1px 0 rgba(0,0,0,0.35),
         0 6px 14px rgba(0,0,0,0.6);
-      transition: opacity 1200ms ease;
+      transition: opacity 1100ms ease;
     }
     .advance.show{
       opacity:1;
@@ -135,108 +99,74 @@
 <body>
   <main class="wrap" aria-label="Iron Society">
     <section class="stack">
-      <div id="intro" class="fade intro">Conhecereis a verdade e a verdade vos libertará.</div>
+      <div class="phrase">01000110 01000101 01010010 01010010 01001111</div>
 
-      <div id="pair" class="fade" aria-live="polite"></div>
+      <!-- sem placeholder, só números -->
+      <input
+        id="code"
+        class="code"
+        type="tel"
+        inputmode="numeric"
+        autocomplete="one-time-code"
+        autocapitalize="off"
+        autocorrect="off"
+        spellcheck="false"
+        aria-label="Código"
+      />
 
-      <div id="finalText" class="fade finalText"></div>
-      <a id="advance" class="advance" href="https://www.google.com" rel="noopener">Avançar</a>
+      <a id="advance" class="advance" href="/society/etapa4-c1dd89sdqasdahhçasapi12d19456hgqc11hkç1" rel="noopener">Avançar</a>
     </section>
   </main>
 
   <script>
     // Config
-    const NEXT_URL = "https://www.google.com";
+    const CORRECT = "FERRO";
+    const NEXT_URL = "society/etapa3-c1dd8917hd10211x19u21d8945645rthdf109g11hkç1";
 
-    const introMs = 7000;      // intro fica visível por 7s
-    const pairFadeDelay = 150; // pequeno delay pra ficar limpo
-    const finalButtonDelay = 2000;
-
-    const pairs = [
-      ["Bens materiais", "Liberdade"],
-      ["Tempo", "Dinheiro"],
-      ["Ativo", "Passivo"],
-      ["Gasto", "Investimento"],
-      ["Dívida", "Equity"],
-      ["Faturamento", "Lucro"]
-    ];
-
-    const $intro = document.getElementById("intro");
-    const $pair = document.getElementById("pair");
-    const $finalText = document.getElementById("finalText");
+    const $code = document.getElementById("code");
     const $advance = document.getElementById("advance");
     $advance.href = NEXT_URL;
 
-    function show(el){ el.classList.add("show"); }
-    function hide(el){ el.classList.remove("show"); }
-
-    function renderPair(i){
-      const [left, right] = pairs[i];
-      $pair.innerHTML = `
-        <div class="pairRow">
-          <button class="btn" type="button" data-side="left">${left}</button>
-          
-          <button class="btn" type="button" data-side="right">${right}</button>
-        </div>
-      `;
+    // Permitir somente dígitos
+    function digitsOnly(value){
+      return (value || "").replace(/\D+/g, "");
     }
 
-    let idx = -1;
+    function update(){
+      const v = digitsOnly($code.value);
+      if ($code.value !== v) $code.value = v;
 
- function nextPair(){
-  idx += 1;
+      if (v === CORRECT){
+        $advance.classList.add("show");
+      } else {
+        $advance.classList.remove("show");
+      }
+    }
 
-  if (idx >= pairs.length){
-    hide($pair);
-    $pair.innerHTML = "";
+    // Não acontece nada quando errado (sem mensagens, sem shake, sem alerta)
+    $code.addEventListener("input", update);
 
-    $finalText.textContent = "“Toda escolha revela um senhor.”";
-    show($finalText);
+    // Enter também avança, mas só se correto
+    $code.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        if (digitsOnly($code.value) === CORRECT) {
+          window.location.href = NEXT_URL;
+        }
+        // errado: não faz nada
+        e.preventDefault();
+      }
+    });
 
-    setTimeout(() => {
-      $advance.classList.add("show");
-    }, finalButtonDelay);
+    // Evita colar texto com letras
+    $code.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData("text");
+      $code.value = digitsOnly(text).slice(0, 16);
+      update();
+    });
 
-    return;
-  }
-
-  // prepara invisível
-  hide($pair);
-  renderPair(idx);
-
-  // força repaint para garantir o fade-in
-  void $pair.offsetWidth;
-
-  // fade-in do próximo
-  show($pair);
-}
-
-
-    // Clique em qualquer botão avança para o próximo par
-$pair.addEventListener("click", (e) => {
-  const btn = e.target.closest("button.btn");
-  if (!btn) return;
-
-  // inicia fade-out
-  hide($pair);
-
-  // espera o fade terminar antes de trocar
-  setTimeout(() => {
-    nextPair();
-  }, 1400); // mesmo tempo do fade
-});
-
-    // Fluxo: intro aparece -> fica 7s -> some -> pares aparecem
-    (function init(){
-      show($intro);
-
-      setTimeout(() => {
-        hide($intro);
-        setTimeout(() => {
-          nextPair();
-        }, pairFadeDelay);
-      }, introMs);
-    })();
-  </script>
+    // Inicial
+    update();
+    </script>
 </body>
 </html>
