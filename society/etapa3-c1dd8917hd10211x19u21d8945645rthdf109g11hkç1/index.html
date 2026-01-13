@@ -245,5 +245,104 @@
   }, { passive:false });
 })();
 </script>
+
+<script>
+(function(){
+  const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz4AR_VRHNWUO_LNYdzQ5yfghYEooEiMJFWm2yICuq_0u3PiRGmb-jdcD4z5ly82cex/exec";
+  const STEP_NAME = "etapa1"; // troque em cada página: etapa1..etapa7
+  const NEXT_URL = null; // ex: "/society/etapa2-.../" ou deixe null
+
+  const UTM_KEYS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","utm_id","utm_source_platform","utm_creative_format","utm_marketing_tactic"];
+
+  function getQuery(){
+    return new URLSearchParams(location.search);
+  }
+
+  function getOrCreateUserId(){
+    const k = "iron_uid";
+    let uid = localStorage.getItem(k);
+    if (!uid) {
+      uid = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ("uid_" + Math.random().toString(16).slice(2) + Date.now());
+      localStorage.setItem(k, uid);
+    }
+    return uid;
+  }
+
+  function persistUtmFirstTouch(){
+    const q = getQuery();
+    const storeKey = "iron_utm";
+    const saved = JSON.parse(localStorage.getItem(storeKey) || "{}");
+
+    // first-touch: só preenche se ainda não existe
+    UTM_KEYS.forEach(k => {
+      const v = q.get(k);
+      if (v && !saved[k]) saved[k] = v;
+    });
+
+    localStorage.setItem(storeKey, JSON.stringify(saved));
+    return saved;
+  }
+
+  function loadUtm(){
+    return JSON.parse(localStorage.getItem("iron_utm") || "{}");
+  }
+
+  function buildUrlWithParams(url){
+    if (!url) return null;
+    const base = new URL(url, location.origin);
+    const q = new URLSearchParams(base.search);
+
+    const uid = getOrCreateUserId();
+    q.set("uid", uid);
+
+    const utm = loadUtm();
+    Object.keys(utm).forEach(k => q.set(k, utm[k]));
+
+    base.search = q.toString();
+    return base.pathname + (base.search ? "?" + base.search : "");
+  }
+
+  function applyParamsToAdvanceLink(){
+    if (!NEXT_URL) return;
+    const a = document.getElementById("advance");
+    if (!a) return;
+    a.href = buildUrlWithParams(NEXT_URL);
+  }
+
+  async function sendEvent(payload){
+    const uid = getOrCreateUserId();
+    const utm = loadUtm();
+
+    const body = {
+      user_id: uid,
+      step: STEP_NAME,
+      utm,
+      payload: payload || {},
+      client_ts: new Date().toISOString(),
+      path: location.pathname
+    };
+
+    // keepalive ajuda a enviar mesmo se o usuário sair rápido
+    return fetch(WEBAPP_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      keepalive: true
+    }).catch(()=>{});
+  }
+
+  // 1) salva UTMs no primeiro toque
+  persistUtmFirstTouch();
+
+  // 2) garante botão avançar com UTMs + uid
+  applyParamsToAdvanceLink();
+
+  // 3) registra entrada na página
+  sendEvent({ type: "page_enter" });
+
+  // expõe helper pra etapas com respostas
+  window.__IRON_TRACK__ = { sendEvent, buildUrlWithParams };
+})();
+</script>
 </body>
 </html>
