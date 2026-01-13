@@ -348,7 +348,7 @@
 (function(){
   const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz4AR_VRHNWUO_LNYdzQ5yfghYEooEiMJFWm2yICuq_0u3PiRGmb-jdcD4z5ly82cex/exec";
   const STEP_NAME = "etapa4"; // troque em cada página: etapa1..etapa7
-  const NEXT_URL = null; // ex: "/society/etapa2-.../" ou deixe null
+  const NEXT_URL = "/society/etapa5-cdcchhasd10cdd89sdq123vbh1api1456hgqc11hkç1"; 
 
   const UTM_KEYS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","utm_id","utm_source_platform","utm_creative_format","utm_marketing_tactic"];
 
@@ -421,13 +421,12 @@
     };
 
     // keepalive ajuda a enviar mesmo se o usuário sair rápido
-    return fetch(WEBAPP_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-      keepalive: true
-    }).catch(()=>{});
-  }
+return fetch(WEBAPP_URL, {
+  method: "POST",
+  headers: { "Content-Type": "text/plain;charset=utf-8" },
+  body: JSON.stringify(body),
+  keepalive: true
+}).catch(()=>{});  }
 
   // 1) salva UTMs no primeiro toque
   persistUtmFirstTouch();
