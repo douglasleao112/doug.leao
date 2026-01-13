@@ -1,7 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; URL='https://chat.whatsapp.com/KbpOs0N7ZFn9MySdzRKD7B'" />
+  <meta charset="utf-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Iron Society</title>
+
+  <style>
+    :root { color-scheme: dark; }
+
+    html, body{
+      height:100%;
+      margin:0;
+      background:#000;
+      font-family:"Times New Roman", Times, serif;
+      overflow:hidden;
+      -webkit-text-size-adjust:100%;
+    }
+
+    .wrap{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:24px;
+      box-sizing:border-box;
+    }
+
+    .phrase{
+      max-width:900px;
+      font-size: clamp(22px, 4.5vw, 46px);
+      line-height:1.25;
+      font-style: italic;
+      color: rgba(255,255,255,0.95);
+      opacity:0;
+      transition: opacity 1600ms ease;
+      user-select:none;
+      text-wrap: balance;
+    }
+
+    .phrase.show{
+      opacity:1;
+    }
+  </style>
 </head>
+
+<body>
+  <main class="wrap" aria-label="Iron Society Reconhecimento">
+    <div id="phrase" class="phrase">
+      “Você não foi escolhido.<br>
+      Você foi reconhecido<br>
+      por honrar sua aliança.”
+    </div>
+  </main>
+
+  <script>
+    const REDIRECT_URL = "https://chat.whatsapp.com/KbpOs0N7ZFn9MySdzRKD7B";
+    const HOLD_TIME_MS = 5000;
+
+    const $phrase = document.getElementById("phrase");
+
+    // Fade-in imediato
+    requestAnimationFrame(() => {
+      $phrase.classList.add("show");
+    });
+
+    // Redireciona após 5 segundos
+    setTimeout(() => {
+      window.location.href = REDIRECT_URL;
+    }, HOLD_TIME_MS);
+  </script>
+</body>
 </html>
