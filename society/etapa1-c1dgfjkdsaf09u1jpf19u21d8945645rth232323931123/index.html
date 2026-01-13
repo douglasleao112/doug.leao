@@ -2,18 +2,25 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <title>Iron Society</title>
 
   <style>
     :root { color-scheme: dark; }
-
     html, body {
       height: 100%;
       margin: 0;
       background: #000;
-      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      font-family: "Times New Roman", Times, serif;
+      overflow: hidden;
+      -webkit-text-size-adjust: 100%;
     }
+
+    .phrase.special{
+  font-size: clamp(30px, 5vw, 52px);
+  line-height: 1.2;
+}
 
     .wrap{
       height:100%;
@@ -29,167 +36,283 @@
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap: 22px;
-      max-width: 720px;
+      gap: 14px;
+      max-width: 840px;
       width: 100%;
     }
 
     /* Relógio maior */
     .timer{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 34px;
-      letter-spacing: 0.12em;
+      font-size: 54px;
+      letter-spacing: 0.10em;
       opacity: 0.95;
       user-select: none;
+      font-variant-numeric: tabular-nums;
     }
 
-    /* Frase menor + fade mais lento */
+    /* Frase um pouco menor */
     .phrase{
-      font-size: clamp(18px, 3.6vw, 32px);
-      line-height: 1.3;
+      font-size: clamp(18px, 3.2vw, 30px);
+      line-height: 1.25;
       font-style: italic;
-      color: #f3f3f3;
+      color: #f2f2f2;
       opacity: 0;
-      transition: opacity 1200ms ease-in-out;
+      transition: opacity 1400ms ease;
       user-select: none;
       text-wrap: balance;
+      padding: 0 4px;
     }
+    .phrase.show{ opacity: 1; }
 
-    .phrase.show{
-      opacity: 1;
-    }
+    /* Botão aço/ferro */
+   .advance{
+  opacity: 0;
+  pointer-events: none;
+  margin-top: 12px;
+  padding: 8px 14px;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.22);
+  background:
+    linear-gradient(145deg,
+      rgba(190,190,190,0.22),
+      rgba(90,90,90,0.22)
+    );
+  color: rgba(255,255,255,0.9);
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    inset 0 -1px 0 rgba(0,0,0,0.35),
+    0 6px 14px rgba(0,0,0,0.6);
 
-    .advance{
-      display:none;
-      margin-top: 6px;
-      padding: 12px 20px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.06);
-      color: #fff;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      font-size: 14px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      user-select: none;
-    }
+  transition: opacity 1200ms ease; /* fade */
+}
 
-    .advance:hover{
-      background: rgba(255,255,255,0.10);
-    }
+.advance.show{
+  opacity: 1;
+  pointer-events: auto;
+}
+.advance:hover{
+  background:
+    linear-gradient(145deg,
+      rgba(210,210,210,0.26),
+      rgba(110,110,110,0.26)
+    );
+}
 
-    .advance:active{
-      transform: translateY(1px);
-    }
+.advance:active{
+  transform: translateY(1px);
+}
   </style>
 </head>
 
 <body>
-  <main class="wrap">
+  <main class="wrap" aria-label="Iron Society">
     <section class="stack">
       <div id="timer" class="timer">--:--:--</div>
       <div id="phrase" class="phrase"></div>
-      <a id="advance" class="advance" href="https://www.google.com" rel="noopener">
-        Avançar
-      </a>
+      <a id="advance" class="advance" href="https://www.google.com" rel="noopener">Avançar</a>
     </section>
   </main>
 
   <script>
-    const phrases = [
-      "A pressa é inimiga da perfeição.",
-      "Quem espera, sempre alcança.",
-      "A direção é mais importante que a velocidade.",
-      "Constância vence intensidade desorganizada.",
-      "Disciplina diária constrói o que motivação não sustenta.",
-      "Resultados duradouros são fruto de decisões repetidas, não de impulsos.",
-      "“Tudo tem o seu tempo determinado.” (Eclesiastes 3:1)",
-      "“Melhor é o fim das coisas do que o seu começo.” (Eclesiastes 7:8)",
-      "“Aquele que é fiel no pouco, também é fiel no muito.” (Lucas 16:10)",
-      "“Os planos bem elaborados levam à fartura.” (Provérbios 21:5)"
-    ];
+  const WINDOW_START_HOUR = 9;
+  const WINDOW_START_MIN  = 0;
+  const WINDOW_END_HOUR   = 11;
+  const WINDOW_END_MIN    = 0;
 
-    const specialPhrase = "Quem espera no Senhor, celebra a vitória.";
+  const ADVANCE_URL = "/etapa2-c1dgfjkdsaf09123f1x19u21d8945645rth223cc55map12vaa/";
+  const TIME_API_URL = "https://worldtimeapi.org/api/timezone/America/Sao_Paulo";
 
-    const $timer = document.getElementById("timer");
-    const $phrase = document.getElementById("phrase");
-    const $advance = document.getElementById("advance");
+  const phrases = [
+    "A pressa é inimiga da perfeição.",
+    "Quem espera, sempre alcança.",
+    "A direção é mais importante que a velocidade.",
+    "Constância vence intensidade desorganizada.",
+    "Disciplina diária constrói o que motivação não sustenta.",
+    "Resultados duradouros são fruto de decisões repetidas, não de impulsos.",
+    "“Tudo tem o seu tempo determinado.” (Eclesiastes 3:1)",
+    "“Melhor é o fim das coisas do que o seu começo.” (Eclesiastes 7:8)",
+    "“Aquele que é fiel no pouco, também é fiel no muito.” (Lucas 16:10)",
+    "“Os planos bem elaborados levam à fartura.” (Provérbios 21:5)"
+  ];
 
-    const pad2 = n => String(n).padStart(2, "0");
+  const specialPhrase = "Quem espera no Senhor, celebra a vitória.";
 
-    function inWindow(now){
-      return now.getHours() === 5;
+  const $timer = document.getElementById("timer");
+  const $phrase = document.getElementById("phrase");
+  const $advance = document.getElementById("advance");
+  $advance.href = ADVANCE_URL;
+
+  const pad2 = n => String(n).padStart(2, "0");
+
+  let serverEpochMs = null;
+  let basePerfMs = null;
+
+  // Controle da rotação
+  let rotationId = null;
+  let lastIndex = -1;
+
+  // Estado atual: dentro/fora da janela
+  let wasInWindow = null;
+
+  function nowFromServerMs(){
+    if (serverEpochMs == null || basePerfMs == null) return null;
+    const elapsed = performance.now() - basePerfMs;
+    return serverEpochMs + elapsed;
+  }
+
+  async function syncTime(){
+    try{
+      const res = await fetch(TIME_API_URL, { cache: "no-store" });
+      if(!res.ok) throw new Error("Falha ao buscar hora");
+      const data = await res.json();
+      serverEpochMs = data.unixtime * 1000;
+      basePerfMs = performance.now();
+    } catch(e){
+      serverEpochMs = null;
+      basePerfMs = null;
+      $timer.textContent = "--:--:--";
+      $advance.style.display = "none";
     }
+  }
 
-    function nextWindowStart(now){
-      const d = new Date(now);
-      d.setHours(5,0,0,0);
-      if (now >= d) d.setDate(d.getDate() + 1);
-      return d;
-    }
+  setInterval(syncTime, 60_000);
 
-    function windowEnd(now){
-      const d = new Date(now);
-      d.setHours(10,0,0,0);
-      return d;
-    }
+  function startOfWindowMs(epochMs){
+    const d = new Date(epochMs);
+    d.setHours(WINDOW_START_HOUR, WINDOW_START_MIN, 0, 0);
+    return d.getTime();
+  }
+  function endOfWindowMs(epochMs){
+    const d = new Date(epochMs);
+    d.setHours(WINDOW_END_HOUR, WINDOW_END_MIN, 0, 0);
+    return d.getTime();
+  }
+  function inWindow(epochMs){
+    const start = startOfWindowMs(epochMs);
+    const end = endOfWindowMs(epochMs);
+    return epochMs >= start && epochMs < end;
+  }
+  function nextWindowStartMs(epochMs){
+    const startToday = startOfWindowMs(epochMs);
+    if (epochMs < startToday) return startToday;
+    const d = new Date(startToday);
+    d.setDate(d.getDate() + 1);
+    return d.getTime();
+  }
 
-    function formatHMS(ms){
-      const t = Math.max(0, Math.floor(ms / 1000));
-      const h = Math.floor(t / 3600);
-      const m = Math.floor((t % 3600) / 60);
-      const s = t % 60;
-      return `${pad2(h)}:${pad2(m)}:${pad2(s)}`;
-    }
+  function formatHMS(ms){
+    const total = Math.max(0, Math.floor(ms / 1000));
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    return `${pad2(h)}:${pad2(m)}:${pad2(s)}`;
+  }
 
-    let lastIndex = -1;
+  function setPhrase(text){
+    $phrase.classList.remove("show");
+    setTimeout(() => {
+      $phrase.textContent = text;
+      $phrase.classList.add("show");
+    }, 700);
+  }
 
-    function setPhrase(text){
-      $phrase.classList.remove("show");
-      setTimeout(() => {
-        $phrase.textContent = text;
-        $phrase.classList.add("show");
-      }, 700);
-    }
+  function pickRandomPhrase(){
+    let idx = Math.floor(Math.random() * phrases.length);
+    if (idx === lastIndex) idx = (idx + 1) % phrases.length;
+    lastIndex = idx;
+    return phrases[idx];
+  }
 
-    function pickRandomPhrase(){
-      let i;
-      do {
-        i = Math.floor(Math.random() * phrases.length);
-      } while (i === lastIndex);
-      lastIndex = i;
-      return phrases[i];
-    }
-
-    function startRotation(){
+  function startRotation(){
+    stopRotation();
+    setPhrase(pickRandomPhrase());
+    rotationId = setInterval(() => {
+      const t = nowFromServerMs();
+      if (t == null) return;
+      if (inWindow(t)) return;
       setPhrase(pickRandomPhrase());
-      setInterval(() => {
-        if (!inWindow(new Date())) {
-          setPhrase(pickRandomPhrase());
-        }
-      }, 4000);
+    }, 4000);
+  }
+
+  function stopRotation(){
+    if (rotationId) {
+      clearInterval(rotationId);
+      rotationId = null;
+    }
+  }
+
+ let advanceTimeout = null;
+
+function enterWindowMode(){
+  stopRotation();
+
+  // Frase especial maior
+  $phrase.classList.add("special");
+  setPhrase(specialPhrase);
+
+  // Esconde relógio
+  $timer.style.display = "none";
+
+  // Garante botão invisível inicialmente
+  $advance.classList.remove("show");
+  if (advanceTimeout) clearTimeout(advanceTimeout);
+
+  // Fade-in após 2 segundos
+  advanceTimeout = setTimeout(() => {
+    $advance.classList.add("show");
+  }, 2000);
+}
+
+function exitWindowMode(){
+  if (advanceTimeout) {
+    clearTimeout(advanceTimeout);
+    advanceTimeout = null;
+  }
+
+  // Remove estilo especial
+  $phrase.classList.remove("special");
+
+  // Volta estado normal
+  $timer.style.display = "block";
+  $advance.classList.remove("show");
+  startRotation();
+}
+
+
+  function tick(){
+    const t = nowFromServerMs();
+    if (t == null) return;
+
+    const nowIn = inWindow(t);
+
+    // Se mudou de estado (entrou ou saiu da janela), aplica o modo correto
+    if (wasInWindow === null || nowIn !== wasInWindow) {
+      wasInWindow = nowIn;
+      if (nowIn) enterWindowMode();
+      else exitWindowMode();
     }
 
-    function tick(){
-      const now = new Date();
-
-      if (inWindow(now)) {
-        $timer.textContent = formatHMS(windowEnd(now) - now);
-        if ($phrase.textContent !== specialPhrase) {
-          setPhrase(specialPhrase);
-        }
-        $advance.style.display = "inline-flex";
-      } else {
-        $timer.textContent = formatHMS(nextWindowStart(now) - now);
-        $advance.style.display = "none";
-      }
+    // Atualiza relógio somente fora da janela
+    if (!nowIn) {
+      const next = nextWindowStartMs(t);
+      $timer.textContent = formatHMS(next - t);
     }
+  }
 
-    startRotation();
+  (async function init(){
+    await syncTime();
+    // força estado inicial correto
+    wasInWindow = null;
     tick();
     setInterval(tick, 250);
+  })();
   </script>
 </body>
 </html>
