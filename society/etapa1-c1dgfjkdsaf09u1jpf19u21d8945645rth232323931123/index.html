@@ -488,6 +488,12 @@ return fetch(WEBAPP_URL, {
 
   // expõe helper pra etapas com respostas
   window.__IRON_TRACK__ = { sendEvent, buildUrlWithParams };
+   setInterval(() => {
+    sendEvent({
+      type: "heartbeat",
+      every: "10s"
+    });
+  }, 10_000);
 })();
 </script>
 
