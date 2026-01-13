@@ -470,13 +470,12 @@ function exitWindowMode(){
     };
 
     // keepalive ajuda a enviar mesmo se o usuário sair rápido
-    return fetch(WEBAPP_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-      keepalive: true
-    }).catch(()=>{});
-  }
+return fetch(WEBAPP_URL, {
+  method: "POST",
+  headers: { "Content-Type": "text/plain;charset=utf-8" },
+  body: JSON.stringify(body),
+  keepalive: true
+}).catch(()=>{});
 
   // 1) salva UTMs no primeiro toque
   persistUtmFirstTouch();
