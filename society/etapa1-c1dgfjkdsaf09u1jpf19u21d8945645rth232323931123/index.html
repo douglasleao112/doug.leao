@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Iron Society</title>
+  <style>
+    :root{
+      --bg:#000;
+      --fg:#fff;
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.55);
+      --card:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.12);
+      --btn:#fff;
+      --btnText:#000;
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .wrap{
+      width:min(520px, 92vw);
+      text-align:center;
+      padding:22px 18px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border-radius:18px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+    }
+    .brand{
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-size:12px;
+      color:var(--muted2);
+      margin-bottom:14px;
+    }
+    .timer{
+      width:96px;
+      height:96px;
+      margin:0 auto 18px auto;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--card);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-variant-numeric: tabular-nums;
+      font-size:18px;
+      color:var(--muted);
+    }
+    .phrase{
+      min-height:72px;
+      font-size:18px;
+      line-height:1.45;
+      color:rgba(255,255,255,.9);
+      padding:0 6px;
+    }
+    .hint{
+      margin-top:14px;
+      font-size:12px;
+      color:var(--muted2);
+    }
+    .btn{
+      margin-top:18px;
+      display:inline-block;
+      padding:12px 18px;
+      border-radius:12px;
+      background:var(--btn);
+      color:var(--btnText);
+      text-decoration:none;
+      font-weight:700;
+      border:0;
+      cursor:pointer;
+      transform:translateY(0);
+      transition:transform .15s ease, opacity .15s ease;
+      opacity:1;
+    }
+    .btn:active{ transform:translateY(1px); }
+    .btn[aria-disabled="true"]{
+      opacity:.28;
+      pointer-events:none;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" role="main" aria-label="Iron Society - Etapa 1">
+    <div class="brand">IRON SOCIETY</div>
+
+    <!-- Cronômetro pequeno ao centro -->
+    <div id="timer" class="timer" aria-live="polite">--:--</div>
+
+    <!-- Frases rotativas -->
+    <div id="phrase" class="phrase" aria-live="polite"></div>
+
+    <div class="hint" id="hint"></div>
+
+    <!-- Botão avançar -->
+    <a id="advance" class="btn" href="https://www.google.com" target="_blank" rel="noopener noreferrer">
+      Avançar
+    </a>
+  </main>
+
+  <script>
+    // Configurações
+    const ADVANCE_URL = "https://www.google.com";
+    const WINDOW_START_HOUR = 5; // 05:00
+    const WINDOW_END_HOUR = 6;   // 06:00 (exclusivo)
+    const ROTATE_EVERY_MS = 3000;
+
+    // Defina aqui o horário de término do cronômetro regressivo (dentro da janela)
+    // Exemplo: contar até o fim da janela (06:00). Você pode alterar se quiser.
+    const COUNTDOWN_TO_END_OF_WINDOW = true;
+
+    const phrases = [
+      "A pressa é inimiga da perfeição.",
+      "Quem espera, sempre alcança.",
+      "A direção é mais importante que a velocidade.",
+      "Constância vence intensidade desorganizada.",
+      "Disciplina diária constrói o que motivação não sustenta.",
+      "Resultados duradouros são fruto de decisões repetidas, não de impulsos.",
+      "“Tudo tem o seu tempo determinado.” (Eclesiastes 3:1)",
+      "“Melhor é o fim das coisas do que o seu começo.” (Eclesiastes 7:8)",
+      "“Aquele que é fiel no pouco, também é fiel no muito.” (Lucas 16:10)",
+      "“Os planos bem elaborados levam à fartura.” (Provérbios 21:5)"
+    ];
+
+    const specialPhrase = "Quem espera no Senhor, celebra a vitória.";
+
+    const $timer = document.getElementById("timer");
+    const $phrase = document.getElementById("phrase");
+    const $hint = document.getElementById("hint");
+    const $advance = document.getElementById("advance");
+
+    $advance.href = ADVANCE_URL;
+
+    function pad2(n){ return String(n).padStart(2, "0"); }
+
+    function nowLocal(){
+      return new Date();
+    }
+
+    function isInWindow(d){
+      const h = d.getHours();
+      return h >= WINDOW_START_HOUR && h < WINDOW_END_HOUR;
+    }
+
+    function nextWindowStart(d){
+      const x = new Date(d);
+      x.setHours(WINDOW_START_HOUR, 0, 0, 0);
+      if (d >= x) {
+        x.setDate(x.getDate() + 1);
+      }
+      return x;
+    }
+
+    function windowEnd(d){
+      const x = new Date(d);
+      x.setHours(WINDOW_END_HOUR, 0, 0, 0);
+      return x;
+    }
+
+    function formatMMSS(ms){
+      const s = Math.max(0, Math.floor(ms / 1000));
+      const mm = Math.floor(s / 60);
+      const ss = s % 60;
+      return `${pad2(mm)}:${pad2(ss)}`;
+    }
+
+    // Cronômetro regressivo
+    function updateCountdown(){
+      const d = nowLocal();
+
+      if (isInWindow(d) && COUNTDOWN_TO_END_OF_WINDOW){
+        const end = windowEnd(d);
+        $timer.textContent = formatMMSS(end - d);
+        $hint.textContent = "Janela ativa: 05:00 às 06:00.";
+        $advance.setAttribute("aria-disabled", "false");
+      } else {
+        // Fora da janela, conta até a próxima janela (05:00)
+        const nxt = nextWindowStart(d);
+        $timer.textContent = formatMMSS(nxt - d);
+        $hint.textContent = "Acesso completo disponível diariamente às 05:00.";
+        // Se você quiser bloquear o botão fora da janela, ative a linha abaixo:
+        // $advance.setAttribute("aria-disabled", "true");
+        $advance.setAttribute("aria-disabled", "false");
+      }
+    }
+
+    // Frases rotativas a cada 3s (exceto na janela 05:00-06:00, que fixa a frase especial)
+    let lastIndex = -1;
+    function pickRandomPhrase(){
+      if (phrases.length === 1) return phrases[0];
+      let idx = Math.floor(Math.random() * phrases.length);
+      while (idx === lastIndex) idx = Math.floor(Math.random() * phrases.length);
+      lastIndex = idx;
+      return phrases[idx];
+    }
+
+    function updatePhrase(){
+      const d = nowLocal();
+      if (isInWindow(d)){
+        $phrase.textContent = specialPhrase;
+      } else {
+        $phrase.textContent = pickRandomPhrase();
+      }
+    }
+
+    // Inicializa
+    updateCountdown();
+    updatePhrase();
+
+    // Intervalos
+    setInterval(updateCountdown, 250);
+    setInterval(updatePhrase, ROTATE_EVERY_MS);
+  </script>
+</body>
+</html>
