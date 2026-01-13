@@ -123,7 +123,7 @@
 
   <script>
   // Config
-  const CORRECT = "ferro";
+  const CORRECT = "FERRO";
   const NEXT_URL = "/society/etapa4-c1dd89sdqasdahhçasapi12d19456hgqc11hkç1/";
 
   const $code = document.getElementById("code");
@@ -131,13 +131,13 @@
   $advance.href = NEXT_URL;
 
   // Normaliza: só letras, sem acento, minúsculo
-  function lettersOnly(value){
-    return (value || "")
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "") // remove acentos
-      .replace(/[^a-zA-Z]/g, "")       // remove tudo que não é letra
-      .toLowerCase();
-  }
+function lettersOnly(value){
+  return (value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .replace(/[^a-zA-Z]/g, "")       // apenas letras
+    .toUpperCase();                  // SEMPRE MAIÚSCULO
+}
 
   function update(){
     const clean = lettersOnly($code.value);
