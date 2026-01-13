@@ -102,71 +102,77 @@
       <div class="phrase">01000110 01000101 01010010 01010010 01001111</div>
 
       <!-- sem placeholder, só números -->
-      <input
-        id="code"
-        class="code"
-        type="tel"
-        inputmode="numeric"
-        autocomplete="one-time-code"
-        autocapitalize="off"
-        autocorrect="off"
-        spellcheck="false"
-        aria-label="Código"
-      />
+<input
+  id="code"
+  class="code"
+  type="text"
+  inputmode="text"
+  autocomplete="off"
+  autocapitalize="characters"
+  autocorrect="off"
+  spellcheck="false"
+  aria-label="Resposta"
+/>
 
       <a id="advance" class="advance" href="/society/etapa4-c1dd89sdqasdahhçasapi12d19456hgqc11hkç1/" rel="noopener">Avançar</a>
     </section>
   </main>
 
   <script>
-    // Config
-    const CORRECT = "FERRO";
-    const NEXT_URL = "/society/etapa4-c1dd89sdqasdahhçasapi12d19456hgqc11hkç1/";
+  // Config
+  const CORRECT = "ferro";
+  const NEXT_URL = "/society/etapa4-c1dd89sdqasdahhçasapi12d19456hgqc11hkç1/";
 
-    const $code = document.getElementById("code");
-    const $advance = document.getElementById("advance");
-    $advance.href = NEXT_URL;
+  const $code = document.getElementById("code");
+  const $advance = document.getElementById("advance");
+  $advance.href = NEXT_URL;
 
-    // Permitir somente dígitos
-    function digitsOnly(value){
-      return (value || "").replace(/\D+/g, "");
+  // Normaliza: só letras, sem acento, minúsculo
+  function lettersOnly(value){
+    return (value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // remove acentos
+      .replace(/[^a-zA-Z]/g, "")       // remove tudo que não é letra
+      .toLowerCase();
+  }
+
+  function update(){
+    const clean = lettersOnly($code.value);
+
+    if ($code.value !== clean) {
+      $code.value = clean;
     }
 
-    function update(){
-      const v = digitsOnly($code.value);
-      if ($code.value !== v) $code.value = v;
-
-      if (v === CORRECT){
-        $advance.classList.add("show");
-      } else {
-        $advance.classList.remove("show");
-      }
+    if (clean === CORRECT){
+      $advance.classList.add("show");
+    } else {
+      $advance.classList.remove("show");
     }
+  }
 
-    // Não acontece nada quando errado (sem mensagens, sem shake, sem alerta)
-    $code.addEventListener("input", update);
+  // Digitação
+  $code.addEventListener("input", update);
 
-    // Enter também avança, mas só se correto
-    $code.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        if (digitsOnly($code.value) === CORRECT) {
-          window.location.href = NEXT_URL;
-        }
-        // errado: não faz nada
-        e.preventDefault();
+  // Enter só funciona se correto
+  $code.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      if (lettersOnly($code.value) === CORRECT) {
+        window.location.href = NEXT_URL;
       }
-    });
-
-    // Evita colar texto com letras
-    $code.addEventListener("paste", (e) => {
       e.preventDefault();
-      const text = (e.clipboardData || window.clipboardData).getData("text");
-      $code.value = digitsOnly(text).slice(0, 16);
-      update();
-    });
+    }
+  });
 
-    // Inicial
+  // Colar texto: filtra letras
+  $code.addEventListener("paste", (e) => {
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData("text");
+    $code.value = lettersOnly(text);
     update();
-    </script>
+  });
+
+  // Inicial
+  update();
+</script>
 </body>
 </html>
