@@ -246,6 +246,27 @@
     }, 7000);
   }
 
+    // ✅ Trocar frase ao tocar/clicar na tela (fora da janela)
+  function onUserTapChangePhrase(e){
+    const t = nowFromServerMs();
+    if (t == null) return;
+
+    // Se estiver dentro da janela (03:00–06:00), não troca a frase especial
+    if (inWindow(t)) return;
+
+    // Evita trocar ao clicar no botão "Avançar"
+    if (e && (e.target?.closest?.("#advance"))) return;
+
+    setPhrase(pickRandomPhrase());
+  }
+
+  // pointerdown funciona bem em mobile e desktop
+  document.addEventListener("pointerdown", onUserTapChangePhrase, { passive: true });
+
+  // fallback extra (caso algum browser não dispare pointer)
+  document.addEventListener("touchstart", onUserTapChangePhrase, { passive: true });
+  document.addEventListener("mousedown", onUserTapChangePhrase, { passive: true });
+  
   function stopRotation(){
     if (rotationId) {
       clearInterval(rotationId);
