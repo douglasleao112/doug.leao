@@ -1,7 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; URL='/society/etapa1-c1dgfjkdsaf09u1jpf19u21d8945645rth232323931123'" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+
+      // Salva UTMs no localStorage
+      params.forEach((value, key) => {
+        if (key.startsWith("utm_")) {
+          localStorage.setItem(key, value);
+        }
+      });
+
+      // Recupera UTMs salvas
+      const utmParams = new URLSearchParams();
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("utm_")) {
+          utmParams.set(key, localStorage.getItem(key));
+        }
+      });
+
+      const baseUrl = "/society/etapa1-c1dgfjkdsaf09u1jpf19u21d8945645rth232323931123";
+      const finalUrl = utmParams.toString()
+        ? `${baseUrl}?${utmParams.toString()}`
+        : baseUrl;
+
+      window.location.replace(finalUrl);
+    })();
+  </script>
 </head>
 </html>
