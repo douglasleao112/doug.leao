@@ -4,14 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Iron Society</title>
+
   <style>
     :root { color-scheme: dark; }
+
     html, body {
       height: 100%;
       margin: 0;
       background: #000;
       font-family: ui-serif, Georgia, "Times New Roman", serif;
     }
+
     .wrap{
       height:100%;
       display:flex;
@@ -21,73 +24,80 @@
       padding: 24px;
       box-sizing:border-box;
     }
+
     .stack{
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap: 18px;
+      gap: 22px;
       max-width: 720px;
       width: 100%;
     }
-    /* Cronômetro pequeno */
+
+    /* Relógio maior */
     .timer{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: 22px;
-      letter-spacing: 0.08em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 34px;
+      letter-spacing: 0.12em;
       opacity: 0.95;
       user-select: none;
     }
-    /* Frase com fade */
+
+    /* Frase menor + fade mais lento */
     .phrase{
-      font-size: clamp(20px, 4.2vw, 40px);
-      line-height: 1.25;
+      font-size: clamp(18px, 3.6vw, 32px);
+      line-height: 1.3;
       font-style: italic;
       color: #f3f3f3;
       opacity: 0;
-      transition: opacity 650ms ease;
+      transition: opacity 1200ms ease-in-out;
       user-select: none;
       text-wrap: balance;
     }
-    .phrase.show{ opacity: 1; }
 
-    /* Botão avançar (só aparece 05:00–06:00) */
+    .phrase.show{
+      opacity: 1;
+    }
+
     .advance{
       display:none;
       margin-top: 6px;
-      padding: 12px 18px;
+      padding: 12px 20px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.18);
       background: rgba(255,255,255,0.06);
       color: #fff;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       font-size: 14px;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
       cursor: pointer;
       user-select: none;
     }
-    .advance:hover{ background: rgba(255,255,255,0.10); }
-    .advance:active{ transform: translateY(1px); }
 
-    /* Só pra garantir que nada extra apareça */
-    .sr-only{
-      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
-      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    .advance:hover{
+      background: rgba(255,255,255,0.10);
+    }
+
+    .advance:active{
+      transform: translateY(1px);
     }
   </style>
 </head>
+
 <body>
-  <main class="wrap" aria-label="Iron Society">
+  <main class="wrap">
     <section class="stack">
       <div id="timer" class="timer">--:--:--</div>
-      <div id="phrase" class="phrase"> </div>
-      <a id="advance" class="advance" href="https://www.google.com" rel="noopener">Avançar</a>
+      <div id="phrase" class="phrase"></div>
+      <a id="advance" class="advance" href="https://www.google.com" rel="noopener">
+        Avançar
+      </a>
     </section>
   </main>
 
   <script>
-    // Frases (rotativas)
     const phrases = [
       "A pressa é inimiga da perfeição.",
       "Quem espera, sempre alcança.",
@@ -101,104 +111,85 @@
       "“Os planos bem elaborados levam à fartura.” (Provérbios 21:5)"
     ];
 
-    // Frase especial (só aparece exatamente entre 05:00 e 06:00)
     const specialPhrase = "Quem espera no Senhor, celebra a vitória.";
 
     const $timer = document.getElementById("timer");
     const $phrase = document.getElementById("phrase");
     const $advance = document.getElementById("advance");
 
-    // Helpers
     const pad2 = n => String(n).padStart(2, "0");
 
     function inWindow(now){
-      const h = now.getHours();
-      const m = now.getMinutes();
-      const s = now.getSeconds();
-      // Entre 05:00:00 (inclusive) e 06:00:00 (exclusive)
-      if (h === 5) return true;
-      if (h === 6 && m === 0 && s === 0) return false;
-      return false;
+      return now.getHours() === 5;
     }
 
     function nextWindowStart(now){
-      const start = new Date(now);
-      start.setHours(5,0,0,0);
-      if (now >= start) {
-        // Já passou das 05:00 hoje → próxima janela amanhã
-        start.setDate(start.getDate() + 1);
-      }
-      return start;
+      const d = new Date(now);
+      d.setHours(5,0,0,0);
+      if (now >= d) d.setDate(d.getDate() + 1);
+      return d;
     }
 
     function windowEnd(now){
-      const end = new Date(now);
-      end.setHours(6,0,0,0);
-      return end;
+      const d = new Date(now);
+      d.setHours(6,0,0,0);
+      return d;
     }
 
     function formatHMS(ms){
-      const total = Math.max(0, Math.floor(ms / 1000));
-      const h = Math.floor(total / 3600);
-      const m = Math.floor((total % 3600) / 60);
-      const s = total % 60;
+      const t = Math.max(0, Math.floor(ms / 1000));
+      const h = Math.floor(t / 3600);
+      const m = Math.floor((t % 3600) / 60);
+      const s = t % 60;
       return `${pad2(h)}:${pad2(m)}:${pad2(s)}`;
     }
 
-    // Frases aleatórias com fade a cada 4s
     let lastIndex = -1;
 
     function setPhrase(text){
-      // Fade out -> troca -> fade in
       $phrase.classList.remove("show");
-      window.setTimeout(() => {
+      setTimeout(() => {
         $phrase.textContent = text;
         $phrase.classList.add("show");
-      }, 420);
+      }, 700);
     }
 
     function pickRandomPhrase(){
-      if (phrases.length === 1) return phrases[0];
-      let idx = Math.floor(Math.random() * phrases.length);
-      if (idx === lastIndex) idx = (idx + 1) % phrases.length;
-      lastIndex = idx;
-      return phrases[idx];
+      let i;
+      do {
+        i = Math.floor(Math.random() * phrases.length);
+      } while (i === lastIndex);
+      lastIndex = i;
+      return phrases[i];
     }
 
     function startRotation(){
-      // Primeira frase imediata
       setPhrase(pickRandomPhrase());
-      // Troca a cada 4 segundos
-      window.setInterval(() => {
-        // Se estiver na janela, mantém a frase especial fixa
-        const now = new Date();
-        if (inWindow(now)) return;
-        setPhrase(pickRandomPhrase());
+      setInterval(() => {
+        if (!inWindow(new Date())) {
+          setPhrase(pickRandomPhrase());
+        }
       }, 4000);
     }
 
-    // Relógio regressivo
     function tick(){
       const now = new Date();
 
       if (inWindow(now)) {
-        // Dentro da janela: conta regressiva até 06:00 e mostra frase especial + botão
-        const end = windowEnd(now);
-        $timer.textContent = formatHMS(end - now);
-        if ($phrase.textContent !== specialPhrase) setPhrase(specialPhrase);
+        $timer.textContent = formatHMS(windowEnd(now) - now);
+        if ($phrase.textContent !== specialPhrase) {
+          setPhrase(specialPhrase);
+        }
         $advance.style.display = "inline-flex";
       } else {
-        // Fora da janela: conta regressiva até 05:00 e mantém rotação normal + esconde botão
-        const start = nextWindowStart(now);
-        $timer.textContent = formatHMS(start - now);
+        $timer.textContent = formatHMS(nextWindowStart(now) - now);
         $advance.style.display = "none";
       }
     }
 
-    // Init
     startRotation();
     tick();
-    window.setInterval(tick, 250); // suave e estável
+    setInterval(tick, 250);
   </script>
 </body>
 </html>
