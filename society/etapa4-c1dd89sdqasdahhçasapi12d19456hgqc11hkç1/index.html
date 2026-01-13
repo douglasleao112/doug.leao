@@ -147,100 +147,129 @@
     </section>
   </main>
 
-  <script>
-    // Config
-    const NEXT_URL = "/society/etapa5-cdcchhasd10cdd89sdq123vbh1api1456hgqc11hkç1";
+ 
+ <script>
+  // Config
+  const NEXT_URL = "/society/etapa5-cdcchhasd10cdd89sdq123vbh1api1456hgqc11hkç1";
 
-    const introMs = 7000;      // intro fica visível por 7s
-    const pairFadeDelay = 150; // pequeno delay pra ficar limpo
-    const finalButtonDelay = 2000;
+  const introMs = 7000;
+  const pairFadeDelay = 150;
+  const finalButtonDelay = 2000;
 
-    const pairs = [
-      ["Bens materiais", "Liberdade"],
-      ["Tempo", "Dinheiro"],
-      ["Ativo", "Passivo"],
-      ["Gasto", "Investimento"],
-      ["Dívida", "Equity"],
-      ["Faturamento", "Lucro"]
-    ];
+  const pairs = [
+    ["Bens materiais", "Liberdade"],
+    ["Tempo", "Dinheiro"],
+    ["Ativo", "Passivo"],
+    ["Gasto", "Investimento"],
+    ["Dívida", "Equity"],
+    ["Faturamento", "Lucro"]
+  ];
 
-    const $intro = document.getElementById("intro");
-    const $pair = document.getElementById("pair");
-    const $finalText = document.getElementById("finalText");
-    const $advance = document.getElementById("advance");
-    $advance.href = NEXT_URL;
+  const $intro = document.getElementById("intro");
+  const $pair = document.getElementById("pair");
+  const $finalText = document.getElementById("finalText");
+  const $advance = document.getElementById("advance");
+  $advance.href = NEXT_URL;
 
-    function show(el){ el.classList.add("show"); }
-    function hide(el){ el.classList.remove("show"); }
+  function show(el){ el.classList.add("show"); }
+  function hide(el){ el.classList.remove("show"); }
 
-    function renderPair(i){
-      const [left, right] = pairs[i];
-      $pair.innerHTML = `
-        <div class="pairRow">
-          <button class="btn" type="button" data-side="left">${left}</button>
-          
-          <button class="btn" type="button" data-side="right">${right}</button>
-        </div>
-      `;
+  function renderPair(i){
+    const [left, right] = pairs[i];
+    $pair.innerHTML = `
+      <div class="pairRow">
+        <button class="btn" type="button" data-side="left">${left}</button>
+        <button class="btn" type="button" data-side="right">${right}</button>
+      </div>
+    `;
+  }
+
+  // ✅ guarda cliques fora, não zera
+  const choices = [];
+  let idx = -1;
+  let locked = false; // evita duplo clique
+
+  function finishEtapa4(){
+    if (window.__IRON_TRACK__) {
+      window.__IRON_TRACK__.sendEvent({ type: "answers", choices });
     }
+  }
 
-    let idx = -1;
-
- function nextPair(){
-  idx += 1;
-
-  if (idx >= pairs.length){
+  function showFinal(){
     hide($pair);
     $pair.innerHTML = "";
 
     $finalText.textContent = "“Toda escolha revela um senhor.”";
     show($finalText);
 
+    // ✅ envia respostas quando termina
+    finishEtapa4();
+
     setTimeout(() => {
       $advance.classList.add("show");
     }, finalButtonDelay);
-
-    return;
   }
 
-  // prepara invisível
-  hide($pair);
-  renderPair(idx);
+  function nextPair(){
+    idx += 1;
 
-  // força repaint para garantir o fade-in
-  void $pair.offsetWidth;
+    if (idx >= pairs.length){
+      showFinal();
+      return;
+    }
 
-  // fade-in do próximo
-  show($pair);
-}
+    hide($pair);
+    renderPair(idx);
 
+    // força repaint para garantir fade-in
+    void $pair.offsetWidth;
+    show($pair);
 
-    // Clique em qualquer botão avança para o próximo par
-$pair.addEventListener("click", (e) => {
-  const btn = e.target.closest("button.btn");
-  if (!btn) return;
+    locked = false;
+  }
 
-  // inicia fade-out
-  hide($pair);
+  // ✅ só 1 listener de clique
+  $pair.addEventListener("click", (e) => {
+    const btn = e.target.closest("button.btn");
+    if (!btn || locked) return;
+    locked = true;
 
-  // espera o fade terminar antes de trocar
-  setTimeout(() => {
-    nextPair();
-  }, 1400); // mesmo tempo do fade
-});
+    const side = btn.dataset.side;
+    const label = btn.textContent.trim();
+    const pair = pairs[idx];
 
-    // Fluxo: intro aparece -> fica 7s -> some -> pares aparecem
-    (function init(){
-      show($intro);
+    choices.push({
+      index: idx,
+      side,
+      chosen: label,
+      left: pair[0],
+      right: pair[1],
+      at: new Date().toISOString()
+    });
 
+    hide($pair);
+    setTimeout(() => {
+      nextPair();
+    }, 1400);
+  });
+
+  // Fluxo inicial
+  (function init(){
+    show($intro);
+
+    setTimeout(() => {
+      hide($intro);
       setTimeout(() => {
-        hide($intro);
-        setTimeout(() => {
-          nextPair();
-        }, pairFadeDelay);
-      }, introMs);
-    })();
-  </script>
+        nextPair();
+      }, pairFadeDelay);
+    }, introMs);
+  })();
+</script>
+
+
+
+
+
    <script>
 /* =========================
    Proteções básicas (anti-curioso)
