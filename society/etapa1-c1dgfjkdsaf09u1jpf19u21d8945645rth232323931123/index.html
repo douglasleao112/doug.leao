@@ -314,5 +314,78 @@ function exitWindowMode(){
     setInterval(tick, 250);
   })();
   </script>
+
+  <script>
+/* =========================
+   Proteções básicas (anti-curioso)
+   - clique direito
+   - atalhos comuns (view-source/devtools/save)
+   - zoom: ctrl+wheel, pinça iOS, duplo toque
+   ========================= */
+
+(function hardenPage(){
+  // 1) Bloqueia menu do botão direito
+  document.addEventListener("contextmenu", (e) => e.preventDefault(), { capture:true });
+
+  // 2) Bloqueia seleção/arrasto (reforço via JS)
+  document.addEventListener("selectstart", (e) => e.preventDefault(), { capture:true });
+  document.addEventListener("dragstart", (e) => e.preventDefault(), { capture:true });
+
+  // 3) Bloqueia atalhos comuns de “ver código” / devtools
+  document.addEventListener("keydown", (e) => {
+    const key = (e.key || "").toLowerCase();
+
+    const ctrlOrCmd = e.ctrlKey || e.metaKey;
+
+    // F12
+    if (e.key === "F12") { e.preventDefault(); e.stopPropagation(); return; }
+
+    // Ctrl/Cmd + U (view source)
+    if (ctrlOrCmd && key === "u") { e.preventDefault(); e.stopPropagation(); return; }
+
+    // Ctrl/Cmd + S (save)
+    if (ctrlOrCmd && key === "s") { e.preventDefault(); e.stopPropagation(); return; }
+
+    // Ctrl/Cmd + P (print)
+    if (ctrlOrCmd && key === "p") { e.preventDefault(); e.stopPropagation(); return; }
+
+    // DevTools: Ctrl/Cmd+Shift+I / J / C
+    if (ctrlOrCmd && e.shiftKey && (key === "i" || key === "j" || key === "c")) {
+      e.preventDefault(); e.stopPropagation(); return;
+    }
+
+    // Ctrl/Cmd + ( + / - / 0 ) zoom
+    if (ctrlOrCmd && (key === "+" || key === "-" || key === "=" || key === "0")) {
+      e.preventDefault(); e.stopPropagation(); return;
+    }
+  }, { capture:true });
+
+  // 4) Bloqueia zoom via Ctrl + scroll (desktop)
+  window.addEventListener("wheel", (e) => {
+    if (e.ctrlKey) e.preventDefault();
+  }, { passive:false });
+
+  // 5) iOS Safari: bloqueia gestos (pinça)
+  // (gesture* existe no iOS Safari)
+  ["gesturestart","gesturechange","gestureend"].forEach(evt => {
+    window.addEventListener(evt, (e) => e.preventDefault(), { passive:false });
+  });
+
+  // 6) Bloqueia “double tap to zoom” (mobile)
+  let lastTouchEnd = 0;
+  document.addEventListener("touchend", (e) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      e.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive:false });
+
+  // 7) Bloqueia pinça via multi-touch (extra)
+  document.addEventListener("touchmove", (e) => {
+    if (e.touches && e.touches.length > 1) e.preventDefault();
+  }, { passive:false });
+})();
+</script>
 </body>
 </html>
