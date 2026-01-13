@@ -339,8 +339,14 @@ return fetch(WEBAPP_URL, {
   // 3) registra entrada na página
   sendEvent({ type: "page_enter" });
 
-  // expõe helper pra etapas com respostas
+ // expõe helper pra etapas com respostas
   window.__IRON_TRACK__ = { sendEvent, buildUrlWithParams };
+   setInterval(() => {
+    sendEvent({
+      type: "heartbeat",
+      every: "10s"
+    });
+  }, 10_000);
 })();
 </script>
 </body>
