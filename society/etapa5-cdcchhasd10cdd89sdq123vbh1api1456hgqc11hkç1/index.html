@@ -8,6 +8,7 @@
 
   <style>
     :root { color-scheme: dark; }
+
     html, body{
       height:100%;
       margin:0;
@@ -15,9 +16,9 @@
       font-family:"Times New Roman", Times, serif;
       overflow:hidden;
       -webkit-text-size-adjust:100%;
-        -webkit-user-select: none; user-select: none;
-  -webkit-touch-callout: none;
-  touch-action: none;
+      -webkit-user-select: none; user-select: none;
+      -webkit-touch-callout: none;
+      touch-action: none;
     }
 
     .wrap{
@@ -76,7 +77,6 @@
       margin-top: 4px;
     }
 
-    /* QR pequeno e discreto */
     .qr{
       width: 92px;
       height: 92px;
@@ -86,288 +86,372 @@
       box-shadow: 0 10px 22px rgba(0,0,0,0.55);
     }
 
-    /* Em telas muito pequenas, reduzir ainda mais */
     @media (max-width: 360px){
       .qr{ width: 78px; height: 78px; }
     }
+
+    /* ====== BOTÃO PADRÃO (aço/ferro) ====== */
+    .advance{
+      opacity:0;
+      pointer-events:none;
+      padding: 8px 14px;
+      border-radius: 2px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: linear-gradient(145deg, rgba(190,190,190,0.22), rgba(90,90,90,0.22));
+      color: rgba(255,255,255,0.9);
+      font-family:"Times New Roman", Times, serif;
+      font-size: 14px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      text-decoration:none;
+      user-select:none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.15),
+        inset 0 -1px 0 rgba(0,0,0,0.35),
+        0 6px 14px rgba(0,0,0,0.6);
+      transition: opacity 1100ms ease;
+    }
+    .advance.show{
+      opacity:1;
+      pointer-events:auto;
+    }
+    .advance:active{ transform: translateY(1px); }
+
+    /* Para usar o mesmo visual em <button> */
+    button.advance{
+      cursor:pointer;
+      appearance:none;
+      -webkit-appearance:none;
+    }
+
+    /* ====== CAMPO NUMÉRICO (218) ====== */
+    .code{
+      width: 109px;
+      height: 44px;
+      box-sizing:border-box;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 2px;
+      outline: none;
+      color: rgba(255,255,255,0.92);
+      font-family:"Times New Roman", Times, serif;
+      font-size: 18px;
+      letter-spacing: 0.22em;
+      text-align:center;
+      padding: 0 12px;
+      caret-color: rgba(255,255,255,0.65);
+    }
+    .code:focus{ border-color: rgba(255,255,255,0.34); }
   </style>
 </head>
 
 <body>
   <main class="wrap" aria-label="Iron Society">
- <section class="stack">
+    <section class="stack">
 
-  <!-- ETAPA 0: PERGUNTA -->
-  <div id="question" class="fade instruction show">
-    Você tem esposa ou companheira?
-  </div>
+      <!-- PERGUNTA INICIAL -->
+      <div id="question" class="fade instruction show">
+        Você tem esposa ou companheira?
+      </div>
 
-  <div id="answers" class="fade show" style="display:flex; gap:18px;">
-    <button id="yesBtn" class="advance show">Sim</button>
-    <button id="noBtn" class="advance show">Não</button>
-  </div>
+      <div id="answers" class="fade show" style="display:flex; gap:18px;">
+        <button id="yesBtn" class="advance show" type="button">Sim</button>
+        <button id="noBtn"  class="advance show" type="button">Não</button>
+      </div>
 
-  <!-- ETAPA SOLTEIRO -->
-  <div id="soloStep" style="display:none; flex-direction:column; gap:16px; align-items:center;">
+      <!-- FLUXO "NÃO" (SOLTEIRO) -->
+      <div id="soloStep" style="display:none; flex-direction:column; gap:16px; align-items:center; width:100%;">
+        <div id="soloMsg1" class="fade instruction">
+          “Nem toda aliança começa acompanhada.<br>
+          Mas toda aliança começa com responsabilidade.”
+        </div>
 
-    <div id="soloMsg1" class="fade instruction">
-      “Nem toda aliança começa acompanhada.<br>
-      Mas toda aliança começa com responsabilidade.”
-    </div>
+        <div id="soloMsg2" class="fade verse">
+          “Não é bom que o homem esteja só; far-lhe-ei uma ajudadora que lhe seja idônea.”
+        </div>
 
-    <div id="soloMsg2" class="fade verse">
-      “Não é bom que o homem esteja só; far-lhe-ei uma ajudadora que lhe seja idônea.”
-    </div>
+        <div id="soloRef" class="fade ref" style="color:rgba(255,255,255,0.45)">R2VuZXNpcw==</div>
 
-    <div class="ref" style="color:rgba(255,255,255,0.45)">R2VuZXNpcw==</div>
+        <input
+          id="soloCode"
+          class="code fade"
+          type="text"
+          inputmode="numeric"
+          autocomplete="off"
+          placeholder=""
+          aria-label="Código"
+        />
 
-    <input
-      id="soloCode"
-      class="code"
-      type="text"
-      inputmode="numeric"
-      autocomplete="off"
-      placeholder=""
-    />
+        <a id="soloAdvance" class="advance" href="/society/link-post-insta-solteiro" rel="noopener">
+          Avançar
+        </a>
+      </div>
 
-    <a id="soloAdvance" class="advance" href="/society/link-post-insta-solteiro">
-      Avançar
-    </a>
+      <!-- FLUXO "SIM" (CASADO) - SEU FLUXO ATUAL -->
+      <div id="marriedFlow" style="display:none; width:100%;">
+        <div id="verse" class="fade verse">
+          "Portanto, deixará o homem seu pai e sua mãe, e apegar-se-á à sua mulher, e serão ambos uma só carne."
+        </div>
 
-  </div>
+        <div id="ref" class="fade ref">Gênesis 2:24</div>
 
-  <!-- ETAPA CASADO (fluxo atual) -->
-  <div id="marriedFlow" style="display:none;">
-    <div id="verse" class="fade verse">
-      "Portanto, deixará o homem seu pai e sua mãe, e apegar-se-á à sua mulher, e serão ambos uma só carne."
-    </div>
+        <div id="instruction" class="fade instruction">
+          “Nenhuma decisão relevante é tomada sozinho."<br><br>
+          Este passo exige a presença da sua mulher.
+        </div>
 
-    <div id="ref" class="fade ref">Gênesis 2:24</div>
+        <div id="qrWrap" class="fade qrWrap" aria-hidden="true">
+          <img class="qr" src="https://i.imgur.com/33Defql.png" alt="">
+        </div>
+      </div>
 
-    <div id="instruction" class="fade instruction">
-      “Nenhuma decisão relevante é tomada sozinho."<br><br>
-      Este passo exige a presença da sua mulher.
-    </div>
-
-    <div id="qrWrap" class="fade qrWrap">
-      <img class="qr" src="https://i.imgur.com/33Defql.png" alt="">
-    </div>
-  </div>
-
-</section>
+    </section>
   </main>
 
   <script>
-    const $verse = document.getElementById("verse");
-    const $ref = document.getElementById("ref");
-    const $instruction = document.getElementById("instruction");
-    const $qrWrap = document.getElementById("qrWrap");
+    // ===== Elementos Pergunta =====
+    const $question = document.getElementById("question");
+    const $answers  = document.getElementById("answers");
+    const $yesBtn   = document.getElementById("yesBtn");
+    const $noBtn    = document.getElementById("noBtn");
+
+    // ===== Fluxo SIM (casado) =====
+    const $marriedFlow  = document.getElementById("marriedFlow");
+    const $verse        = document.getElementById("verse");
+    const $ref          = document.getElementById("ref");
+    const $instruction  = document.getElementById("instruction");
+    const $qrWrap       = document.getElementById("qrWrap");
+
+    // ===== Fluxo NÃO (solteiro) =====
+    const $soloStep    = document.getElementById("soloStep");
+    const $soloMsg1    = document.getElementById("soloMsg1");
+    const $soloMsg2    = document.getElementById("soloMsg2");
+    const $soloRef     = document.getElementById("soloRef");
+    const $soloCode    = document.getElementById("soloCode");
+    const $soloAdvance = document.getElementById("soloAdvance");
 
     const show = (el) => el.classList.add("show");
     const hide = (el) => el.classList.remove("show");
 
-    const REF_DELAY_MS = 1000;      // 1s após o verso
-    const VERSE_HOLD_MS = 10000;     // mantém verso/ref por 5s
-    const NEXT_FADE_GAP = 1000;      // respiro pequeno entre cenas
+    // Config do seu fluxo atual
+    const REF_DELAY_MS   = 1000;
+    const VERSE_HOLD_MS  = 10000;
+    const NEXT_FADE_GAP  = 1000;
 
-    (function init(){
-      show($verse);
+    function resetMarriedFlow(){
+      [$verse,$ref,$instruction,$qrWrap].forEach(hide);
+    }
+
+    function resetSoloFlow(){
+      [$soloMsg1,$soloMsg2,$soloRef,$soloCode].forEach(hide);
+      $soloAdvance.classList.remove("show");
+      $soloCode.value = "";
+    }
+
+    // ===== Clique SIM =====
+    $yesBtn.addEventListener("click", () => {
+      hide($question);
+      hide($answers);
+
+      $soloStep.style.display = "none";
+      resetSoloFlow();
+
+      $marriedFlow.style.display = "block";
+      resetMarriedFlow();
+
+      // Inicia seu fluxo (só agora)
+      setTimeout(() => show($verse), 150);
+
       setTimeout(() => {
         show($ref);
       }, REF_DELAY_MS);
-     setTimeout(() => {
+
+      setTimeout(() => {
         hide($verse);
         hide($ref);
 
         setTimeout(() => {
           show($instruction);
 
-         setTimeout(() => {
+          setTimeout(() => {
             show($qrWrap);
           }, 900);
 
         }, NEXT_FADE_GAP);
 
       }, VERSE_HOLD_MS);
-    })();
+    });
+
+    // ===== Clique NÃO =====
+    $noBtn.addEventListener("click", () => {
+      hide($question);
+      hide($answers);
+
+      $marriedFlow.style.display = "none";
+      resetMarriedFlow();
+
+      $soloStep.style.display = "flex";
+      resetSoloFlow();
+
+      // Cena 1: 7s
+      setTimeout(() => show($soloMsg1), 150);
+
+      setTimeout(() => {
+        hide($soloMsg1);
+
+        // Cena 2: verso + código + campo
+        setTimeout(() => {
+          show($soloMsg2);
+          show($soloRef);
+          show($soloCode);
+          // não dar focus automático (como você pediu)
+        }, 500);
+
+      }, 7000);
+    });
+
+    // ===== Validação 218 (somente números) =====
+    function digitsOnly(v){ return (v || "").replace(/\D+/g, ""); }
+
+    $soloCode.addEventListener("input", () => {
+      const clean = digitsOnly($soloCode.value);
+      if ($soloCode.value !== clean) $soloCode.value = clean;
+
+      if (clean === "218") $soloAdvance.classList.add("show");
+      else $soloAdvance.classList.remove("show");
+    });
+
   </script>
-   <script>
-/* =========================
-   Proteções básicas (anti-curioso)
-   - clique direito
-   - atalhos comuns (view-source/devtools/save)
-   - zoom: ctrl+wheel, pinça iOS, duplo toque
-   ========================= */
 
-(function hardenPage(){
-  // 1) Bloqueia menu do botão direito
-  document.addEventListener("contextmenu", (e) => e.preventDefault(), { capture:true });
+  <!-- ===== Seu script de proteções (igual) ===== -->
+  <script>
+  (function hardenPage(){
+    document.addEventListener("contextmenu", (e) => e.preventDefault(), { capture:true });
+    document.addEventListener("selectstart", (e) => e.preventDefault(), { capture:true });
+    document.addEventListener("dragstart", (e) => e.preventDefault(), { capture:true });
 
-  // 2) Bloqueia seleção/arrasto (reforço via JS)
-  document.addEventListener("selectstart", (e) => e.preventDefault(), { capture:true });
-  document.addEventListener("dragstart", (e) => e.preventDefault(), { capture:true });
+    document.addEventListener("keydown", (e) => {
+      const key = (e.key || "").toLowerCase();
+      const ctrlOrCmd = e.ctrlKey || e.metaKey;
 
-  // 3) Bloqueia atalhos comuns de “ver código” / devtools
-  document.addEventListener("keydown", (e) => {
-    const key = (e.key || "").toLowerCase();
+      if (e.key === "F12") { e.preventDefault(); e.stopPropagation(); return; }
+      if (ctrlOrCmd && key === "u") { e.preventDefault(); e.stopPropagation(); return; }
+      if (ctrlOrCmd && key === "s") { e.preventDefault(); e.stopPropagation(); return; }
+      if (ctrlOrCmd && key === "p") { e.preventDefault(); e.stopPropagation(); return; }
 
-    const ctrlOrCmd = e.ctrlKey || e.metaKey;
+      if (ctrlOrCmd && e.shiftKey && (key === "i" || key === "j" || key === "c")) {
+        e.preventDefault(); e.stopPropagation(); return;
+      }
 
-    // F12
-    if (e.key === "F12") { e.preventDefault(); e.stopPropagation(); return; }
+      if (ctrlOrCmd && (key === "+" || key === "-" || key === "=" || key === "0")) {
+        e.preventDefault(); e.stopPropagation(); return;
+      }
+    }, { capture:true });
 
-    // Ctrl/Cmd + U (view source)
-    if (ctrlOrCmd && key === "u") { e.preventDefault(); e.stopPropagation(); return; }
+    window.addEventListener("wheel", (e) => {
+      if (e.ctrlKey) e.preventDefault();
+    }, { passive:false });
 
-    // Ctrl/Cmd + S (save)
-    if (ctrlOrCmd && key === "s") { e.preventDefault(); e.stopPropagation(); return; }
-
-    // Ctrl/Cmd + P (print)
-    if (ctrlOrCmd && key === "p") { e.preventDefault(); e.stopPropagation(); return; }
-
-    // DevTools: Ctrl/Cmd+Shift+I / J / C
-    if (ctrlOrCmd && e.shiftKey && (key === "i" || key === "j" || key === "c")) {
-      e.preventDefault(); e.stopPropagation(); return;
-    }
-
-    // Ctrl/Cmd + ( + / - / 0 ) zoom
-    if (ctrlOrCmd && (key === "+" || key === "-" || key === "=" || key === "0")) {
-      e.preventDefault(); e.stopPropagation(); return;
-    }
-  }, { capture:true });
-
-  // 4) Bloqueia zoom via Ctrl + scroll (desktop)
-  window.addEventListener("wheel", (e) => {
-    if (e.ctrlKey) e.preventDefault();
-  }, { passive:false });
-
-  // 5) iOS Safari: bloqueia gestos (pinça)
-  // (gesture* existe no iOS Safari)
-  ["gesturestart","gesturechange","gestureend"].forEach(evt => {
-    window.addEventListener(evt, (e) => e.preventDefault(), { passive:false });
-  });
-
-  // 6) Bloqueia “double tap to zoom” (mobile)
-  let lastTouchEnd = 0;
-  document.addEventListener("touchend", (e) => {
-    const now = Date.now();
-    if (now - lastTouchEnd <= 300) {
-      e.preventDefault();
-    }
-    lastTouchEnd = now;
-  }, { passive:false });
-
-  // 7) Bloqueia pinça via multi-touch (extra)
-  document.addEventListener("touchmove", (e) => {
-    if (e.touches && e.touches.length > 1) e.preventDefault();
-  }, { passive:false });
-})();
-</script>
-
-
-<script>
-(function(){
-  const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz4AR_VRHNWUO_LNYdzQ5yfghYEooEiMJFWm2yICuq_0u3PiRGmb-jdcD4z5ly82cex/exec";
-  const STEP_NAME = "etapa5"; // troque em cada página: etapa1..etapa7
-  const NEXT_URL = null; 
-
-  const UTM_KEYS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","utm_id","utm_source_platform","utm_creative_format","utm_marketing_tactic"];
-
-  function getQuery(){
-    return new URLSearchParams(location.search);
-  }
-
-  function getOrCreateUserId(){
-    const k = "iron_uid";
-    let uid = localStorage.getItem(k);
-    if (!uid) {
-      uid = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ("uid_" + Math.random().toString(16).slice(2) + Date.now());
-      localStorage.setItem(k, uid);
-    }
-    return uid;
-  }
-
-  function persistUtmFirstTouch(){
-    const q = getQuery();
-    const storeKey = "iron_utm";
-    const saved = JSON.parse(localStorage.getItem(storeKey) || "{}");
-
-    // first-touch: só preenche se ainda não existe
-    UTM_KEYS.forEach(k => {
-      const v = q.get(k);
-      if (v && !saved[k]) saved[k] = v;
+    ["gesturestart","gesturechange","gestureend"].forEach(evt => {
+      window.addEventListener(evt, (e) => e.preventDefault(), { passive:false });
     });
 
-    localStorage.setItem(storeKey, JSON.stringify(saved));
-    return saved;
-  }
+    let lastTouchEnd = 0;
+    document.addEventListener("touchend", (e) => {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) e.preventDefault();
+      lastTouchEnd = now;
+    }, { passive:false });
 
-  function loadUtm(){
-    return JSON.parse(localStorage.getItem("iron_utm") || "{}");
-  }
+    document.addEventListener("touchmove", (e) => {
+      if (e.touches && e.touches.length > 1) e.preventDefault();
+    }, { passive:false });
+  })();
+  </script>
 
-  function buildUrlWithParams(url){
-    if (!url) return null;
-    const base = new URL(url, location.origin);
-    const q = new URLSearchParams(base.search);
+  <!-- ===== Seu tracking (igual) ===== -->
+  <script>
+  (function(){
+    const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbz4AR_VRHNWUO_LNYdzQ5yfghYEooEiMJFWm2yICuq_0u3PiRGmb-jdcD4z5ly82cex/exec";
+    const STEP_NAME = "etapa5";
+    const NEXT_URL = null;
 
-    const uid = getOrCreateUserId();
-    q.set("uid", uid);
+    const UTM_KEYS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","utm_id","utm_source_platform","utm_creative_format","utm_marketing_tactic"];
 
-    const utm = loadUtm();
-    Object.keys(utm).forEach(k => q.set(k, utm[k]));
+    function getQuery(){ return new URLSearchParams(location.search); }
 
-    base.search = q.toString();
-    return base.pathname + (base.search ? "?" + base.search : "");
-  }
+    function getOrCreateUserId(){
+      const k = "iron_uid";
+      let uid = localStorage.getItem(k);
+      if (!uid) {
+        uid = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ("uid_" + Math.random().toString(16).slice(2) + Date.now());
+        localStorage.setItem(k, uid);
+      }
+      return uid;
+    }
 
-  function applyParamsToAdvanceLink(){
-    if (!NEXT_URL) return;
-    const a = document.getElementById("advance");
-    if (!a) return;
-    a.href = buildUrlWithParams(NEXT_URL);
-  }
+    function persistUtmFirstTouch(){
+      const q = getQuery();
+      const storeKey = "iron_utm";
+      const saved = JSON.parse(localStorage.getItem(storeKey) || "{}");
 
-  async function sendEvent(payload){
-    const uid = getOrCreateUserId();
-    const utm = loadUtm();
+      UTM_KEYS.forEach(k => {
+        const v = q.get(k);
+        if (v && !saved[k]) saved[k] = v;
+      });
 
-    const body = {
-      user_id: uid,
-      step: STEP_NAME,
-      utm,
-      payload: payload || {},
-      client_ts: new Date().toISOString(),
-      path: location.pathname
-    };
+      localStorage.setItem(storeKey, JSON.stringify(saved));
+      return saved;
+    }
 
-    // keepalive ajuda a enviar mesmo se o usuário sair rápido
-return fetch(WEBAPP_URL, {
-  method: "POST",
-  headers: { "Content-Type": "text/plain;charset=utf-8" },
-  body: JSON.stringify(body),
-  keepalive: true
-}).catch(()=>{});  }
+    function loadUtm(){ return JSON.parse(localStorage.getItem("iron_utm") || "{}"); }
 
-  // 1) salva UTMs no primeiro toque
-  persistUtmFirstTouch();
+    function buildUrlWithParams(url){
+      if (!url) return null;
+      const base = new URL(url, location.origin);
+      const q = new URLSearchParams(base.search);
 
-  // 2) garante botão avançar com UTMs + uid
-  applyParamsToAdvanceLink();
+      const uid = getOrCreateUserId();
+      q.set("uid", uid);
 
-  // 3) registra entrada na página
-  sendEvent({ type: "page_enter" });
+      const utm = loadUtm();
+      Object.keys(utm).forEach(k => q.set(k, utm[k]));
 
- // expõe helper pra etapas com respostas
-  window.__IRON_TRACK__ = { sendEvent, buildUrlWithParams };
-   setInterval(() => {
-    sendEvent({
-      type: "heartbeat",
-      every: "10s"
-    });
-  }, 10_000);
-})();
-</script>
+      base.search = q.toString();
+      return base.pathname + (base.search ? "?" + base.search : "");
+    }
+
+    async function sendEvent(payload){
+      const uid = getOrCreateUserId();
+      const utm = loadUtm();
+
+      const body = {
+        user_id: uid,
+        step: STEP_NAME,
+        utm,
+        payload: payload || {},
+        client_ts: new Date().toISOString(),
+        path: location.pathname
+      };
+
+      return fetch(WEBAPP_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(body),
+        keepalive: true
+      }).catch(()=>{});
+    }
+
+    persistUtmFirstTouch();
+    sendEvent({ type: "page_enter" });
+
+    window.__IRON_TRACK__ = { sendEvent, buildUrlWithParams };
+
+    setInterval(() => {
+      sendEvent({ type: "heartbeat", every: "10s" });
+    }, 10_000);
+  })();
+  </script>
 
 </body>
 </html>
