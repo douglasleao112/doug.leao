@@ -1,0 +1,10 @@
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const nome = params.get("nome");
+
+  if (nome) {
+    const texto = `Olá, vim pela ${nome}, gostaria de saber sobre a consultoria`;
+    const url = `https://wa.me/5562984888498?text=${encodeURIComponent(texto)}`;
+    window.location.href = url;
+  }
+</script>
