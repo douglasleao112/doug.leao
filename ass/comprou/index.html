@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Redirecionando...</title>
+</head>
+<body>
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzzf52tLPPg6DnWi1NMtt7Dxo4ImKEWKNHqeebNT9s8KWpInCwhIymDP5N3UtCxOB4/exec";
+  const DESTINO = "https://forms.gle/osEkRBBwK2ng7B5Y6";
+
+  // Ex: /compra#Raphaela -> "Raphaela"
+  const nome = decodeURIComponent((window.location.hash || "").replace("#", "").trim());
+
+  async function salvarEIr() {
+    try {
+      if (nome) {
+        const urlSalvar = `${SCRIPT_URL}?utm=${encodeURIComponent(nome)}&aba=Compra`;
+
+        await fetch(urlSalvar, {
+          method: "GET",
+          mode: "no-cors"
+        });
+      }
+    } catch (error) {
+      console.error("Erro ao salvar na planilha:", error);
+    }
+
+    setTimeout(() => {
+      window.location.replace(DESTINO);
+    }, 400);
+  }
+
+  salvarEIr();
+</script>
+</body>
+</html>
