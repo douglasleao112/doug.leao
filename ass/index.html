@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planos de Assinatura</title>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #05060a;
+      --card: #0d1118;
+      --card-2: #101722;
+      --stroke: rgba(255, 255, 255, .10);
+      --stroke-2: rgba(255, 255, 255, .16);
+      --txt: #ffffff;
+      --muted: #a9b1bd;
+      --accent: #ff316b;
+      --accent-2: #ff4d7f;
+      --green: #00e676;
+      --blue: #38b6ff;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .35);
+      --radius: 24px;
+      --radius-lg: 30px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--txt);
+      font-family: 'Inter', Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(40vmax 40vmax at 10% 20%, #131c2c 0%, transparent 60%),
+        radial-gradient(35vmax 35vmax at 90% 10%, #121824 0%, transparent 60%),
+        radial-gradient(45vmax 45vmax at 30% 80%, #0b1324 0%, transparent 60%),
+        radial-gradient(30vmax 30vmax at 85% 75%, #111827 0%, transparent 60%),
+        #05060a;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -20vmax;
+      z-index: -1;
+      background:
+        radial-gradient(30vmax 30vmax at 20% 30%, #0d1b2a80 0%, transparent 65%),
+        radial-gradient(25vmax 25vmax at 80% 40%, #1b263b66 0%, transparent 65%),
+        radial-gradient(35vmax 35vmax at 40% 80%, #0d132066 0%, transparent 65%);
+      filter: blur(26px);
+      animation: floatBg 24s linear infinite alternate;
+    }
+
+    @keyframes floatBg {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      100% {
+        transform: translate(-3vw, 2vh) scale(1.04);
+      }
+    }
+
+    /* SLIDER TOPO */
+    .slider-container {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+      background: transparent;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 14px;
+    }
+
+    .slider-track {
+      display: flex;
+      width: max-content;
+      animation: scrollSlide 160s linear infinite;
+      will-change: transform;
+    }
+
+    .slider-track img {
+      width: 320px;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin: 0 5px;
+      filter: brightness(0.92);
+      transition: transform 0.4s ease, filter 0.4s ease;
+      flex-shrink: 0;
+    }
+
+    .slider-track img:hover {
+      transform: scale(1.04);
+      filter: brightness(1);
+    }
+
+    @keyframes scrollSlide {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 20px 16px 60px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .headline {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 10px;
+      line-height: 1.03;
+    }
+
+    .headline .txt {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      font-family: 'Archivo Black', Arial, sans-serif;
+      font-size: clamp(30px, 7vw, 48px);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+      padding: 0 .1em;
+    }
+
+    .headline .risk {
+      position: absolute;
+      z-index: 1;
+      left: 7%;
+      right: 7%;
+      height: clamp(8px, 2vw, 12px);
+      bottom: 10%;
+      background: var(--accent);
+      border-radius: 999px;
+      transform: rotate(-2deg);
+    }
+
+    .sub {
+      margin: 0;
+      color: #d1d7e0;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .coupon-box {
+      margin: 26px 0 20px;
+      padding: 18px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .coupon-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #dce3ec;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    .coupon-input-wrap {
+      position: relative;
+    }
+
+    .coupon-input {
+      width: 100%;
+      height: 56px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke-2);
+      background: #0a0f17;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 0 16px;
+      outline: none;
+      transition: .2s ease;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .02);
+    }
+
+    .coupon-input::placeholder {
+      color: #7f8997;
+      font-weight: 500;
+    }
+
+    .coupon-input:focus {
+      border-color: rgba(255, 49, 107, .65);
+      box-shadow: 0 0 0 4px rgba(255, 49, 107, .10);
+    }
+
+    .coupon-status {
+      min-height: 20px;
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: left;
+      color: #ffd166;
+      opacity: .95;
+    }
+
+    .plans {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .plan-card {
+      position: relative;
+      width: 100%;
+      border: none;
+      text-align: left;
+      border-radius: 28px;
+      padding: 20px 20px 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .015)),
+        linear-gradient(180deg, #0d1118, #0b1017);
+      border: 1px solid rgba(255, 255, 255, .09);
+      box-shadow: var(--shadow);
+      transition: .25s ease;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .plan-card:disabled {
+      opacity: .62;
+      cursor: not-allowed;
+      filter: saturate(.85);
+    }
+
+    .plan-card:not(:disabled):hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 49, 107, .45);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, .45), 0 0 0 1px rgba(255, 49, 107, .10);
+    }
+
+    .plan-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255, 49, 107, .28), rgba(255, 255, 255, .04), rgba(0, 230, 118, .14));
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .plan-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .plan-name {
+      font-family: 'Archivo Black', Arial, sans-serif;
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .badge {
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 800;
+      color: #111;
+      background: linear-gradient(135deg, #ffe082, #ffd54f);
+      padding: 8px 10px;
+      border-radius: 999px;
+      box-shadow: 0 8px 22px rgba(255, 213, 79, .22);
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .price-area {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .parcelas {
+      font-size: 13px;
+      font-weight: 700;
+      color: #aab3bf;
+      letter-spacing: .2px;
+      margin-bottom: 6px;
+    }
+
+    .price-now {
+      font-size: 44px;
+      line-height: .95;
+      font-weight: 900;
+      color: var(--green);
+      letter-spacing: -1.3px;
+      text-shadow: 0 0 18px rgba(0, 230, 118, .10);
+    }
+
+    .price-old {
+      width: 100%;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #9ea7b4;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .price-old-value {
+      position: relative;
+      display: inline-block;
+      color: #b6bec9;
+    }
+
+    .price-old-value::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: translateY(-50%);
+      border-radius: 999px;
+      opacity: .9;
+    }
+
+    .terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 18px;
+      color: #d8dee7;
+      font-size: 13px;
+      line-height: 1.5;
+      user-select: none;
+    }
+
+    .terms input {
+      margin-top: 2px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .terms a {
+      color: var(--blue);
+      text-decoration: underline;
+    }
+
+    .discount-on .badge {
+      background: linear-gradient(135deg, #67ffb1, #00e676);
+      color: #032514;
+      box-shadow: 0 8px 22px rgba(0, 230, 118, .22);
+    }
+
+    .discount-on .coupon-status {
+      color: #7dffb1;
+    }
+
+    @media (max-width:480px) {
+      .slider-track img {
+        width: 220px;
+        height: 140px;
+      }
+
+      .slider-track {
+        animation: scrollSlide 120s linear infinite;
+      }
+
+      .wrap {
+        padding: 18px 14px 50px;
+      }
+
+      .coupon-box {
+        padding: 16px;
+        border-radius: 20px;
+      }
+
+      .plan-card {
+        padding: 18px 16px 16px;
+        border-radius: 24px;
+      }
+
+      .plan-name {
+        font-size: 24px;
+      }
+
+      .price-now {
+        font-size: 38px;
+      }
+
+      .parcelas {
+        font-size: 12px;
+      }
+
+      .badge {
+        font-size: 10px;
+        padding: 7px 9px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="slider-container">
+    <div class="slider-track">
+      <img src="https://static.wixstatic.com/media/7f5efc_e84ee0a6c57746988d42a08cc8ec65f3~mv2.jpg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_4552cee2f4484546bf003b7759771d45~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_06d10e47822d49ccbc0f32187e2af5bb~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_d7565999f85d499297c03784bf7ef7ac~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_73006a3b73b9449fa3a06cda8b3b5871~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_9ac3e899b5994d909b4abc5c71b59b55~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_740223f02a0243ff93b437764a0a7f80~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_e41a1bf84b5c405fa07553f0c307e780~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_fd20f825600f435ba394adf7d9d3c3d2~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_1c667a39aa3e44b48a216a20f6391ab1~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_a25fd737dd224ff0aa0270d03319532e~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_29a19204fa4f4d02a76d9eaec4027530~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" alt="">
+
+      <img src="https://static.wixstatic.com/media/7f5efc_e84ee0a6c57746988d42a08cc8ec65f3~mv2.jpg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_4552cee2f4484546bf003b7759771d45~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_06d10e47822d49ccbc0f32187e2af5bb~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_d7565999f85d499297c03784bf7ef7ac~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_73006a3b73b9449fa3a06cda8b3b5871~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_9ac3e899b5994d909b4abc5c71b59b55~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_740223f02a0243ff93b437764a0a7f80~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_e41a1bf84b5c405fa07553f0c307e780~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_fd20f825600f435ba394adf7d9d3c3d2~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_1c667a39aa3e44b48a216a20f6391ab1~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_a25fd737dd224ff0aa0270d03319532e~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_29a19204fa4f4d02a76d9eaec4027530~mv2.jpeg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg" alt="">
+      <img src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" alt="">
+    </div>
+  </div>
+
+  <div class="wrap" id="app">
+    <div class="hero">
+      <div class="headline">
+        <span class="txt">PLANOS DE RECORRÊNCIA</span>
+        <span class="risk"></span>
+      </div>
+    </div>
+
+    <div class="coupon-box">
+      <label class="coupon-label" for="couponName">CUPOM ATÉ 35% DE DESCONTO</label>
+      <div class="coupon-input-wrap">
+        <input type="text" id="couponName" class="coupon-input" placeholder="Digite o nome da influencer"
+          autocomplete="off" />
+      </div>
+      <div class="coupon-status" id="couponStatus"> </div>
+
+
+      <label class="terms">
+        <input type="checkbox" id="termsCheck" />
+        <span>
+          Concordo com os termos de
+          <a href="https://drive.google.com/file/d/1A10RMsSCKcviu2JNX6A3Z-WVOfPV1SVB/view?usp=sharing" target="_blank"
+            rel="noopener noreferrer">prestação de serviço</a> e contratação dos planos.
+        </span>
+      </label>
+    </div>
+
+    <div class="plans">
+
+
+
+      <button class="plan-card" id="btnAnu" type="button" data-plan="anual">
+        <div class="plan-top">
+          <h3 class="plan-name">Anual</h3>
+          <span class="badge" id="badgeAnu">Preço normal</span>
+        </div>
+
+        <div class="price-area">
+          <span class="parcelas">12x de</span>
+          <span class="price-now" id="anuPrice">R$ 236</span>
+        </div>
+
+
+      </button>
+
+
+      <button class="plan-card" id="btnSem" type="button" data-plan="semestre">
+        <div class="plan-top">
+          <h3 class="plan-name">Semestre</h3>
+          <span class="badge" id="badgeSem">Preço normal</span>
+        </div>
+
+        <div class="price-area">
+          <span class="parcelas">6x de</span>
+          <span class="price-now" id="semPrice">R$ 321</span>
+        </div>
+
+
+      </button>
+
+
+
+      <button class="plan-card" id="btnTri" type="button" data-plan="trimestre">
+        <div class="plan-top">
+          <h3 class="plan-name">Trimestre</h3>
+          <span class="badge" id="badgeTri">Preço normal</span>
+        </div>
+
+        <div class="price-area">
+          <span class="parcelas">3x de</span>
+          <span class="price-now" id="triPrice">R$ 341</span>
+        </div>
+
+
+      </button>
+
+
+    </div>
+  </div>
+
+  <script>
+    const plans = {
+      trimestre: {
+        installments: 3,
+        discounted: 239,
+        url: 'https://sun.eduzz.com/R9JYNV689X'
+      },
+      semestre: {
+        installments: 6,
+        discounted: 225,
+        url: 'https://sun.eduzz.com/39YBYAVQWO'
+      },
+      anual: {
+        installments: 12,
+        discounted: 165,
+        url: 'https://sun.eduzz.com/E0DBXZOY91'
+      }
+    };
+
+    const els = {
+      app: document.getElementById('app'),
+      couponName: document.getElementById('couponName'),
+      couponStatus: document.getElementById('couponStatus'),
+      termsCheck: document.getElementById('termsCheck'),
+      btnTri: document.getElementById('btnTri'),
+      btnSem: document.getElementById('btnSem'),
+      btnAnu: document.getElementById('btnAnu'),
+      triPrice: document.getElementById('triPrice'),
+      semPrice: document.getElementById('semPrice'),
+      anuPrice: document.getElementById('anuPrice'),
+
+      badgeTri: document.getElementById('badgeTri'),
+      badgeSem: document.getElementById('badgeSem'),
+      badgeAnu: document.getElementById('badgeAnu')
+    };
+
+    let debounceTimer = null;
+
+    function formatBRL(value) {
+      return 'R$ ' + Math.round(value).toLocaleString('pt-BR');
+    }
+
+    function getOriginalPrice(discounted) {
+      return discounted / 0.7;
+    }
+
+    function sanitizeUtmSource(value) {
+      return value
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, '_')
+        .replace(/[^a-z0-9_-]/g, '');
+    }
+
+    function updatePlanPrices(useDiscount) {
+      const triOriginal = getOriginalPrice(plans.trimestre.discounted);
+      const semOriginal = getOriginalPrice(plans.semestre.discounted);
+      const anuOriginal = getOriginalPrice(plans.anual.discounted);
+
+      if (useDiscount) {
+        els.triPrice.textContent = formatBRL(plans.trimestre.discounted);
+        els.semPrice.textContent = formatBRL(plans.semestre.discounted);
+        els.anuPrice.textContent = formatBRL(plans.anual.discounted);
+
+
+        els.badgeTri.textContent = '25% OFF';
+        els.badgeSem.textContent = '29% OFF';
+        els.badgeAnu.textContent = '35% OFF';
+
+        els.couponStatus.textContent = 'Desconto aplicado com sucesso.';
+        els.app.classList.add('discount-on');
+      } else {
+        els.triPrice.textContent = formatBRL(triOriginal);
+        els.semPrice.textContent = formatBRL(semOriginal);
+        els.anuPrice.textContent = formatBRL(anuOriginal);
+
+        els.badgeTri.textContent = 'Preço normal';
+        els.badgeSem.textContent = 'Preço normal';
+        els.badgeAnu.textContent = 'Preço normal';
+
+        els.couponStatus.textContent = ' ';
+        els.app.classList.remove('discount-on');
+      }
+    }
+
+    function canEnableButtons() {
+      const hasName = els.couponName.value.trim().length > 0;
+      const acceptedTerms = els.termsCheck.checked;
+      return hasName && acceptedTerms;
+    }
+
+    function updateButtonsState() {
+      const enabled = canEnableButtons();
+      els.btnTri.disabled = !enabled;
+      els.btnSem.disabled = !enabled;
+      els.btnAnu.disabled = !enabled;
+    }
+
+    function handleCouponTyping() {
+      clearTimeout(debounceTimer);
+
+      const value = els.couponName.value.trim();
+
+      if (!value) {
+        updatePlanPrices(false);
+        updateButtonsState();
+        return;
+      }
+
+      els.couponStatus.textContent = 'Validando cupom...';
+
+      debounceTimer = setTimeout(() => {
+        updatePlanPrices(true);
+        updateButtonsState();
+      }, 2000);
+    }
+
+    function openPlan(planKey) {
+      if (!canEnableButtons()) return;
+
+      const influencerName = els.couponName.value.trim();
+      const utmSource = sanitizeUtmSource(influencerName) || 'influencer';
+
+      const url = new URL(plans[planKey].url);
+      url.searchParams.set('utm_source', utmSource);
+      url.searchParams.set('utm_medium', 'cupom_influencer');
+      url.searchParams.set('utm_campaign', planKey);
+
+      window.open(url.toString(), '_blank');
+    }
+
+    els.couponName.addEventListener('input', handleCouponTyping);
+    els.termsCheck.addEventListener('change', updateButtonsState);
+
+    els.btnTri.addEventListener('click', () => openPlan('trimestre'));
+    els.btnSem.addEventListener('click', () => openPlan('semestre'));
+    els.btnAnu.addEventListener('click', () => openPlan('anual'));
+
+    updatePlanPrices(false);
+    updateButtonsState();
+  </script>
+</body>
+
+</html>
