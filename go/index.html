@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
- 
+  
 </head>
 <body>
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzzf52tLPPg6DnWi1NMtt7Dxo4ImKEWKNHqeebNT9s8KWpInCwhIymDP5N3UtCxOB4/exec";
 
-  // Ex: /go#Vitoria -> "Vitoria"
   const nome = decodeURIComponent((window.location.hash || "").replace("#", "").trim());
 
   async function salvarEIrParaWhatsapp() {
-    // se vier vazio, manda pro padrão
     if (!nome) {
       window.location.replace("https://wa.me/5562984888498");
       return;
@@ -29,9 +27,11 @@
       console.error("Erro ao salvar no Sheets:", error);
     }
 
-    const texto = `Olá, vim pela ${nome}, gostaria de saber sobre a consultoria`;
-    const url = `https://wa.me/5562984888498?text=${encodeURIComponent(texto)}`;
-    window.location.replace(url);
+    setTimeout(() => {
+      const texto = `Olá, vim pela ${nome}, gostaria de saber sobre a consultoria`;
+      const url = `https://wa.me/5562984888498?text=${encodeURIComponent(texto)}`;
+      window.location.replace(url);
+    }, 400);
   }
 
   salvarEIrParaWhatsapp();
