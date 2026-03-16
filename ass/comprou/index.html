@@ -8,29 +8,29 @@
 <body>
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzzf52tLPPg6DnWi1NMtt7Dxo4ImKEWKNHqeebNT9s8KWpInCwhIymDP5N3UtCxOB4/exec";
-  const FORM_URL = "https://forms.gle/osEkRBBwK2ng7B5Y6";
+  const DESTINO = "https://forms.gle/osEkRBBwK2ng7B5Y6";
 
   const nome = decodeURIComponent((window.location.hash || "").replace("#", "").trim());
 
-  async function salvarEIrFormulario() {
-    if (nome) {
-      try {
-        const saveUrl = `${SCRIPT_URL}?utm=${encodeURIComponent(nome)}&aba=Compra`;
-        await fetch(saveUrl, {
+  async function salvarEIr() {
+    try {
+      if (nome) {
+        const urlSalvar = `${SCRIPT_URL}?utm=${encodeURIComponent(nome)}&aba=Comprou`;
+        await fetch(urlSalvar, {
           method: "GET",
           mode: "no-cors"
         });
-      } catch (error) {
-        console.error("Erro ao salvar:", error);
       }
+    } catch (error) {
+      console.error("Erro ao salvar:", error);
     }
 
     setTimeout(() => {
-      window.location.href = FORM_URL;
-    }, 400);
+      window.location.replace(DESTINO);
+    }, 500);
   }
 
-  salvarEIrFormulario();
+  salvarEIr();
 </script>
 </body>
 </html>
