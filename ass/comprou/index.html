@@ -10,7 +10,8 @@
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzzf52tLPPg6DnWi1NMtt7Dxo4ImKEWKNHqeebNT9s8KWpInCwhIymDP5N3UtCxOB4/exec";
   const DESTINO = "https://forms.gle/osEkRBBwK2ng7B5Y6";
 
-  const nome = decodeURIComponent((window.location.hash || "").replace("#", "").trim());
+  const params = new URLSearchParams(window.location.search);
+  const nome = params.get("utm") || decodeURIComponent((window.location.hash || "").replace("#", "").trim());
 
   async function salvarEIr() {
     try {
