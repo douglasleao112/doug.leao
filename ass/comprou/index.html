@@ -11,7 +11,7 @@
   const DESTINO = "https://forms.gle/osEkRBBwK2ng7B5Y6";
 
   const params = new URLSearchParams(window.location.search);
-  const nome = params.get("utm") || decodeURIComponent((window.location.hash || "").replace("#", "").trim());
+  const nome = params.get("utm_source") || params.get("utm") || decodeURIComponent((window.location.hash || "").replace("#", "").trim());
 
   async function salvarEIr() {
     try {
