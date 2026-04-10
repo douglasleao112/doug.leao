@@ -219,7 +219,7 @@
       setTimeout(() => {
         typeBotMessage('Obrigado pelas respostas!✅', () => {
           setTimeout(() => {
-            if(yesCount >= 3){    // IMPORTANTE! quantidade de SIM's para qualificar
+            if(yesCount >= 5){    // IMPORTANTE! quantidade de SIM's para qualificar
               fbq('track', 'CompleteRegistration');     // IMPORTANTE! pixel MQL
               window.location.assign(YES_REDIRECT);
             } else {
