@@ -248,6 +248,56 @@
       flex-shrink: 0;
     }
 
+.resultados {
+  padding: 30px 18px 10px;
+  text-align: center;
+}
+
+.resultados h2 {
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.slider-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  max-width: 100%;
+  margin: 0 auto 20px auto;
+  padding-bottom: 10px;
+}
+
+.slider-container::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-track {
+  display: flex;
+  gap: 12px;
+  animation: scroll-left 18s linear infinite;
+  will-change: transform;
+}
+
+.slider-track img {
+  height: 240px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+    
     .lesson-text {
       font-size: 15px;
       line-height: 1.3;
@@ -533,6 +583,35 @@
         <div class="lesson-text">Por que copiar treinos/dietas não garantem resultados</div>
       </div>
     </section>
+
+
+
+    <section class="resultados">
+  <h2>Resultados de quem já começou a fazer da forma certa</h2>
+
+  <div class="slider-container" id="sliderContainer">
+    <div class="slider-track" id="sliderTrack">
+      <img src="https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" />
+
+      <!-- repetição para rolagem infinita -->
+      <img src="https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" />
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
 
 
 
