@@ -277,11 +277,12 @@
 .slider-track {
   display: flex;
   gap: 12px;
-  animation: scroll-left 18s linear infinite;
-  will-change: transform;
+  width: max-content;
+  animation: scroll-left 35s linear infinite;
 }
 
 .slider-track img {
+  width: 180px;
   height: 240px;
   border-radius: 14px;
   flex-shrink: 0;
@@ -289,12 +290,12 @@
 }
 
 @keyframes scroll-left {
-  0% {
+  from {
     transform: translateX(0);
   }
 
-  100% {
-    transform: translateX(-50%);
+  to {
+    transform: translateX(calc(-50% - 6px));
   }
 }
     
