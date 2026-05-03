@@ -162,15 +162,26 @@
       margin: 0 auto;
     }
 
-/* AURA EXTERNA */
+/* AURA FORA DO BOTÃO */
 .btn::after {
   content: "";
   position: absolute;
-  inset: -6px; /* 👈 expande pra fora */
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
   border-radius: 999px;
-  background: rgba(0, 255, 100, 0.5);
+
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 100, 0.6) 0%,
+    rgba(0, 255, 100, 0.3) 40%,
+    transparent 70%
+  );
+
   z-index: -1;
   filter: blur(12px);
+
   animation: auraPulse 1.8s infinite;
 }
 
@@ -181,7 +192,7 @@
     opacity: 0.7;
   }
   70% {
-    transform: scale(1.4);
+    transform: scale(1.5);
     opacity: 0;
   }
   100% {
@@ -401,7 +412,7 @@
 </div>
 
         <h1>
-          O que a Blogueira não te conta
+          O que a Blogueira não te conta sobre o emagrecimento
         </h1>
 
         <a class="btn">
