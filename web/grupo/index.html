@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+
+  <script>
+    function getRedirectLink() {
+      const agora = new Date();
+
+      const periodos = [
+        {
+          inicio: "10/05/2026 17:55",
+          fim: "17/05/2026 17:54",
+          link: "https://chat.whatsapp.com/LJojNqZWlbPL21IdIXMjfe"
+        },
+        {
+          inicio: "17/05/2026 17:55",
+          fim: "24/05/2026 17:54",
+          link: "https://chat.whatsapp.com/LJojNqZWlbPL21IdIXMjfe"
+        },
+        {
+          inicio: "24/05/2026 17:55",
+          fim: "31/05/2026 17:54",
+          link: "https://chat.whatsapp.com/LJojNqZWlbPL21IdIXMjfe"
+        },
+        {
+          inicio: "31/05/2026 17:55",
+          fim: "07/06/2026 17:54",
+          link: "https://chat.whatsapp.com/LJojNqZWlbPL21IdIXMjfe"
+        },
+        {
+          inicio: "07/06/2026 17:55",
+          fim: "14/06/2026 17:54",
+          link: "https://chat.whatsapp.com/LJojNqZWlbPL21IdIXMjfe"
+        },
+        {
+          inicio: "14/06/2026 17:55",
+          fim: "21/06/2026 17:54",
+          link: "https://chat.whatsapp.com/LJojNqZWlbPL21IdIXMjfe"
+        }
+      ];
+
+      // conversão correta de data BR
+      function parseDataBR(dataStr) {
+        const [data, hora] = dataStr.split(" ");
+        const [dia, mes, ano] = data.split("/");
+        const [h, m] = hora.split(":");
+
+        return new Date(
+          Number(ano),
+          Number(mes) - 1,
+          Number(dia),
+          Number(h),
+          Number(m)
+        );
+      }
+
+      for (const periodo of periodos) {
+        const inicio = parseDataBR(periodo.inicio);
+        const fim = parseDataBR(periodo.fim);
+
+        if (agora >= inicio && agora <= fim) {
+          return periodo.link;
+        }
+      }
+
+      // fallback
+      return "https://chat.whatsapp.com/LJojNqZWlbPL21IdIXMjfe";
+    }
+
+    setTimeout(() => {
+      window.location.href = getRedirectLink();
+    }, 50);
+  </script>
+
+</head>
+
+<body style="background:#fff;"></body>
+</html>
