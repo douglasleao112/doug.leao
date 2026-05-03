@@ -420,6 +420,38 @@
 }
 
 
+
+
+#ctaGradient {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  height: 120px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.7) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.4s ease;
+
+  z-index: 998;
+}
+
+/* QUANDO APARECE */
+#ctaGradient.show {
+  opacity: 1;
+}
+
+
+
     @media (min-width: 768px) {
       .page {
         max-width: 430px;
@@ -488,7 +520,7 @@
 
       <div class="lesson fade-item">
         <div class="lesson-number">1</div>
-        <div class="lesson-text">Você pode estar com deficiencia de hormônios e vitaminas e não sabe</div>
+        <div class="lesson-text">Você pode estar com deficiência de hormônios e vitaminas e não sabe</div>
       </div>
 
       <div class="lesson fade-item">
@@ -530,9 +562,9 @@
     </section>
 
 
-
+<div id="ctaGradient"></div>
     <a class="btn btn-fixed" id="btnFixed">
-  Participar do Evento Gratuito
+  Garantir Minha Vaga
 </a>
 
 
@@ -619,21 +651,22 @@ function formatDate(date) {
 
 
 
-  
+
+
+<script>
   const mainBtn = document.querySelector('.hero .btn');
   const fixedBtn = document.getElementById('btnFixed');
+  const gradient = document.getElementById('ctaGradient');
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // botão principal visível → esconde o fixo
           fixedBtn.classList.remove('show');
-          fixedBtn.classList.add('hide');
+          gradient.classList.remove('show');
         } else {
-          // botão principal sumiu → mostra o fixo
           fixedBtn.classList.add('show');
-          fixedBtn.classList.remove('hide');
+          gradient.classList.add('show');
         }
       });
     },
