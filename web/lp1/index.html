@@ -149,7 +149,7 @@
       display: block;
        overflow: hidden;
       position: relative;
-      z-index: 6;
+       z-index: 1;
       width: 100%;
       background: #174d1d;
       color: #00ff20;
@@ -162,14 +162,15 @@
       margin: 0 auto;
     }
 
-    /* AURA */
-.btn::before {
+/* AURA EXTERNA */
+.btn::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -6px; /* 👈 expande pra fora */
   border-radius: 999px;
-  background: rgba(0, 255, 100, 0.4);
+  background: rgba(0, 255, 100, 0.5);
   z-index: -1;
+  filter: blur(12px);
   animation: auraPulse 1.8s infinite;
 }
 
@@ -178,17 +179,14 @@
   0% {
     transform: scale(1);
     opacity: 0.7;
-    filter: blur(8px);
   }
   70% {
     transform: scale(1.4);
     opacity: 0;
-    filter: blur(18px);
   }
   100% {
     transform: scale(1);
     opacity: 0;
-    filter: blur(8px);
   }
 }
 
