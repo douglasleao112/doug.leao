@@ -375,7 +375,7 @@
           Aprenda como transformar seu físico com estratégia, treino e alimentação bem direcionados.
         </h1>
 
-        <a class="btn" href="https://typebot-chat-viewer.vexhyt.easypanel.host/webnar">
+        <a class="btn">
           Comprar agora
         </a>
       </div>
@@ -412,7 +412,7 @@
 
     <!-- OFERTA -->
     <section class="section offer">
-     <a class="btn" href="https://typebot-chat-viewer.vexhyt.easypanel.host/webnar1">
+     <a class="btn" >
           Comprar agora
         </a>
     </section>
@@ -513,6 +513,15 @@ function formatDate(date) {
   }
 
   document.getElementById("eventDate").innerText = formatDate(eventDate);
+
+
+
+  
+  const LINK_GLOBAL = "https://typebot-chat-viewer.vexhyt.easypanel.host/webnar1";
+
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.setAttribute('href', LINK_GLOBAL);
+  });
 </script>
 
 
