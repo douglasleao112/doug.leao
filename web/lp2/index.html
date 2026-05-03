@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>🥑TRUQUE DO ABACATE</title>
+  <link rel="icon" href="https://images.vexels.com/media/users/3/185069/isolated/lists/8e22d6cf9646d776e84633ee2f170afe-frutos-de-abacate.png" type="image/png">
+
+  <style>
+    /* reset básico */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: Arial, sans-serif; color: #333; }
+
+    .container {
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 0 16px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    p.subtitle {
+      font-size: 18px;
+
+      color: #555;
+      margin-bottom: 24px;
+    }
+
+
+        #nextEvent {
+  font-size: 16px;
+  color: #555;
+  font-weight: bold;
+  margin-bottom: 6px;    /* reduzir de 24px para 8px */
+}
+
+
+
+    /* countdown */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 0; 
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+    .countdown div {
+      flex: 1;
+    }
+    .countdown .value {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    /* botão pulsante */
+    .btn {
+      display: inline-block;
+      background-color: #22c55e;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 6px;
+      margin: 16px 0;
+      animation: zoom 1.5s infinite alternate ease-in-out;
+    }
+    @keyframes zoom {
+      from { transform: scale(1); }
+      to   { transform: scale(1.1); }
+    }
+
+    /* lista de itens */
+    .features {
+      text-align: left;
+      margin: 24px 0;
+    }
+    .features li {
+      margin-bottom: 12px;
+      list-style: none;
+      padding-left: 24px;
+      position: relative;
+    }
+.features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #45b501;
+  font-size: 22px; /* aumenta o ícone */
+  font-weight: bold;
+  line-height: 1;
+  top: 2px; /* alinha verticalmente com o texto */
+}
+
+    /* foto circular */
+    .photo-wrapper {
+      margin: 32px 0;
+    }
+    .photo-wrapper img {
+      width: 190px;
+      height:190px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* seção de autor */
+    .author {
+      text-align: left;
+      margin-bottom: 40px;
+    }
+    .author h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .author p {
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    footer {
+      font-size: 12px;
+      color: #888;
+      margin: 40px 0 20px;
+      text-align: center;
+    }
+
+
+    
+    /* slider*/
+    .slider-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  max-width: 100%;
+  margin: 0 auto 32px auto;
+  padding-bottom: 10px;
+}
+
+.slider-container::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-track {
+  display: flex;
+  gap: 12px;
+  animation: scroll-left 10s linear infinite;
+  will-change: transform;
+}
+
+.slider-track img {
+  height: 240px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* rolagem automática mais rápida */
+@keyframes scroll-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+
+
+
+
+
+
+.sessao-laranja {
+  background-color: #d94128;
+  width: 100%;
+  margin: 0;
+  padding: 40px 0;
+}
+
+.sessao-laranja-content {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 16px;
+  color: #fff;
+  text-align: center;
+}
+
+.sessao-laranja h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.sessao-laranja p {
+  font-size: 16px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.sessao-laranja .btn {
+  background-color: #22c55e;
+  padding: 16px 32px;
+  font-size: 16px;
+}
+
+
+
+
+.box-destaque {
+  background: transparent;
+  border: 0.8px solid #22c55e;
+  border-radius: 12px;
+  padding: 20px;
+  color: #333;
+  font-size: 16px;
+  margin: 24px 0;
+  text-align: left;
+}
+
+.box-destaque .linha {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.box-destaque .icon-img {
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.box-destaque .divisor {
+  height: 0.8px;
+  background-color: #22c55e;
+  margin: 12px 12px;
+  border-radius: 1px;
+}
+
+.aviso-topo {
+  background-color: #b71e1e;
+  color: #fff;
+  text-align: center;
+  padding: 12px 16px;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  font-family: 'Roboto', sans-serif;
+}
+
+  </style>
+
+
+<!-- Meta Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src='https://connect.facebook.net/en_US/fbevents.js';
+  s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script');
+
+  fbq('init', '1290378376428374');
+  fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1290378376428374&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
+
+</head>
+<body>
+
+  <div class="aviso-topo">
+  ATENÇÃO: Essa página sairá do ar em breve...<br>
+  Conteúdo disponível por pouco tempo!
+</div>
+
+  <div class="container">
+    <!-- título -->
+    <h1>🥑 TRUQUE DO <b>ABACATE</b> QUE PROMETE ELIMITAR 12KG DE PURA GORDURA EM 6 SEMANAS</h1>
+    <p class="subtitle">Garanta seu ingresso GRATUITO, que no próximo domingo irei te contar tudo!</p>
+
+
+<!-- box verde com destaque -->
+<div class="box-destaque">
+  <div class="linha">
+    <img src="https://i.imgur.com/zQfY06k.png" class="icon-img" alt="check">
+    <span>Ativo natural do abacate que age igual às <strong>canetinhas de R$1.200</strong> e sem colaterais</span>
+  </div>
+  <div class="divisor"></div>
+  <div class="linha">
+    <img src="https://i.imgur.com/OGpK2O6.png" class="icon-img" alt="cross">
+    <span>O que a <strong>indústria bilionária</strong> não quer que você saiba sobre emagrecimento definitivo</span>
+  </div>
+</div>
+
+
+
+<!-- data proxima -->
+    <p id="nextEvent" style="font-size:16px; color:#555;  font-weight:bold;"></p>
+
+
+    <!-- contador -->
+    <div class="countdown">
+      <div><div id="days"    class="value">0</div>dias</div>
+      <div><div id="hours"   class="value">0</div>horas</div>
+      <div><div id="minutes" class="value">0</div>minutos</div>
+      <div><div id="seconds" class="value">0</div>segundos</div>
+    </div>
+
+    <!-- botão CTA -->
+    <a class="btn" href="#"  style="padding: 18px 56px;">INSCREVA-SE AGORA</a>
+<br>
+
+ <!-- lista de benefícios -->
+<ul class="features">
+  <center>
+    <img src="https://i.imgur.com/sKNOX5Z.png" style="max-width: 85%; height: auto; margin-bottom: 12px;">
+    <h2>VEJA O QUE VOCÊ VAI DESCOBRIR NO PRÓXIMO DOMINGO:</h2><br>
+  </center>
+  <li>Por que dietas restritivas e as "canetinhas" <strong>DESTROEM seu metabolismo</strong></li>
+  <li>O poderoso ativo do <strong>abacate</strong> que controla a fome naturalmente</li>
+  <li>Os 3 pilares que transformam seu corpo numa <strong>máquina de queimar gordura</strong></li>
+  <li>Como eliminar <strong>12kg em 6 semanas</strong> sem efeito sanfona</li>
+</ul>
+
+<br><br>
+<!-- resultados -->
+<div class="resultados">
+  <center><h2>OLHA ESSES RESULTADOS DE QUEM JÁ DESCOBRIU O SEGREDO:</h2><br></center>
+  <div class="slider-container" id="sliderContainer">
+    <div class="slider-track" id="sliderTrack">
+      <img src="https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg" />
+      <img src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" />
+    </div>
+  </div>
+</div><br>
+
+
+   <!-- QUEM SOU EU -->
+     <img src="https://static.wixstatic.com/media/7f5efc_0c8b15cfc99f4ebaa271f4c6a88ee786~mv2.png" style="max-width: 70%; height: auto; margin-bottom: 0px;">
+      <div class="author">
+      <center><h2 style="margin-top:-8px;">QUEM É O EX-GORDO??</h2><br></center>
+      <p>Meu nome é <strong>Douglas Leão</strong>, já pesei 130kg, tive depressão por estar acima do peso e quase morri fazendo dietas restritivas.</p> 
+      <p>Hoje sou Doutor em treinamento e nutricionista esportivo, e já transformei a vida de centenas de mulheres. Passei pelo <strong>mesmo inferno</strong> que você, por isso sei exatamente como te ajudar.</p>
+      <p>Se inscreva no nosso evento e entre no nosso grupo do WhatsApp. Lá você vai receber todas as informações e o link para o evento.</p>
+   </div>
+<br>
+  
+</div>
+<!-- sessão laranja ocupando 100% da largura -->
+<section class="sessao-laranja">
+  <div class="sessao-laranja-content">
+    <h2>VOCÊ É ANSIOSO COMO EU E JÁ ROLOU A PÁGINA PARA BAIXO?<br>CALMA, EU VOU TE EXPLICAR DO QUE SE TRATA…</h2>
+    <p>Você vai descobrir por que <strong>dietas retritivas e as Canetas do emagrecimento</strong> acabam com seu metabolismo. </p>
+      <p>O ativo do abacate que imita o Mounjaro, combinado a 3 pilares que queimam gordura e eliminam até 12kg em 6 semanas e comendo de tudo.</p>
+    <p><strong></strong>Garanta sua vaga AGORA, corre que o tempo tá passando!</strong></p>
+    <center><a class="btn" href="#"  style="padding: 18px 56px;">QUERO PARTICIPAR AGORA</a></center>
+  </div>
+</section>
+
+
+
+    <footer>Copyright © 2025 Abacate Secret. Todos os Direitos Reservados.</footer>
+  <br>
+
+  <script>
+  /*************************************************************************
+   * CONFIGURAÇÃO IMPORTANTE!
+   * Se quiser usar uma data fixa, preencha EVENT_DATETIME (ISO, ex:
+   *   '2025-06-23T19:00:00').
+   * Se deixar em branco, usará DEFAULT_WEEKDAY/DEFAULT_HOUR/DEFAULT_MINUTE.
+   *************************************************************************/
+  const EVENT_DATETIME = '';    // ex: '2025-06-23T19:00:00'
+  const DEFAULT_WEEKDAY = 0;    // 0=domingo,1=segunda,…6=sábado
+  const DEFAULT_HOUR    = 19;   // hora do evento
+  const DEFAULT_MINUTE  = 0;    // minuto do evento
+
+  // Retorna o objeto Date do próximo evento
+  function getEventDateTime() {
+    if (EVENT_DATETIME) {
+      return new Date(EVENT_DATETIME);
+    }
+    const now = new Date();
+    // quantos dias até o DEFAULT_WEEKDAY
+    let daysUntil = (DEFAULT_WEEKDAY - now.getDay() + 7) % 7;
+    const candidate = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + daysUntil,
+      DEFAULT_HOUR,
+      DEFAULT_MINUTE,
+      0
+    );
+    // se hoje for o mesmo dia e horário já passou, agenda pra próxima semana
+    if (daysUntil === 0 && now >= candidate) {
+      candidate.setDate(candidate.getDate() + 7);
+    }
+    return candidate;
+  }
+
+  // Prepara o Date alvo e nomes de dias
+  const targetDate  = getEventDateTime();
+  const WEEKDAYS    = ['Domingo','Segunda-feira','Terça-feira',
+                       'Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+
+  // formata número em 2 dígitos
+  function pad(n) { return String(n).padStart(2,'0'); }
+
+  // atualiza o texto da próxima data/evento
+  function writeNextEventText() {
+    const dayName = WEEKDAYS[targetDate.getDay()];
+    const hh      = pad(targetDate.getHours());
+    const mm      = pad(targetDate.getMinutes());
+    document.getElementById('nextEvent').textContent =
+      `${dayName}, às ${hh}:${mm}h`;
+  }
+
+  // Atualiza o contador numérico
+  function updateCountdown() {
+    const now  = new Date();
+    let   diff = targetDate - now;
+    if (diff < 0) diff = 0;
+
+    const days    = Math.floor(diff / 86400000);
+    const hours   = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById('days'   ).textContent = days;
+    document.getElementById('hours'  ).textContent = pad(hours);
+    document.getElementById('minutes').textContent = pad(minutes);
+    document.getElementById('seconds').textContent = pad(seconds);
+  }
+
+  // Dispara o contador e a escrita da data
+  function startCountdown() {
+    writeNextEventText();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }
+
+  // Quando a página terminar de carregar
+  window.addEventListener('load', startCountdown);
+
+
+
+    // Mapeamento dos links por dia da semana (0 = domingo, 6 = sábado)
+  const linksPorDia = {
+    0: 'https://www.dougleao.com.br/webnar-start-dom',
+    1: 'https://www.dougleao.com.br/webnar-start-seg',
+    2: 'https://www.dougleao.com.br/webnar-start-ter',
+    3: 'https://www.dougleao.com.br/webnar-start-qua',
+    4: 'https://www.dougleao.com.br/webnar-start-qui',
+    5: 'https://www.dougleao.com.br/webnar-start-sex',
+    6: 'https://www.dougleao.com.br/webnar-start-sab'
+  };
+
+  // Atualiza todos os botões com a nova URL do dia
+  const diaHoje = new Date().getDay();
+  const linkAtual = linksPorDia[diaHoje];
+
+  document.querySelectorAll('a.btn').forEach(botao => {
+    botao.setAttribute('href', linkAtual);
+  });
+
+
+
+  // slider
+    const slider = document.getElementById('sliderContainer');
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  slider.addEventListener('mousedown', e => {
+    isDown = true;
+    slider.classList.add('active');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  slider.addEventListener('mouseleave', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+
+  slider.addEventListener('mouseup', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+
+  slider.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2; // velocidade do arraste
+    slider.scrollLeft = scrollLeft - walk;
+  });
+
+  slider.addEventListener('touchstart', e => {
+    startX = e.touches[0].pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  slider.addEventListener('touchmove', e => {
+    const x = e.touches[0].pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2;
+    slider.scrollLeft = scrollLeft - walk;
+  });
+
+
+
+
+
+  
+  // Função simples para transformar URLs em <a> clicáveis
+  function linkify(text) {
+    return text
+      // https:// ou http://
+      .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
+      // www. algo
+      .replace(/\b(www\.[^\s]+)/g, '<a href="http://$1" target="_blank" rel="noopener">$1</a>');
+  }
+
+  function addMessage(user, text) {
+    const div = document.createElement('div');
+    div.className = 'chat-message';
+    // aplicamos a linkify no text
+    const safeText = linkify(text);
+    div.innerHTML = `<strong>${user}:</strong> ${safeText}`;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+  
+
+// Bloqueia pinça (touchmove com 2 dedos)
+document.addEventListener('touchmove', function(e) {
+  if (e.touches && e.touches.length > 1) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// Bloqueia duplo-toque rápido
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(e) {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) {
+    e.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
+// Bloqueia gestos específicos no iOS
+document.addEventListener('gesturestart', function(e) {
+  e.preventDefault();
+});
+
+
+
+// Bloqueia o menu de contexto (clique direito)
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Impede copiar/recortar/selecionar texto
+['copy','cut','selectstart','dragstart'].forEach(evt =>
+  document.addEventListener(evt, e => e.preventDefault())
+);
+
+// Bloqueia atalho Ctrl+C, Ctrl+U (ver fonte), Ctrl+S, Ctrl+P e F12
+document.addEventListener('keydown', e => {
+  const forbidden =
+    // combinações de Ctrl + C, U, S, P, A
+    (e.ctrlKey &&
+      ['c','u','s','p','a'].includes(e.key.toLowerCase()))
+    // F12
+    || e.key === 'F12';
+  if (forbidden) e.preventDefault();
+});
+
+</script>
+
+</body>
+</html>

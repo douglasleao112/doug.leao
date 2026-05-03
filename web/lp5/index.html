@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emagreça comendo de Tudo</title>
+  <link rel="icon" href="https://images.emojiterra.com/google/android-11/512px/1f525.png" type="image/png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+<!-- AOS Animation CSS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src='https://connect.facebook.net/en_US/fbevents.js';
+    s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script');
+
+    fbq('init', '1290378376428374');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1290378376428374&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
+
+  <style>
+    .btn-pulsante {
+      position: relative;
+      z-index: 1;
+      animation: pulse-zoom 1.5s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .btn-pulsante::after {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      right: -6px;
+      bottom: -6px;
+      border-radius: 9999px;
+      background-color: rgba(34, 197, 94, 0.3);
+      z-index: -1;
+      opacity: 0;
+      animation: aura-pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-zoom {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes aura-pulse {
+      0% {
+        transform: scale(0.95);
+        opacity: 0.4;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+    }
+  </style>
+  
+<style>
+  @keyframes glass-flash-once {
+    0% {
+      left: -75%;
+    }
+    100% {
+      left: 125%;
+    }
+  }
+
+  .reflexo-glass {
+    position: relative;
+  }
+
+  .reflexo-glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0.15), rgba(255,255,255,0));
+    transform: skewX(-20deg);
+    pointer-events: none;
+    z-index: 20;
+  }
+
+  .reflexo-glass.ativo::before {
+    animation: glass-flash-once 3s ease-in-out 1 forwards;
+  }
+</style>
+
+
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "r0oqvd12ri");
+</script>
+
+
+</head>
+
+<body class="bg-black text-white font-sans">
+
+
+<!-- DATA DO EVENTO (DINÂMICA) -->
+<div id="data-evento" class="text-center text-sm mt-1 text-white font-semibold"></div>
+
+
+
+
+  <!-- CRONÔMETRO COM GRADIENTE -->
+  <div class="w-full text-white relative bg-gradient-to-b from-black to-[#001b03]">
+    <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-300 to-transparent"></div>
+    <div class="max-w-6xl mx-auto px-4 py-2 flex justify-center">
+<div class="flex space-x-4 font-semibold uppercase text-[10px] lg:text-xs">
+  <div class="text-center">
+    <span id="dias" class="block text-2xl lg:text-3xl text-[#5fff72]">--</span>
+    <span class="text-white">DIAS</span>
+  </div>
+  <div class="text-center">
+    <span id="horas" class="block text-2xl lg:text-3xl text-[#5fff72]">--</span>
+    <span class="text-white">HRS</span>
+  </div>
+  <div class="text-center">
+    <span id="minutos" class="block text-2xl lg:text-3xl text-[#5fff72]">--</span>
+    <span class="text-white">MINS</span>
+  </div>
+  <div class="text-center">
+    <span id="segundos" class="block text-2xl lg:text-3xl text-[#5fff72]">--</span>
+    <span class="text-white">SEGS</span>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="relative overflow-hidden min-h-screen px-4 lg:px-0 w-full">
+    
+<!-- FUNDO COM BLURS EM VERDE MAIS TRANSPARENTES -->
+<div class="absolute inset-0 -z-10 overflow-hidden">
+  <div class="absolute w-[400px] h-[400px] bg-emerald-400/10 rounded-full blur-3xl top-[-100px] left-[-100px] mix-blend-lighten pointer-events-none"></div>
+  <div class="absolute w-[500px] h-[500px] bg-green-400/5 rounded-full blur-2xl bottom-0 right-[50px] mix-blend-lighten pointer-events-none"></div>
+  <div class="absolute w-[300px] h-[300px] bg-lime-500/5 rounded-full blur-2xl top-[40%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 mix-blend-lighten pointer-events-none"></div>
+</div>
+
+    <!-- CONTEÚDO CENTRALIZADO -->
+   <div class="max-w-6xl mx-auto w-full flex flex-col lg:flex-row items-center justify-center pb-10 lg:pb-16">
+
+      
+      <!-- BLOCO DE TEXTO -->
+      <div class="flex-1 mt-12 lg:mt-0 lg:pt-4 lg:pr-10">
+    
+
+   <h1 class="mt-6 text-2xl lg:text-4xl font-bold max-w-3xl leading-tight text-center lg:text-left">
+  DESAFIO: Emagreça até 12kg de Pura Gordura<br>
+  <span class="bg-gradient-to-t from-green-500 to-[#27c61b] bg-clip-text text-transparent px-1">
+    Sem Deixar de Comer
+  </span><br class="hidden lg:block"> as Coisas que Gosta
+</h1>
+
+
+<br>
+
+
+<div class="border border-green-300 rounded-xl p-4 space-y-4 max-w-md mx-auto lg:mx-0 text-sm lg:text-base">
+  <!-- Item 1 -->
+  <div class="flex items-start gap-2">
+    <img src="https://cdn-icons-png.flaticon.com/512/5709/5709755.png" alt="Check" class="w-5 h-5 mt-1" />
+    <span>
+      Ciência revela ativo natural encontrado no Abacate que
+      <span class="font-bold">elimina até 12kg</span> em apenas 6 semanas
+    </span>
+  </div>
+
+  <!-- Linha divisória -->
+  <hr class="border-t border-green-300">
+
+  <!-- Item 2 -->
+  <div class="flex items-start gap-2">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="X" class="w-5 h-5 mt-1" />
+    <span>
+      Emagreça sem precisar de <span class="font-bold">remédios caros</span> e perigosos para a sua saúde
+    </span>
+  </div>
+</div>
+
+
+
+
+
+<div class="mt-8 w-[350px] mx-auto lg:mx-0">
+<!-- TEXTO ACIMA DA BARRA -->
+<p class="mb-2 text-sm lg:text-base text-gray-200 text-center">
+  Grupo de Desafio <b>100% Gratuito</b> 
+</p>
+
+<!-- BARRA DE LOADING -->
+<div id="barra-loading-container" class="w-full h-2 relative bg-transparent border border-white rounded-full overflow-hidden">
+  <div id="barra-loading" class="absolute top-0 left-0 h-full bg-green-500 rounded-full transition-all duration-2000 ease-in-out"></div>
+</div>
+
+<!-- TEXTO ABAIXO DA BARRA -->
+<div class="mb-2 text-white text-sm font-semibold text-center" id="texto-loading">
+  0% das vagas preenchidas.
+</div>
+
+
+<!-- BOTÃO -->
+<a href="#form" class="mt-8 inline-block bg-green-500 text-center hover:bg-green-600 text-white font-bold py-5 px-6 w-full rounded-full text-lg transition-all btn-pulsante">
+  QUERO PARTICIPAR
+</a>
+</div>
+
+
+
+
+
+<script>
+  function getPorcentagemDia() {
+    const dia = new Date().getDay();
+    switch (dia) {
+      case 5: return 92; // Sexta
+      case 6: return 95; // Sábado
+      case 0: return 97; // Domingo
+      default: return 90; // Outros dias
+    }
+  }
+
+  const porcentagemFinal = getPorcentagemDia();
+  const barra = document.getElementById('barra-loading');
+  const texto = document.getElementById('texto-loading');
+
+  let atual = 0;
+  const intervalo = setInterval(() => {
+    if (atual >= porcentagemFinal) {
+      atual = porcentagemFinal;
+      clearInterval(intervalo);
+    }
+    barra.style.width = atual + '%';
+    texto.textContent = `${atual}% das vagas preenchidas.`;
+    atual++;
+  }, 25);
+</script>
+
+
+</div>
+
+
+<!-- IMAGEM HERO -->
+<div class="flex-1 mt-4 lg:mt-32 flex justify-center lg:justify-start">
+  <img 
+    src="https://static.wixstatic.com/media/7f5efc_4db1f484c2d34db4898b31fb476b34d5~mv2.png"
+    class="w-[95vw] max-w-[420px] lg:w-[550px] lg:max-w-none object-contain lg:-ml-12 animate-floating"
+  />
+</div>
+<style>
+@keyframes floating {
+  0%   { transform: translate(0px, 0px); }
+  25%  { transform: translate(3px, -4px); }
+  50%  { transform: translate(-4px, 3px); }
+  75%  { transform: translate(5px, 2px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.animate-floating {
+  animation: floating 8s ease-in-out infinite;
+}
+</style>
+
+
+
+
+    </div>
+  </section>
+  
+  <!-- SEÇÃO 2: Para quem é este evento -->
+<section class="w-full px-4 pt-8 pb-16 lg:pt-12 lg:pb-24 bg-black text-white">
+  <div class="max-w-6xl mx-auto">
+
+<h2 class="text-4xl lg:text-4xl font-bold text-center mb-12 bg-gradient-to-t from-green-500 to-[#27c61b] bg-clip-text text-transparent">
+ Para quem é este <br>Grupo de Desafio?
+</h2>
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- Card 1 -->
+<div class="rounded-2xl overflow-hidden border border-green-300 backdrop-blur-md bg-white/5 shadow-xl" data-aos="zoom-in">
+  <div class="relative w-full h-[180px] bg-cover bg-center flex items-center justify-center reflexo-glass"
+       style="background-image: url('https://conectapiaui.com.br/media/image_bank/2025/5/thumbs/ozempic.webp.1200x0_q95_crop.webp');">
+    <div class="absolute inset-0 bg-black/80 z-10"></div>
+    <p class="relative z-30 text-sm font-semibold text-center px-4 text-white">
+      PARA MULHERES QUE SE FRUSTRARAM COM O PREÇO ABSURDO DAS CANETINHAS MILAGROSAS
+    </p>
+  </div>
+</div>
+
+
+      <!-- Card 2 -->
+<div class="rounded-2xl overflow-hidden border border-green-300 backdrop-blur-md bg-white/5 shadow-xl" data-aos="zoom-in">
+  <div class="relative w-full h-[180px] bg-cover bg-center flex items-center justify-center reflexo-glass"
+       style="background-image: url('https://pt.quizur.com/_image?href=https://img.quizur.com/f/img60c01fb92190c0.64368804.jpg?lastEdited=1623203775&w=600&h=600&f=webp');">
+    <div class="absolute inset-0 bg-black/80 z-10"></div>
+    <p class="relative z-30 text-sm font-semibold text-center px-4 text-white">
+            PARA ESPOSAS QUE QUEREM VOLTAR A SER DESEJADAS PELO PRÓPRIO MARIDO
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+<div class="rounded-2xl overflow-hidden border border-green-300 backdrop-blur-md bg-white/5 shadow-xl" data-aos="zoom-in">
+  <div class="relative w-full h-[180px] bg-cover bg-center flex items-center justify-center reflexo-glass"
+       style="background-image: url('https://i0.statig.com.br/bancodeimagens/8f/g0/ez/8fg0ezaz8tuzrt0ay2s5k88r3.jpg');">
+    <div class="absolute inset-0 bg-black/80 z-10"></div>
+    <p class="relative z-30 text-sm font-semibold text-center px-4 text-white">
+            PARA MULHERES QUE JÁ TENTARAM DE TUDO E SEMPRE VOLTAM A ENGORDAR
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+<div class="rounded-2xl overflow-hidden border border-green-300 backdrop-blur-md bg-white/5 shadow-xl" data-aos="zoom-in">
+  <div class="relative w-full h-[180px] bg-cover bg-center flex items-center justify-center reflexo-glass"
+       style="background-image: url('https://elements-resized.envatousercontent.com/elements-video-cover-images/files/2b388ce3-a881-44bd-8260-4cb01915a6a7/inline_image_preview.jpg?w=500&cf_fit=cover&q=85&format=auto&s=1d87f66b1e3f43e7c2b4b750e9e5d8d06417cd2891ee4847a9e6e2de040763e1');">
+    <div class="absolute inset-0 bg-black/80 z-10"></div>
+    <p class="relative z-30 text-sm font-semibold text-center px-4 text-white">
+            PARA QUEM SENTE VERGONHA DO PRÓPRIO CORPO AO VESTIR UM BIQUÍNI, TIRAR FOTOS OU SE OLHAR NO ESPELHO
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+<div class="rounded-2xl overflow-hidden border border-green-300 backdrop-blur-md bg-white/5 shadow-xl" data-aos="zoom-in">
+  <div class="relative w-full h-[180px] bg-cover bg-center flex items-center justify-center reflexo-glass"
+       style="background-image: url('https://img.freepik.com/fotos-premium/mulher-gorda-comendo-comida-nao-saudavel-generativa-ai_90153-4384.jpg?semt=ais_hybrid&w=740&q=80');">
+    <div class="absolute inset-0 bg-black/80 z-10"></div>
+    <p class="relative z-30 text-sm font-semibold text-center px-4 text-white">
+            PARA MULHERES QUE QUEREM EMAGRECER SEM PASSAR FOME E SEM ENGORDAR DE NOVO
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+<div class="rounded-2xl overflow-hidden border border-green-300 backdrop-blur-md bg-white/5 shadow-xl" data-aos="zoom-in">
+  <div class="relative w-full h-[180px] bg-cover bg-center flex items-center justify-center reflexo-glass"
+       style="background-image: url('https://st2.depositphotos.com/2069237/5288/i/450/depositphotos_52887169-stock-photo-woman-on-beach-enjoying-nature.jpg');">
+    <div class="absolute inset-0 bg-black/80 z-10"></div>
+    <p class="relative z-30 text-sm font-semibold text-center px-4 text-white">
+            PARA MULHERES QUE QUEREM SE SENTIR FELIZES E SAUDÁVEIS COM O PRÓPRIO CORPO
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Botão -->
+    <div class="flex justify-center mt-12">
+      <a href="#form" class="bg-green-500 hover:bg-green-600 text-center text-white font-bold py-5 px-6 w-[350px] rounded-full text-lg transition-all btn-pulsante">
+        QUERO PARTICIPAR
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<section class="relative pt-20 pb-8 bg-black text-white overflow-hidden">
+  <!-- Fundo com grid e bordas esmaecidas -->
+  <div class="absolute inset-0 z-0 pointer-events-none bg-[length:40px_40px] 
+    bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)]"
+    style="mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+           -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);">
+  </div>
+
+  <!-- Imagem no desktop -->
+  <div class="absolute inset-0 hidden lg:block">
+    <img 
+      src="https://static.wixstatic.com/media/7f5efc_bc82390371114722a01ed56d8018314e~mv2.webp" 
+      class="h-full object-contain absolute top-0 left-0 translate-x-20"
+    />
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-4 flex flex-col lg:flex-row items-start lg:items-start gap-8">
+    
+    <!-- Texto -->
+    <div class="w-full lg:w-1/2 text-center lg:text-left order-1">
+      <h2 class="text-3xl lg:text-5xl font-bold mb-4">
+        <span class="text-white">QUEM É O</span> <span class="text-[#5fff72]">EX-GORDO</span>
+      </h2>
+      <p class="mb-4">Meu nome é Douglas Leão, já pesei 130kg, tive depressão por estar acima do peso e quase morri fazendo dietas restritivas.</p>
+      <p class="mb-4">Hoje sou Doutor em treinamento e nutricionista esportivo, e já transformei a vida de centenas de mulheres. Passei pelo mesmo inferno que você, por isso sei exatamente como te ajudar.</p>
+      <p class="mb-4">Se inscreva no nosso evento e entre no nosso grupo do WhatsApp. Lá você vai receber todas as informações e o link para o evento.</p>
+
+      <!-- Botão no mobile -->
+      <div class="mt-6 flex lg:hidden justify-center">
+        <a href="#form" class="bg-green-500 hover:bg-green-600 block text-center text-white font-bold py-4 px-6 rounded-full text-lg transition-all btn-pulsante w-full max-w-xs">
+          QUERO PARTICIPAR
+        </a>
+      </div>
+
+      <!-- Botão no desktop -->
+      <div class="hidden lg:flex justify-start mt-12">
+        <a href="#form" class="bg-green-500 hover:bg-green-600 text-center text-white font-bold py-5 px-6 w-[350px] rounded-full text-lg transition-all btn-pulsante">
+          QUERO PARTICIPAR
+        </a>
+      </div>
+    </div>
+
+    <!-- Imagem mobile -->
+    <div class="w-full lg:w-1/2 relative mt-0 lg:mt-0 order-2 lg:order-none">
+      <img 
+        src="https://static.wixstatic.com/media/7f5efc_bc82390371114722a01ed56d8018314e~mv2.webp" 
+        class="w-screen h-auto block lg:hidden"
+      />
+    </div>
+  </div>
+</section>
+
+
+<br>
+
+<footer class="bg-black text-white text-sm px-6 pt-6 pb-12">
+  <div class="max-w-4xl mx-auto flex flex-col items-center text-center space-y-4">
+ 
+
+    <!-- Texto -->
+<p class="max-w-3xl text-[10px] sm:text-xs text-gray-500 leading-relaxed">
+  <strong>Dr. Douglas Leão</strong> - Todos os direitos reservados. <strong>ESTE SITE NÃO É do FACEBOOK:</strong> Este site não faz parte do site do Facebook ou do Facebook Inc. Além disso, este site <strong>NÃO</strong> é endossado pelo Facebook de nenhuma maneira. FACEBOOK é comercial independente da FACEBOOK, Inc.
+</p>
+
+  </div>
+</footer>
+
+
+
+
+
+  <script>
+    <!-- SCRIPT DO CRONÔMETRO -->
+    const customTargetDate = null;
+
+    function getNextSundayAt19h() {
+      const now = new Date();
+      const dayOfWeek = now.getDay();
+      const daysUntilSunday = (7 - dayOfWeek) % 7;
+      const nextSunday = new Date(now);
+      nextSunday.setDate(now.getDate() + daysUntilSunday);
+      nextSunday.setHours(19, 0, 0, 0);
+      if (now > nextSunday) nextSunday.setDate(nextSunday.getDate() + 7);
+      return nextSunday;
+    }
+	
+	function formatarDataEvento(date) {
+  const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+  const diaSemana = diasSemana[date.getDay()];
+  const horas = String(date.getHours()).padStart(2, '0');
+  const minutos = String(date.getMinutes()).padStart(2, '0');
+  return `${diaSemana}, às ${horas}:${minutos}h`;
+}
+
+
+
+    function updateCountdown() {
+      const targetDate = customTargetDate || getNextSundayAt19h();
+      const now = new Date();
+      const diff = targetDate - now;
+      if (diff <= 0) return;
+      const totalSeconds = Math.floor(diff / 1000);
+      const dias = Math.floor(totalSeconds / (3600 * 24));
+      const horas = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+      const minutos = Math.floor((totalSeconds % 3600) / 60);
+      const segundos = totalSeconds % 60;
+      document.getElementById("dias").textContent = String(dias).padStart(2, '0');
+      document.getElementById("horas").textContent = String(horas).padStart(2, '0');
+      document.getElementById("minutos").textContent = String(minutos).padStart(2, '0');
+      document.getElementById("segundos").textContent = String(segundos).padStart(2, '0');
+	  // Atualiza a data exibida acima do cronômetro
+document.getElementById("data-evento").textContent = formatarDataEvento(targetDate);
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+  
+  <!-- AOS Animation JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true
+  });
+</script>
+
+
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true
+  });
+
+  // REFLEXO FUNCIONAL COM INTERSECTION OBSERVER
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const reflexo = el.querySelector('.reflexo-glass');
+        if (reflexo && !reflexo.classList.contains('ativo')) {
+          reflexo.classList.add('ativo');
+          obs.unobserve(el); // Para não repetir
+        }
+      }
+    });
+  }, {
+    threshold: 0.6 // ativa quando 60% do card estiver visível
+  });
+
+  // Aplica o observer a cada card
+  document.querySelectorAll('[data-aos="zoom-in"]').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+
+
+<script>
+  // Mapeamento dos links por dia da semana
+  const linksPorDia = {
+    0: 'https://www.dougleao.com.br/webnar-start-dom',
+    1: 'https://www.dougleao.com.br/webnar-start-seg',
+    2: 'https://www.dougleao.com.br/webnar-start-ter',
+    3: 'https://www.dougleao.com.br/webnar-start-qua',
+    4: 'https://www.dougleao.com.br/webnar-start-qui',
+    5: 'https://www.dougleao.com.br/webnar-start-sex',
+    6: 'https://www.dougleao.com.br/webnar-start-sab'
+  };
+
+  // Detecta o dia atual
+  const diaAtual = new Date().getDay();
+  const linkDoDia = linksPorDia[diaAtual];
+
+  // Aplica nos botões com classe ou ID definidos
+  document.querySelectorAll('a[href="#form"], a.btn-pulsante').forEach(botao => {
+    botao.setAttribute('href', linkDoDia);
+  });
+  
+  
+  
+  
+  
+// Bloqueia pinça (touchmove com 2 dedos)
+document.addEventListener('touchmove', function(e) {
+  if (e.touches && e.touches.length > 1) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// Bloqueia duplo-toque rápido
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(e) {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) {
+    e.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
+// Bloqueia gestos específicos no iOS
+document.addEventListener('gesturestart', function(e) {
+  e.preventDefault();
+});
+
+
+
+// Bloqueia o menu de contexto (clique direito)
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Impede copiar/recortar/selecionar texto
+['copy','cut','selectstart','dragstart'].forEach(evt =>
+  document.addEventListener(evt, e => e.preventDefault())
+);
+
+// Bloqueia atalho Ctrl+C, Ctrl+U (ver fonte), Ctrl+S, Ctrl+P e F12
+document.addEventListener('keydown', e => {
+  const forbidden =
+    // combinações de Ctrl + C, U, S, P, A
+    (e.ctrlKey &&
+      ['c','u','s','p','a'].includes(e.key.toLowerCase()))
+    // F12
+    || e.key === 'F12';
+  if (forbidden) e.preventDefault();
+});
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

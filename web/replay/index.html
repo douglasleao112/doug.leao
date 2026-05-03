@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vamos queimar toda gordura 🔥</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+        #videoContainer, #chatContainer, #nameForm {
+            display: none;
+            margin: 20px auto;
+            max-width: 480px;
+            width: 100%;
+        }
+        .player-wrapper {
+            position: relative;
+            width: 100%;
+        }
+ 
+#nameForm input,
+#chatInputArea input {
+  font-size: 16px;
+}
+        #customVideo {
+            width: 100%;
+            display: block;
+        }
+        #videoClickOverlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            cursor: pointer;
+            z-index: 3;
+        }
+/* botão centralizado e com imagem de play */
+#playButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  transform: translate(-50%, -50%) scale(1);
+  background: url('https://jornadadaradiestesia.com.br/wp-content/uploads/2023/05/player-thum-youtub.svg') center/contain no-repeat;
+  border: none;
+  cursor: pointer;
+  z-index: 4;
+
+   /* 2) Animação de “zoom in/out” */
+  animation: zoom 1.5s infinite alternate;
+}
+
+/* 3) Keyframes que fazem o zoom ir (scale 1 → 1.2) e voltar */
+@keyframes zoom {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+        /* Chat Layout */
+        #chatContainer {
+            background: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #messages {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        .chat-message {
+            background: #f1f3f5;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: #333;
+        }
+        .chat-message strong {
+            color: #365899;
+            display: block;
+            margin-bottom: 4px;
+        }
+        #chatInputArea {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 6px 10px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        #userMessage {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 6px 10px;
+            font-size: 14px;
+            box-sizing: border-box;
+            min-width: 0;
+        }
+        #sendButton {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 6px;
+            width: 40px;
+            height: 40px;
+        }
+        #sendButton img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+        }
+#chatContainer h3 {
+    font-size: 13px;      
+    font-weight: bold;
+    color: #333;
+	margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+
+  
+        #nameForm {
+            display: none;
+            max-width: 400px;
+            width: 100%;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0);
+            text-align: center;
+        }
+        #nameForm img.logo {
+            width: 120px;
+            margin-bottom: 8px;
+        }
+        #nameForm h3 {
+            color: #000;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        #nameForm p {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        #nameForm input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        #nameForm button {
+            width: 100%;
+            background-color: #22c55e;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #nameForm .link {
+            display: block;
+            margin-top: 12px;
+            color: #007BFF;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        #nameForm .link:hover {
+            text-decoration: underline;
+        }
+
+  
+        @media (max-width: 500px) {
+            body {
+                padding: 0 !important; 
+            }
+			  .mainContent {
+             padding-left: 12px;
+             padding-right: 12px;
+            }
+            #chatContainer {
+                margin: 10px auto;
+                padding-left: 10px;
+                padding-right: 10px;
+                box-sizing: border-box;
+                width: 100%;
+            }
+		   #nameForm {
+                margin: 10px auto;
+                padding-left: 10px;
+                padding-right: 10px;
+                box-sizing: border-box;
+                width: 100%;
+            }
+			#videoContainer {
+                margin: 0 !important;
+                padding: 0 !important;
+                padding-left: 10px;
+                padding-right: 10px;
+                box-sizing: border-box;
+                width: 100% !important; 
+            }
+            #chatInputArea {
+                flex-wrap: wrap;
+            }
+        }
+		
+            #viewerCounter {
+            font-size: 13px;       
+            color: #555;           
+            margin-top: 30px;
+            }
+            #viewerCounter strong {
+            color: rgb(16, 16, 16);           
+            font-size: 13px;
+            }
+            
+#waitingMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* mantêm largura e estilo anteriores */
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  background: #fff;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  /* remova margens verticais que conflitem */
+  margin: 0;
+}
+
+#waitingMessage h2 {
+    color: #000;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#waitingMessage p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#waitingMessage #countdown {
+  font-size: 16px;
+  color: #333;
+  margin: 0 0 20px;   
+  font-family: inherit; 
+}
+
+#countdown {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#nameFormWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+
+
+html, body {
+  -webkit-user-select: none !important;
+     -moz-user-select: none !important;
+      -ms-user-select: none !important;
+          user-select: none !important;
+}
+img, a {
+  -webkit-user-drag: none !important;
+}
+
+#eventClosedMessage {
+  height: 100vh;             
+  display: flex;              
+  align-items: center;         
+  justify-content: center;   
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+#offerSection .price-old {
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+#offerSection .price-old span {
+  text-decoration: line-through;
+  color: #999;
+}
+
+#offerSection .price-new {
+  color: #28a745;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+#offerSection button {
+  background-color: #ff7d00; 
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto 8px;
+}
+
+#offerSection button:hover {
+  opacity: 0.9;
+}
+
+#offerSection .discount-note {
+  color: #333;
+  font-size: 12px;
+}
+
+#chatInputArea {
+    display: flex;
+    align-items: center;
+    background-color: #e0e0e0; /* Cinza claro */
+    border-radius: 20px;
+    padding: 10px 15px;
+    opacity: 0.7;
+    width: 100%;
+    cursor: not-allowed;
+    position: relative;
+}
+
+#userMessage {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #555; /* Cinza escuro para o texto */
+    font-size: 14px;
+    cursor: not-allowed;
+}
+
+#userMessage::placeholder {
+    color: #555; /* Placeholder em cinza escuro */
+}
+
+#sendButton {
+    background-color: transparent;
+    border: none;
+    cursor: not-allowed;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+}
+
+#sendButton img {
+    width: 60%;
+    height: 60%;
+    opacity: 0.5;
+}
+
+
+#progressBarOverlay {
+  position: absolute;
+  bottom: 0; /* <-- Aqui é a mudança */
+  left: 0;
+  height: 8px;
+  width: 0%;
+  background: rgba(255, 0, 0, 0.425);
+  z-index: 5;
+  transition: width 0.2s linear;
+  pointer-events: none;
+}
+
+
+    </style>
+
+
+
+<!-- Meta Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s){
+    if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src='https://connect.facebook.net/en_US/fbevents.js';
+    s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)
+  }(window, document,'script');
+
+  fbq('init', '1290378376428374');
+</script>
+<!-- End Meta Pixel Code -->
+
+
+
+
+</head>
+<body>
+
+
+<div id="nameFormWrapper">
+<div id="nameForm">
+    <img class="logo" src="https://static.wixstatic.com/media/7f5efc_e6c47774387b4355a3f0c7b475436863~mv2.webp">
+   <h3 style="font-size: 20px;">Descubra como Eliminar 16kg em 6 Semanas com a Fórmula do Abacate</h3>
+    <p>Por favor, entre com o mesmo <b>Nome</b> e <b>WhatsApp</b> que você informou na inscrição.</p><br/>
+<input type="text" id="userNameInput" placeholder="Nome"
+  autocomplete="name"
+  style="width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box;">
+
+<input 
+  type="text" 
+  id="userWhatsappInput"
+  maxlength="15"
+  placeholder="(11) 99999-9999"
+  oninput="limparDDI(this)"
+  autocomplete="tel"
+  style="width: 100%; padding: 10px; margin: 8px 0 16px 0; box-sizing: border-box;">
+
+
+
+
+
+    <button onclick="saveUserName()">ENTRAR</button>
+    <a href="https://www.dougleao.com.br/cadastrar-replay" class="link">Ou, clique aqui para se inscrever agora.</a>
+</div>
+</div>
+
+
+
+<div id="nextSession"></div>
+
+
+<div id="waitingMessage" style="display:none;">
+    <h2>Quase lá!</h2>
+    <p>Aguarde! Nosso evento começa em breve!</p>
+    <p id="countdown"></p>
+</div>
+
+<div id="eventClosedMessage" style="display:none;">
+  <h2>Evento Encerrado.</h2>
+</div>
+
+
+<div id="videoContainer">    
+ <!-- Headline e subhealine -->
+<div id="viewerCounter" style="text-align: center; margin-top: 20px; margin-bottom: 10px;">
+  <h1 style="font-size: 18px; color: #d62828; margin-bottom: 8px;">Vídeo liberado por tempo limitado</h1>
+  <p style="font-size: 13px; color: #333;">
+    Esse vídeo sairá do ar HOJE,<b> <span id="diaSemana"></span> às 23:59</b>
+  </p>
+</div>
+
+
+    <div class="player-wrapper">
+        <video id="customVideo" preload="metadata" playsinline >  <!--  controls    IMPORTANTE! -->
+        <source src="https://video.wixstatic.com/video/7f5efc_c2d3a2398153429ba31f28c2305d8359/720p/mp4/file.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo HTML5.
+        </video>
+        <div id="progressBarOverlay"></div>
+        <div id="videoClickOverlay"></div>
+        <button id="playButton"></button>
+     </div>
+    </div>
+
+
+
+
+
+
+
+<div class="mainContent">
+<!-- Oferta especial, inicialmente escondida   IMPORTANTE! -->
+<div id="offerSection" style="display:none; text-align:center; max-width:480px; margin:20px auto;">
+  <div style="margin-top: 10px; font-size: 14px; color: #ff0000;">
+    <b>ATENÇÃO:</b> Desconto de R$ 100,00 somente para às 10 primeiras.<br>
+  </div>
+  <div class="oferta-dupla" style="display: flex; justify-content: center;">
+    <!-- Plano 12 meses -->
+    <div class="plano-oferta" style="flex: 1 1 280px; background: #f2fff4; border-radius: 16px; padding: 22px 12px 16px 12px; box-shadow: 0 4px 24px rgba(40,167,69,0.07); margin:8px;">
+      <div style="font-size:16px; color:#2c9c5e; font-weight:600; margin-bottom:7px;">Tratamento 12 Meses</div>
+      <div style="font-size:13px; color:#333; margin-bottom:7px;">
+        De <span style="text-decoration:line-through;color:#c44;">R$ 4.128</span>
+      </div>
+      <div style="font-size: 23px; color: #28a745; font-weight: bold;">
+        12x R$ 99,70
+      </div>
+      <div style="font-size:13px; color:#333; margin-bottom:13px;">
+        ou R$ 997 à vista
+      </div>
+      <a href="https://sun.eduzz.com/39YDN81D9O?cupom=OFF100"
+         style="display:block; background:#28a745; color:#fff; font-weight: bold; font-size: 18px; padding:14px 0; border-radius:12px; text-decoration:none; margin:0 auto 10px; transition: background .2s; box-shadow: 0 0 8px #28a74522;  animation: pulse 1.5s infinite, zoomInOut 1.5s infinite;">
+        QUERO 12 MESES COM DESCONTO
+      </a>
+      <div style="font-size:12px; color:#28894e;">Aproveite 70% de desconto somente agora!</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+	
+<style>
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(243, 181, 10, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+  }
+}
+
+@keyframes zoomInOut {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+a[href*="eduzz"] {
+  animation: zoomInOut 1.5s infinite;
+}
+</style>
+
+
+
+
+
+
+
+
+<div id="chatContainer">
+    <h3>Chat Transmitido Domingo</h3>
+    <div id="messages"></div>
+
+  <div id="chatInputArea">
+    <input type="text" id="userMessage" placeholder="Chat indisponível no Replay" disabled>
+    <button id="sendButton" disabled>
+        <img src="https://cdn-icons-png.flaticon.com/512/876/876777.png" alt="Enviar">
+    </button>
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+<script>  //PROGRAMAR LIVE IMPORTANTE!
+    const configDay = 1;        // dom0  seg1  ter2  qua3   qui4   sex5   sab6     
+    const configHour = 9;         // HORA                                  
+    const configMinute = 0;      // MINUTO                                   
+    const durationMinutes = 63;    // duração do video                        
+
+    const video = document.getElementById('customVideo');
+    const playButton = document.getElementById('playButton');
+    const overlay = document.getElementById('videoClickOverlay');
+    const videoContainer = document.getElementById('videoContainer');
+    const chatContainer = document.getElementById('chatContainer');
+    const messages = document.getElementById('messages');
+    const nextSession = document.getElementById('nextSession');
+    const nameForm = document.getElementById('nameForm');
+    const videoDuration = durationMinutes * 60;
+    const REPLAY_MODE = true; // vídeo sempre liberado   IMPORTANTE!
+
+
+
+
+
+function hhmmssToSeconds(hhmmss) {
+    const [h, m, s] = hhmmss.split(":").map(Number);
+    return h * 3600 + m * 60 + s;
+}
+
+
+
+
+    let shownProgrammedMessages = new Set();
+    let videoJaIniciado = false;
+	let tempoJaDefinido = false;
+	let viewerInterval;
+    let userName = "";
+	let monitoramentoAtivo = false;
+
+    function isWebinarTime() {
+        const now = new Date();
+        const day = now.getDay();
+        const webinarStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), configHour, configMinute, 0);
+        const webinarEnd = new Date(webinarStart.getTime() + (durationMinutes * 60000));
+        return day === configDay && now >= webinarStart && now <= webinarEnd;
+    }
+
+    function getNextSessionDate() {
+        const now = new Date();
+        let daysUntilNext = (configDay - now.getDay() + 7) % 7;
+        if (daysUntilNext === 0 && (now.getHours() > configHour || (now.getHours() === configHour && now.getMinutes() >= configMinute))) {
+            daysUntilNext = 7;
+        }
+        const nextDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysUntilNext, configHour, configMinute, 0);
+        return nextDate.toLocaleString('pt-BR');
+    }
+
+
+
+
+  
+    function startWebinar() {
+  messages.innerHTML = "";
+  shownProgrammedMessages.clear();
+
+  videoContainer.style.display = "block";
+  chatContainer.style.display = "block";
+
+  if (REPLAY_MODE) {
+    // Replay: começa do início. Se já tiver tempo salvo no localStorage,
+    // o trecho "loadedmetadata" mais abaixo já cuida de posicionar.
+    if (!tempoJaDefinido) {
+      video.currentTime = 0;
+      tempoJaDefinido = true;
+    }
+  } else {
+    // Modo "ao vivo" antigo, mantido caso queira usar no futuro
+    const now = new Date();
+    const webinarStart = new Date(
+      now.getFullYear(), now.getMonth(), now.getDate(),
+      configHour, configMinute, 0
+    );
+    const secondsSinceStart = Math.floor((now - webinarStart) / 1000);
+
+    if (!tempoJaDefinido && secondsSinceStart >= 0 && secondsSinceStart <= videoDuration) {
+      video.currentTime = secondsSinceStart;
+      tempoJaDefinido = true;
+    }
+
+    if (typeof programmedMessages !== 'undefined') {
+      programmedMessages.forEach(msg => {
+        if (hhmmssToSeconds(msg.time) < secondsSinceStart) {
+          shownProgrammedMessages.add(msg.time + '-' + msg.name);
+        }
+      });
+    }
+  }
+
+  const tempoParaMostrarBotao = 2289;  // segundos pitch  IMPORTANTE!
+  let botaoJaApareceu = false;
+
+  video.addEventListener('timeupdate', () => {
+    const progressBar = document.getElementById('progressBarOverlay');
+    if (progressBar) {
+      const total = video.duration;
+      const currentTime = video.currentTime;
+      let widthPercent = 0;
+
+      if (currentTime <= 240) {
+        widthPercent = (currentTime / 240) * 50;
+      } else if (currentTime <= 540) {
+        widthPercent = 50 + ((currentTime - 240) / 300) * 25;
+      } else {
+        const remaining = total - 540;
+        const elapsed = currentTime - 540;
+        widthPercent = 75 + (elapsed / remaining) * 25;
+      }
+      progressBar.style.width = `${Math.min(widthPercent, 100)}%`;
+    }
+
+    if (!botaoJaApareceu && video.currentTime >= tempoParaMostrarBotao) {
+      document.getElementById('offerSection').style.display = 'block';
+      botaoJaApareceu = true;
+
+      if (typeof fbq === 'function') {
+        fbq('track', 'AddToWishlist');   // evento facebook pitch  IMPORTANTE!
+      }
+    }
+  });
+
+  overlay.style.display = 'block';
+  playButton.style.display = 'block';
+}
+
+
+
+
+
+
+
+    function sendMessage() {
+        const input = document.getElementById('userMessage');
+        const text = input.value.trim();
+        if (text) {
+            addMessage(userName, text);
+            input.value = '';
+        }
+    }
+
+
+function iniciarVideo() {
+    if (videoJaIniciado) return;
+    videoJaIniciado = true;
+
+    playButton.style.display = 'none';
+    overlay.style.display = 'none';
+
+    video.play().then(() => {
+        // ✅ CORRIGIDO: Agora apenas chama a função correta que já existe no seu código
+        iniciarMonitoramentoDeMensagens();
+    }).catch(err => console.warn("Erro ao iniciar vídeo:", err));
+}
+
+
+
+function saveUserName() {
+  const nameInput = document.getElementById('userNameInput');
+  const name = nameInput.value.trim();
+const whatsappInput = document.getElementById('userWhatsappInput');
+const whatsappRaw = whatsappInput.value.trim();
+const whatsapp = whatsappRaw.replace(/\D/g, ''); // Apenas números!
+  const nameFormWrapper = document.getElementById('nameFormWrapper');
+
+  if (!name) {
+    return alert("Por favor, digite seu nome.");
+  }
+   if (!whatsapp) {
+    return alert("Por favor, digite seu WhatsApp.");
+ }
+  if (whatsapp.length !== 11) {
+    alert("O número do WhatsApp deve ter 11 dígitos (DDD + número). Exemplo: (11) 99999-9999");
+    whatsappInput.focus();
+    return;
+  }
+
+   // dispara o ViewContent somente agora, pós-preenchimento válido
+  fireViewContentOnce();
+
+  window.userName = name;
+  window.userWhatsapp  = whatsapp;
+  userName = name;
+
+  localStorage.setItem('webinarUserName', name);
+  localStorage.setItem('webinarUserWhatsapp', whatsapp);
+
+  nameFormWrapper.style.display = "none";
+
+  // Sempre iniciar o webinar logo após o cadastro do nome
+  startWebinar();
+ 
+}
+
+
+// logica do campo de coleta whatsapp
+function formatarWhatsapp(input) {
+  let valor = input.value.replace(/\D/g, '').slice(0, 11); // só números, máx 11
+  if (valor.length > 2) {
+    valor = '(' + valor.slice(0,2) + ') ' + valor.slice(2);
+  }
+  if (valor.length > 9) {
+    valor = valor.slice(0, 10) + '-' + valor.slice(10);
+  }
+  input.value = valor;
+}
+
+
+
+function limparDDI(input) {
+  let valor = input.value.trim();
+  // Remove tudo que não for número
+  valor = valor.replace(/\D/g, '');
+
+  // Se começar com 55 (DDI Brasil) e tiver 13 dígitos ou mais, remove o DDI
+  if (valor.length >= 13 && valor.startsWith('55')) {
+    valor = valor.substring(2);
+  }
+
+  // Continua a formatação normal
+  if (valor.length > 2) {
+    valor = '(' + valor.slice(0,2) + ') ' + valor.slice(2);
+  }
+  if (valor.length > 9) {
+    valor = valor.slice(0, 10) + '-' + valor.slice(10);
+  }
+  input.value = valor;
+}
+
+
+
+
+    playButton.addEventListener('click', iniciarVideo);
+    overlay.addEventListener('click', iniciarVideo);
+
+    
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+ 
+  
+  
+
+window.addEventListener('DOMContentLoaded', function () {
+  // Mostra o formulário logo que abrir a página
+  document.getElementById('nameFormWrapper').style.display = "flex";
+  document.getElementById('nameForm').style.display = "block";
+});
+
+
+
+
+
+function showCountdown() {
+    const waitingDiv = document.getElementById('waitingMessage');
+    waitingDiv.style.display = "block";
+
+    const targetDate = getNextWebinarDate();
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+            location.reload();  // Quando chega o horário, recarrega a página
+            return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+         document.getElementById('countdown').textContent =
+    `${days} dias ${hours} horas ${minutes} minutos ${seconds} segundos`;
+
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
+function getNextSessionDateObject() {
+    const now = new Date();
+    let targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), configHour, configMinute, 0);
+
+    if (now >= targetDate) {
+        // Se já passou o horário de hoje, calcula para a próxima semana
+        let daysUntilNext = (configDay - now.getDay() + 7) % 7;
+        if (daysUntilNext === 0) daysUntilNext = 7;  // Garante que seja a próxima semana
+        targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysUntilNext, configHour, configMinute, 0);
+    } else {
+        // Se ainda não chegou o horário de hoje, mas é o mesmo dia
+        let daysUntilNext = (configDay - now.getDay() + 7) % 7;
+        if (daysUntilNext === 0 && now < targetDate) {
+            // Continua com o horário de hoje
+        } else {
+            targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysUntilNext, configHour, configMinute, 0);
+        }
+    }
+
+    return targetDate;
+}
+
+
+function showEventClosed() {
+    // Esconde os outros blocos
+    document.getElementById('nameFormWrapper').style.display = "none";
+    document.getElementById('waitingMessage').style.display = "none";
+    document.getElementById('videoContainer').style.display = "none";
+    document.getElementById('chatContainer').style.display = "none";
+
+    // Mostra a mensagem de encerrado
+    document.getElementById('eventClosedMessage').style.display = "block";
+}
+
+
+
+function getNextWebinarDate() {
+    const now = new Date();
+    let daysUntilNext = (configDay - now.getDay() + 7) % 7;
+
+    // Se hoje for domingo e já passou do horário, joga para o domingo da próxima semana
+    if (daysUntilNext === 0 && (now.getHours() > configHour || (now.getHours() === configHour && now.getMinutes() >= configMinute))) {
+        daysUntilNext = 7;
+    }
+
+    const nextWebinar = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysUntilNext, configHour, configMinute, 0);
+    return nextWebinar;
+}
+
+
+
+function getLastWebinarDate() {
+    const now = new Date();
+    let daysSinceLast = (now.getDay() - configDay + 7) % 7;
+
+    // Se hoje for domingo mas ainda não chegou o horário, pega o domingo anterior
+    if (daysSinceLast === 0 && now.getHours() < configHour) {
+        daysSinceLast = 7;
+    }
+
+    const lastWebinar = new Date(now.getFullYear(), now.getMonth(), now.getDate() - daysSinceLast, configHour, configMinute, 0);
+    return lastWebinar;
+}
+
+
+
+
+
+
+  // Função simples para transformar URLs em <a> clicáveis
+  function linkify(text) {
+    return text
+      // https:// ou http://
+      .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
+      // www. algo
+      .replace(/\b(www\.[^\s]+)/g, '<a href="http://$1" target="_blank" rel="noopener">$1</a>');
+  }
+
+
+function addMessage(user, text) {
+  const div = document.createElement('div');
+  div.className = 'chat-message';
+  const safeText = linkify(text);
+  div.innerHTML = `<strong>${user}:</strong> ${safeText}`;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+
+
+// Bloqueia pinça (touchmove com 2 dedos)
+document.addEventListener('touchmove', function(e) {
+  if (e.touches && e.touches.length > 1) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// Bloqueia duplo-toque rápido
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(e) {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) {
+    e.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
+// Bloqueia gestos específicos no iOS
+document.addEventListener('gesturestart', function(e) {
+  e.preventDefault();
+});
+
+
+
+// Bloqueia o menu de contexto (clique direito)
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Impede copiar/recortar/selecionar texto
+['copy','cut','selectstart','dragstart'].forEach(evt =>
+  document.addEventListener(evt, e => e.preventDefault())
+);
+
+// Bloqueia atalho Ctrl+C, Ctrl+U (ver fonte), Ctrl+S, Ctrl+P e F12
+document.addEventListener('keydown', e => {
+  const forbidden =
+    // combinações de Ctrl + C, U, S, P, A
+    (e.ctrlKey &&
+      ['c','u','s','p','a'].includes(e.key.toLowerCase()))
+    // F12
+    || e.key === 'F12';
+  if (forbidden) e.preventDefault();
+});
+
+
+
+// Salva o tempo do vídeo a cada 5 segundos
+setInterval(() => {
+    if (!video.paused && !video.ended) {
+        localStorage.setItem('webinarVideoTime', video.currentTime);
+    }
+}, 5000);
+
+
+
+
+// VERIFICA E CARREGA O TEMPO SALVO DA PAGINA
+video.addEventListener('loadedmetadata', () => {
+  const savedTime = parseFloat(localStorage.getItem('webinarVideoTime'));
+  const expirado = expirouLimiteDeTempo();
+
+  if (!isNaN(savedTime) && savedTime > 0 && savedTime < video.duration && !expirado) {
+    // Se tem tempo salvo e ainda é válido (não expirou)
+    video.currentTime = savedTime;
+    tempoJaDefinido = true;
+
+    programmedMessages.forEach(msg => {
+      if (msg.time < savedTime) {
+        shownProgrammedMessages.add(msg.time + '-' + msg.name);
+      }
+    });
+  } else {
+    // Se expirou ou não tem tempo salvo
+    video.currentTime = 0;
+    tempoJaDefinido = true;
+    localStorage.removeItem('webinarVideoTime');
+    localStorage.setItem('webinarFirstVisit', Date.now());
+  }
+});
+
+
+
+
+
+
+
+// Define o tempo máximo para relembrar (em milissegundos)
+const LIMITE_MEMORIA = 6 * 60 * 60 * 1000; // IMPORTANTE! TEMPO QUE RESETA O LOCAL STORAGE 1 * 60 * 60 * 1000 = 1HORA
+
+// Salva o tempo da primeira visita
+if (!localStorage.getItem('webinarFirstVisit')) {
+  localStorage.setItem('webinarFirstVisit', Date.now());
+}
+
+// Função para verificar se o tempo expirou
+function expirouLimiteDeTempo() {
+  const firstVisit = parseInt(localStorage.getItem('webinarFirstVisit'), 10);
+  const agora = Date.now();
+  return isNaN(firstVisit) || (agora - firstVisit > LIMITE_MEMORIA);
+}
+
+
+
+
+
+
+function iniciarMonitoramentoDeMensagens() {
+    if (monitoramentoAtivo) return;  // Evita criar múltiplos intervals
+    monitoramentoAtivo = true;
+
+    setInterval(() => {
+        const currentTime = Math.floor(video.currentTime);
+        programmedMessages.forEach(msg => {
+            const key = msg.time + '-' + msg.name; // Chave única para evitar repetições
+            
+            // Converte o tempo do comentário para segundos ANTES de comparar
+            const msgTimeInSeconds = hhmmssToSeconds(msg.time);
+
+            if (currentTime >= msgTimeInSeconds && !shownProgrammedMessages.has(key)) {
+                addMessage(msg.name, msg.text);
+                shownProgrammedMessages.add(key);
+            }
+        });
+    }, 1000);
+}
+
+
+// DATA DO TOPO DA PAGINA IMPORTANTE!
+const diasSemana = ["DOMINGO", "2ª FEIRA", "3ª FEIRA", "4ª FEIRA", "5ª FEIRA", "6ª FEIRA", "SÁBADO"];
+  const hoje = new Date();
+  document.getElementById("diaSemana").textContent = diasSemana[hoje.getDay()];
+   
+
+</script>
+
+
+
+
+
+
+
+ <script src="/ao-vivo/comentarios.js"></script>
+
+
+
+
+<script>
+const horaEntrada = new Date();
+
+function getBrowserId() {
+  let id = localStorage.getItem('browserId');
+  if (!id) {
+    id = 'browser-' + Math.random().toString(36).substring(2, 15);
+    localStorage.setItem('browserId', id);
+  }
+  return id;
+}
+
+const browserId = getBrowserId();
+
+function enviarDados() {
+  const agora = new Date();
+  const tempoPagina = Math.floor((agora - horaEntrada) / 1000);   // IMPORTANTE! APPSCRIPT GOOGLE
+  const horaSaida = agora.toLocaleTimeString();
+
+  fetch('https://script.google.com/macros/s/AKfycbyz-E7Ko2Ywh8ckUCSJAFhzGnM8IAKyP1GCV2i3tPkQ85bPRL-Bh32XzWnq9zJ1jlMQ/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+  browserId: browserId,
+  nome: window.userName || 'Desconhecido',
+  whatsapp: window.userWhatsapp || 'sem-whatsapp',
+  horaEntrada: horaEntrada.toLocaleTimeString(),
+  tempoPagina: tempoPagina,
+  horaSaida: horaSaida,
+  paginaOrigem: 'replay'
+})
+  });
+}
+
+setInterval(enviarDados, 10000);
+</script>
+
+
+
+<script>
+  function fireViewContentOnce(){
+    if(typeof fbq === 'function' && !window.__vcFired){
+      window.__vcFired = true;
+      fbq('track', 'Search', { event_source: 'form_submit' });
+    }
+  }
+</script>
+
+
+
+
+</body>
+</html>
