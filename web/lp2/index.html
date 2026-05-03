@@ -130,40 +130,39 @@
 
     
     /* slider*/
-    .slider-container {
-  overflow-x: auto;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
+.slider-container {
+  overflow: hidden;
+  width: 100%;
   max-width: 100%;
   margin: 0 auto 32px auto;
   padding-bottom: 10px;
 }
 
-.slider-container::-webkit-scrollbar {
-  display: none;
-}
-
 .slider-track {
   display: flex;
   gap: 12px;
-  animation: scroll-left 10s linear infinite;
+  width: max-content;
+  animation: scroll-left 45s linear infinite;
   will-change: transform;
 }
 
 .slider-track img {
+  width: 180px;
   height: 240px;
   border-radius: 12px;
   flex-shrink: 0;
   object-fit: cover;
 }
 
-/* rolagem automática mais rápida */
 @keyframes scroll-left {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+  from {
+    transform: translateX(0);
+  }
 
+  to {
+    transform: translateX(calc(-50% - 42px));
+  }
+}
 
 
 
