@@ -389,6 +389,37 @@
 }
 
 
+.btn-fixed {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: calc(100% - 40px);
+  max-width: 380px;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.4s ease, transform 0.4s ease;
+
+  z-index: 999;
+}
+
+/* QUANDO APARECE */
+.btn-fixed.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* QUANDO SOME */
+.btn-fixed.hide {
+  opacity: 0;
+  transform: translateX(-50%) translateY(20px);
+}
+
+
     @media (min-width: 768px) {
       .page {
         max-width: 430px;
@@ -471,20 +502,6 @@
       </div>
     </section>
 
-    <!-- OFERTA -->
-    <section class="section offer">
-     <a class="btn" >
-          Garantir Minha Vaga
-        </a>
-
-           <p class="microcopy">
-  73% das Vagas Preenchidas
-</p>
-
-    </section>
-
-
-        <div class="divider"></div>
 
 
     <!-- SOBRE -->
@@ -511,6 +528,13 @@
         >
       </div>
     </section>
+
+
+
+    <a class="btn btn-fixed" id="btnFixed">
+  Participar do Evento Gratuito
+</a>
+
 
   </main>
 
@@ -592,8 +616,34 @@ function formatDate(date) {
   document.querySelectorAll('.btn').forEach(btn => {
     btn.setAttribute('href', LINK_GLOBAL);
   });
-</script>
 
+
+
+  
+  const mainBtn = document.querySelector('.hero .btn');
+  const fixedBtn = document.getElementById('btnFixed');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // botão principal visível → esconde o fixo
+          fixedBtn.classList.remove('show');
+          fixedBtn.classList.add('hide');
+        } else {
+          // botão principal sumiu → mostra o fixo
+          fixedBtn.classList.add('show');
+          fixedBtn.classList.remove('hide');
+        }
+      });
+    },
+    {
+      threshold: 0.3
+    }
+  );
+
+  observer.observe(mainBtn);
+</script>
 
 </body>
 </html>
