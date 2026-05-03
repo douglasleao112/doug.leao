@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Dr. Douglas Leão</title>
+
+  <!-- PIXEL FACEBOOK -->
+  <!-- TROCAR AQUI O ID DO PIXEL -->
+  <script>
+    const FACEBOOK_PIXEL_ID = "99999999999999";
+  </script>
+
+  <script>
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)
+    }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', FACEBOOK_PIXEL_ID);
+    fbq('track', 'PageView');
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0f0f0f;
+      color: #f2f2f2;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      background: #0f0f0f;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+  .section {
+  padding: 12px 18px;  
+}
+
+.course {
+  margin-top: 10px;
+}
+
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 680px;
+      overflow: hidden;
+      background: #0f0f0f;
+    }
+
+    .hero-visual {
+      position: relative;
+      width: 100%;
+      height: 430px;
+      background-image: url("https://static.wixstatic.com/media/7f5efc_3bf7682833f942d1b58ce2996f51bfbf~mv2.png/v1/fill/w_953,h_446,al_c,lg_1,q_90,enc_avif,quality_auto/background_edited_edited.png");
+      background-size: 100% auto;
+      background-position: top center;
+      background-repeat: no-repeat;
+    }
+
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(to bottom, rgba(15,15,15,0), #0f0f0f 85%);
+      z-index: 2;
+    }
+
+    .logo {
+      position: absolute;
+      top: 120px;
+      left: 16px;
+      width: 137px;
+      height: auto;
+      z-index: 4;
+    }
+
+    .hero-person {
+      position: absolute;
+      left: 50%;
+      bottom: -8px;
+      width: 112%;
+      max-width: none;
+      transform: translateX(-50%);
+      z-index: 3;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      padding: 12px 16px 0;
+      margin-top: -10px;
+    }
+
+
+    .hero-content {
+  position: relative;
+  z-index: 5;
+
+  padding: 0 16px;
+  margin-top: -90px;  
+}
+
+
+.eyebrow {
+  background: rgba(0, 0, 0, 0.65); /* mais escuro */
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  color: #ffffff;
+  font-size: 13px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-weight: 600;
+
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+    h1 {
+      font-size: 29px;
+      line-height: 1.22;
+      text-align: center;
+      font-weight: 400;
+      margin-bottom: 26px;
+    }
+
+    .btn {
+      display: block;
+      position: relative;
+      z-index: 6;
+      width: 100%;
+      background: #174d1d;
+      color: #00ff20;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 15px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 auto;
+    }
+
+    .course h2,
+    .offer h2,
+    .about h2 {
+      font-size: 27px;
+      line-height: 1.18;
+      font-weight: 500;
+      margin-bottom: 22px;
+    }
+
+    .about {
+  margin-top: 60px;
+}
+
+    .course p,
+    .about p {
+      color: #aaa;
+      font-size: 15px;
+      line-height: 1.45;
+      margin-bottom: 26px;
+    }
+
+    .fade-item {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.6s ease;
+}
+
+.fade-item.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+    .lesson {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 0;
+      border-bottom: 1px solid #222;
+    }
+
+    .lesson-number {
+      width: 36px;
+      height: 36px;
+      background: #2b2b2b;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .lesson-text {
+      font-size: 15px;
+      line-height: 1.3;
+      font-weight: 700;
+      color: #d7d7d7;
+    }
+
+    .offer .pre {
+      font-style: italic;
+      color: #bdbdbd;
+        margin-top: 70px; /* empurra pra baixo */
+      font-size: 15px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .price-card {
+      border: 1px solid #242424;
+      border-radius: 22px;
+      padding: 28px;
+      background: #101112;
+    }
+
+    .old-price {
+      color: #9a9a9a;
+      font-size: 18px;
+      margin-top: 28px;
+    }
+
+    .old-price span {
+      text-decoration: line-through;
+    }
+
+    .price {
+      color: #00d722;
+      font-size: 48px;
+      font-weight: 700;
+      margin: 6px 0 18px;
+    }
+
+
+    .course .section-label {
+  display: block !important;
+  color: #9a9a9a !important;
+  font-size: 13px !important;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 10px;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+    .secure {
+      text-align: center;
+      color: #aaa;
+      margin: 26px 0;
+      font-size: 15px;
+    }
+
+    .about-card {
+      border: 1px solid #222;
+      border-radius: 28px;
+      padding: 34px;
+      background: #101010;
+    }
+
+    .about small {
+      color: #888;
+      display: block;
+      margin-bottom: 18px;
+    }
+
+    .media {
+      margin-top: 36px;
+      margin-bottom: 24px;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .about-img {
+      width: 100%;
+      border-radius: 18px;
+      display: block;
+      margin-top: 24px;
+    }
+
+.section-label {
+  color: #8e8e8e !important;
+  font-size: 13px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-weight: 600;
+
+  text-align: left;
+  margin-bottom: 12px;
+
+  display: block;
+}
+
+    .eyebrow-box2 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+
+    @media (min-width: 768px) {
+      .page {
+        max-width: 430px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <div class="hero-visual">
+        <img 
+          class="logo" 
+          src="https://i.imgur.com/KYR7gxE.png" 
+          alt="Logo Dr. Douglas Leão"
+        >
+
+        <img 
+          class="hero-person" 
+          src="https://i.imgur.com/Sttih1U.png" 
+          alt="Dr. Douglas Leão"
+        >
+      </div>
+
+      <div class="hero-content">
+<div class="eyebrow-box2">
+  <div class="eyebrow" id="eventDate">Carregando data...</div>
+</div>
+
+        <h1>
+          Aprenda como transformar seu físico com estratégia, treino e alimentação bem direcionados.
+        </h1>
+
+        <a class="btn" href="https://typebot-chat-viewer.vexhyt.easypanel.host/webnar">
+          Comprar agora
+        </a>
+      </div>
+
+    </section>
+
+    <!-- POR DENTRO DO CURSO -->
+    <section class="section course">
+  <div class="section-label">Por dentro do curso</div>
+
+  <h2>Um programa pensado para você não perder tempo.</h2>
+
+      <p>
+        Prezamos pela sua experiência e satisfação. Veja o que você vai aprender em cada aula:
+      </p>
+
+      <div class="lesson fade-item">
+        <div class="lesson-number">1</div>
+        <div class="lesson-text">Como organizar sua alimentação para ter mais resultado</div>
+      </div>
+
+      <div class="lesson fade-item">
+        <div class="lesson-number">2</div>
+        <div class="lesson-text">Como treinar com mais eficiência e menos desperdício</div>
+      </div>
+
+      <div class="lesson fade-item">
+        <div class="lesson-number">3</div>
+        <div class="lesson-text">Como ajustar sua rotina para melhorar sua performance</div>
+      </div>
+    </section>
+
+    <!-- OFERTA -->
+    <section class="section offer">
+      <div class="pre">Pré-venda exclusiva</div>
+
+      <h2>
+        Aprenda como evoluir seu físico com estratégia e acompanhamento inteligente.
+      </h2>
+
+      <div class="price-card">
+        <div class="eyebrow" style="text-align:left;">Nutrição e Performance</div>
+
+        <div class="old-price">De <span>R$ 997</span></div>
+        <div class="price">R$ 97</div>
+
+        <a class="btn" href="https://typebot-chat-viewer.vexhyt.easypanel.host/webnar">
+          Comprar agora
+        </a>
+
+        <div class="secure">✓ Compra Segura</div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; color:#777; font-weight:700; font-size:22px;">
+          <span>VISA</span>
+          <span>Mastercard</span>
+          <span>pix</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section class="section about">
+      <div class="about-card">
+        <small>Seu professor</small>
+
+        <h2>Eu sou Dr. Douglas Leão</h2>
+
+        <p>
+          Nutricionista e treinador, com Doutorado com Atletas de Fisiculturismo e Alta Performance e Nutricionista Esportivo pelo Colégio Americano de Medicina do Esporte.
+        </p>
+
+        <p>
+          Meu objetivo é ajudar pessoas a evoluírem o físico com estratégia, clareza e acompanhamento bem direcionado.
+        </p>
+
+        
+
+        <img 
+          class="about-img" 
+          src="https://static.wixstatic.com/media/7f5efc_dab67ba329d54135992da07512f6cff4~mv2.png" 
+          alt="Dr. Douglas Leão"
+        >
+      </div>
+    </section>
+
+  </main>
+
+
+  <script>
+  const items = document.querySelectorAll('.fade-item');
+
+  items.forEach((item, index) => {
+    setTimeout(() => {
+      item.classList.add('show');
+    }, index * 1500); // 1.5s entre cada
+  });
+
+
+
+
+  function getNextSundayWithTime(horaEvento) {
+    const now = new Date();
+    const result = new Date(now);
+
+    const [hora, minuto] = horaEvento.split(":").map(Number);
+
+    // Próximo domingo
+    const daysUntilSunday = (7 - now.getDay()) % 7;
+    result.setDate(now.getDate() + daysUntilSunday);
+
+    // Define horário do evento
+    result.setHours(hora, minuto, 0, 0);
+
+    // Se for hoje (domingo) e já passou da hora → próximo domingo
+    if (daysUntilSunday === 0 && now >= result) {
+      result.setDate(result.getDate() + 7);
+    }
+
+    return result;
+  }
+
+function formatDate(date) {
+  const dias = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+
+  const hoje = new Date();
+
+  const isHoje =
+    date.getDate() === hoje.getDate() &&
+    date.getMonth() === hoje.getMonth() &&
+    date.getFullYear() === hoje.getFullYear();
+
+  const diaSemana = dias[date.getDay()];
+  const dia = String(date.getDate()).padStart(2, '0');
+  const mes = String(date.getMonth() + 1).padStart(2, '0');
+
+  const hora = String(date.getHours()).padStart(2, '0');
+
+  if (isHoje) {
+    return `📅 HOJE às ${hora}h`;
+  }
+
+  return `📅 ${diaSemana} ${dia}/${mes} às ${hora}h`;
+}
+  // 🔥 CONFIGURAÇÃO SIMPLES
+  const dataManual = null; 
+  const horaEvento = "19:00"; // 👈 formato correto agora
+
+  let eventDate;
+
+  if (dataManual) {
+    eventDate = new Date(dataManual);
+  } else {
+    eventDate = getNextSundayWithTime(horaEvento);
+  }
+
+  document.getElementById("eventDate").innerText = formatDate(eventDate);
+</script>
+
+
+</body>
+</html>
