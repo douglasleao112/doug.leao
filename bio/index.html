@@ -4,15 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Douglas Leão | Links</title>
+
   <style>
     :root {
       --bg: #050505;
       --text: #f4f4f4;
       --muted: rgba(255,255,255,0.72);
-      --soft: rgba(255,255,255,0.12);
-      --soft-2: rgba(255,255,255,0.08);
-      --stroke: rgba(255,255,255,0.18);
-      --shadow: 0 18px 50px rgba(0,0,0,0.45);
       --radius: 24px;
       --maxw: 440px;
     }
@@ -25,14 +22,13 @@
     html, body {
       margin: 0;
       min-height: 100%;
-      background: var(--bg);
+      background: #000;
       color: var(--text);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       overflow-x: hidden;
     }
 
     body {
-      position: relative;
       display: flex;
       justify-content: center;
       background: #000;
@@ -70,14 +66,13 @@
 
     .bg-overlay {
       background:
-        linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.78) 24%, rgba(0,0,0,0.46) 52%, rgba(0,0,0,0.28) 100%),
+        linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.82) 28%, rgba(0,0,0,0.48) 58%, rgba(0,0,0,0.28) 100%),
         linear-gradient(to right, rgba(0,0,0,0.20), rgba(0,0,0,0.08), rgba(0,0,0,0.20));
       z-index: 1;
     }
 
     .bg-vignette {
-      background: radial-gradient(circle at 50% 18%, rgba(255,255,255,0.06), transparent 34%),
-                  radial-gradient(circle at 50% 100%, rgba(0,0,0,0.34), transparent 40%);
+      background: radial-gradient(circle at 50% 18%, rgba(255,255,255,0.06), transparent 34%);
       z-index: 2;
       mix-blend-mode: screen;
       opacity: 0.65;
@@ -159,7 +154,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: max(20px, env(safe-area-inset-top)) 20px max(26px, env(safe-area-inset-bottom));
+      padding: max(20px, env(safe-area-inset-top)) 20px max(22px, env(safe-area-inset-bottom));
     }
 
     .stack {
@@ -209,16 +204,16 @@
     }
 
     .subtitle {
-  margin: 0;
-  max-width: 90%;
-  font-size: 0.76rem;
-  line-height: 1.35;
-  font-weight: 500;
-  font-family: "Times New Roman", Times, serif;
-  color: var(--muted);
-  text-align: center;
-  text-shadow: 0 4px 18px rgba(0,0,0,0.4);
-}
+      margin: 0;
+      max-width: 90%;
+      font-size: 0.76rem;
+      line-height: 1.35;
+      font-weight: 500;
+      font-family: "Times New Roman", Times, serif;
+      color: var(--muted);
+      text-align: center;
+      text-shadow: 0 4px 18px rgba(0,0,0,0.4);
+    }
 
     .links {
       width: 100%;
@@ -248,51 +243,39 @@
       letter-spacing: 0.01em;
       text-align: center;
       border: 1px solid rgba(255,255,255,0.12);
-      background:
-        linear-gradient(180deg, rgba(0,0,0,0.82), rgba(0,0,0,0.72)),
-        rgba(0,0,0,0.75);
+      background: linear-gradient(180deg, #25d366 0%, #1ebe5d 45%, #149647 100%);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        inset 0 -1px 0 rgba(0,0,0,0.6),
-        0 14px 36px rgba(0,0,0,0.45);
+        inset 0 1px 0 rgba(255,255,255,0.25),
+        inset 0 -2px 0 rgba(0,0,0,0.18),
+        0 14px 36px rgba(37, 211, 102, 0.35);
       backdrop-filter: blur(10px) saturate(1.05);
       -webkit-backdrop-filter: blur(10px) saturate(1.05);
       overflow: hidden;
       isolation: isolate;
-      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.28s ease;
     }
 
     .link-btn .btn-icon {
-  position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.95;
-}
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.95;
+    }
 
     .link-btn .btn-icon svg {
-  width: 24px;
-  height: 24px;
-  stroke: rgba(255,255,255,0.92);
-  fill: none;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-    .link-btn::before {
-      content: "";
-      position: absolute;
-      inset: 1px;
-      border-radius: calc(var(--radius) - 1px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.02));
-      pointer-events: none;
-      z-index: -2;
+      width: 24px;
+      height: 24px;
+      stroke: rgba(255,255,255,0.92);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .link-btn::after {
@@ -303,7 +286,7 @@
       width: 38%;
       height: 190%;
       transform: rotate(18deg) translateX(0);
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.32), transparent);
       opacity: 0;
       pointer-events: none;
     }
@@ -315,14 +298,11 @@
     .link-btn:hover,
     .link-btn:focus-visible {
       transform: translateY(-2px) scale(1.01);
-      border-color: rgba(255,255,255,0.28);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.19), rgba(255,255,255,0.08)),
-        rgba(255,255,255,0.07);
+      background: linear-gradient(180deg, #34e776 0%, #25d366 45%, #18a34f 100%);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.18),
-        inset 0 -1px 0 rgba(255,255,255,0.05),
-        0 18px 42px rgba(0,0,0,0.35);
+        inset 0 1px 0 rgba(255,255,255,0.35),
+        inset 0 -2px 0 rgba(0,0,0,0.15),
+        0 18px 42px rgba(37, 211, 102, 0.45);
     }
 
     .link-btn:active {
@@ -334,6 +314,51 @@
       z-index: 2;
     }
 
+    .resultados {
+      width: calc(100% + 40px);
+      margin-left: -20px;
+      padding: 20px 0 0;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: rise 1s ease forwards;
+      animation-delay: 0.42s;
+    }
+
+    .slider-container {
+      overflow: hidden;
+      width: 100%;
+      margin: 0;
+      padding: 0 0 4px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .slider-track {
+      display: flex;
+      gap: 12px;
+      width: max-content;
+      animation: scroll-left 35s linear infinite;
+    }
+
+    .slider-track img {
+      height: 150px;
+      width: auto;
+      border-radius: 14px;
+      flex-shrink: 0;
+      object-fit: cover;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+    }
+
+    @keyframes scroll-left {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(calc(-50% - 6px));
+      }
+    }
+
     .footer-glow {
       position: absolute;
       left: 50%;
@@ -341,7 +366,7 @@
       width: 92%;
       height: 260px;
       transform: translateX(-50%);
-      background: radial-gradient(circle at 50% 90%, rgba(255,255,255,0.08), transparent 60%);
+      background: radial-gradient(circle at 50% 90%, rgba(37,211,102,0.12), transparent 60%);
       z-index: 4;
       pointer-events: none;
       filter: blur(24px);
@@ -389,38 +414,51 @@
         font-size: 0.93rem;
         border-radius: 22px;
       }
+
+      .resultados {
+        width: calc(100% + 32px);
+        margin-left: -16px;
+      }
+
+      .slider-track img {
+        height: 138px;
+      }
     }
 
-@media (min-width: 521px) {
-  body {
-    padding: 0;
-  }
+    @media (min-width: 521px) {
+      body {
+        padding: 0;
+      }
 
-  .app {
-    min-height: calc(100vh - 36px);
-    border-radius: 32px;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.45);
-  }
-}
+      .app {
+        min-height: calc(100vh - 36px);
+        border-radius: 32px;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+      }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       .blob,
       .brand,
       .identity,
       .links,
+      .resultados,
+      .slider-track,
       .link-btn.shine::after {
         animation: none !important;
       }
 
       .brand,
       .identity,
-      .links {
+      .links,
+      .resultados {
         opacity: 1;
         transform: none;
       }
     }
   </style>
 </head>
+
 <body>
   <main class="app">
     <div class="bg-photo"></div>
@@ -456,9 +494,31 @@
                 <path d="M3.5 9.5h17"></path>
               </svg>
             </span>
-             <span>AGENDE SUA CONSULTA</span>
+            <span>AGENDE SUA CONSULTA</span>
           </a>
         </nav>
+
+        <section class="resultados">
+          <div class="slider-container">
+            <div class="slider-track">
+              <img src="https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" />
+
+              <img src="https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg" />
+              <img src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" />
+            </div>
+          </div>
+        </section>
       </div>
     </section>
   </main>
