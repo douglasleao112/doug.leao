@@ -473,22 +473,36 @@
 
     // Mapeamento dos links por dia da semana (0 = domingo, 6 = sábado)
   const linksPorDia = {
-    0: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar2',
-    1: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar2',
-    2: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar2',
-    3: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar2',
-    4: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar2',
-    5: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar2',
-    6: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar2'
+    0: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao',
+    1: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao',
+    2: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao',
+    3: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao',
+    4: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao',
+    5: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao',
+    6: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao'
   };
 
-  // Atualiza todos os botões com a nova URL do dia
-  const diaHoje = new Date().getDay();
-  const linkAtual = linksPorDia[diaHoje];
+// Atualiza todos os botões e dispara Subscribe ao clicar
+const diaHoje = new Date().getDay();
+const linkAtual = linksPorDia[diaHoje];
 
-  document.querySelectorAll('a.btn').forEach(botao => {
-    botao.setAttribute('href', linkAtual);
+document.querySelectorAll('a.btn').forEach(botao => {
+  botao.setAttribute('href', linkAtual);
+
+  botao.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    // Dispara o evento Subscribe do Meta Pixel
+    if (typeof fbq === 'function') {
+      fbq('track', 'Subscribe');
+    }
+
+    // Delay curto para o pixel disparar antes de redirecionar
+    setTimeout(() => {
+      window.location.href = linkAtual;
+    }, 400);
   });
+});
 
 
 
