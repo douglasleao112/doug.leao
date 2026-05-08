@@ -304,27 +304,17 @@
       cta.href = linkDoDia;                      
     }
 
-  
-// Dispara evento Contact do Pixel e depois envia para o Typebot
-cta?.addEventListener('click', (e) => {
-  e.preventDefault();
-
-  if (!linkDoDia) return;
-
-  // Garante que o href esteja correto
+if (cta && linkDoDia) {
   cta.href = linkDoDia;
+}
 
-  // Evento padrão do Meta Pixel: Contact
+
+  
+cta?.addEventListener('click', () => {
   if (typeof fbq === 'function') {
     fbq('track', 'Contact');
   }
-
-  // Pequeno delay para dar tempo do pixel disparar antes do redirecionamento
-  setTimeout(() => {
-    window.location.href = linkDoDia;
-  }, 400);
 });
-
 
 
     // Bloqueios (mantidos)
