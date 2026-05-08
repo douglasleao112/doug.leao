@@ -310,10 +310,16 @@ if (cta && linkDoDia) {
 
 
   
-cta?.addEventListener('click', () => {
+cta?.addEventListener('click', (e) => {
+  e.preventDefault();
+
   if (typeof fbq === 'function') {
     fbq('track', 'Contact');
   }
+
+  setTimeout(() => {
+    window.location.href = linkDoDia;
+  }, 400);
 });
 
 
