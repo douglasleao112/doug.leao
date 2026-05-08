@@ -709,11 +709,17 @@ function formatDate(date) {
 
 
 
-  const LINK_GLOBAL = "https://typebot-chat-viewer.vexhyt.easypanel.host/webnar1";
+  const LINK_GLOBAL = "https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao";
 
-  document.querySelectorAll('.btn').forEach(btn => {
-    btn.setAttribute('href', LINK_GLOBAL);
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.setAttribute('href', LINK_GLOBAL);
+
+  btn.addEventListener('click', () => {
+    if (typeof fbq === 'function') {
+      fbq('track', 'ViewContent');
+    }
   });
+});
 
 
 
