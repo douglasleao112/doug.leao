@@ -532,11 +532,11 @@
 </div>
 
         <h1>
-          O que a Blogueira <b>NÃO</b> conta sobre o corpo "perfeito"
+          O que a Blogueira <b>NÃO</b> conta sobre o EMAGRECIMENTO
         </h1>
 
         <p class="subheadline">
-  Enquanto elas te enganam no Instagram, escondendo o que acontece nos bastidores. Neste domingo vou te contar tudo...
+  Enquanto elas te enganam no Instagram, escondendo o que acontece nos bastidores. NestA SEGUNDA vou te contar tudo...
 </p>
 
         <a class="btn">
@@ -566,12 +566,12 @@
 
       <div class="lesson fade-item">
         <div class="lesson-number">2</div>
-        <div class="lesson-text">Se matar na academia ou passar fome, não é sinal de emagrecimento</div>
+        <div class="lesson-text">Por que treinar mais e comer menos não vai resolver</div>
       </div>
 
       <div class="lesson fade-item">
         <div class="lesson-number">3</div>
-        <div class="lesson-text">Por que copiar treinos/dietas não garantem resultados</div>
+        <div class="lesson-text">Por que copiar treinos/dietas da blogueira pode ser periogoso</div>
       </div>
     </section>
 
@@ -649,27 +649,26 @@
 
 
 
+function getNextMondayWithTime(horaEvento) {
+  const now = new Date();
+  const result = new Date(now);
 
-  function getNextSundayWithTime(horaEvento) {
-    const now = new Date();
-    const result = new Date(now);
+  const [hora, minuto] = horaEvento.split(":").map(Number);
 
-    const [hora, minuto] = horaEvento.split(":").map(Number);
+  // Próxima segunda-feira
+  const daysUntilMonday = (1 - now.getDay() + 7) % 7;
+  result.setDate(now.getDate() + daysUntilMonday);
 
-    // Próximo domingo
-    const daysUntilSunday = (7 - now.getDay()) % 7;
-    result.setDate(now.getDate() + daysUntilSunday);
+  // Define horário do evento
+  result.setHours(hora, minuto, 0, 0);
 
-    // Define horário do evento
-    result.setHours(hora, minuto, 0, 0);
-
-    // Se for hoje (domingo) e já passou da hora → próximo domingo
-    if (daysUntilSunday === 0 && now >= result) {
-      result.setDate(result.getDate() + 7);
-    }
-
-    return result;
+  // Se for hoje (segunda) e já passou da hora → próxima segunda
+  if (daysUntilMonday === 0 && now >= result) {
+    result.setDate(result.getDate() + 7);
   }
+
+  return result;
+}
 
 function formatDate(date) {
   const dias = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
@@ -702,7 +701,7 @@ function formatDate(date) {
   if (dataManual) {
     eventDate = new Date(dataManual);
   } else {
-    eventDate = getNextSundayWithTime(horaEvento);
+   eventDate = getNextMondayWithTime(horaEvento);
   }
 
   document.getElementById("eventDate").innerText = formatDate(eventDate);
