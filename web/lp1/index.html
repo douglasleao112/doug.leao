@@ -714,13 +714,18 @@ function formatDate(date) {
 document.querySelectorAll('.btn').forEach(btn => {
   btn.setAttribute('href', LINK_GLOBAL);
 
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+
     if (typeof fbq === 'function') {
       fbq('track', 'ViewContent');
     }
+
+    setTimeout(() => {
+      window.location.href = LINK_GLOBAL;
+    }, 400);
   });
 });
-
 
 
 
