@@ -194,30 +194,36 @@
 </a>
         </div>
 
-        <script>
-          function getPorcentagemDia() {
-            const dia = new Date().getDay();
-            switch (dia) {
-              case 5: return 95; // Sexta
-              case 6: return 97; // Sábado
-              case 0: return 99; // Domingo
-              default: return 91; // Outros dias
-            }
-          }
-          const porcentagemFinal = getPorcentagemDia();
-          const barra = document.getElementById('barra-loading');
-          const texto = document.getElementById('texto-loading');
-          let atual = 0;
-          const intervalo = setInterval(() => {
-            if (atual >= porcentagemFinal) {
-              atual = porcentagemFinal;
-              clearInterval(intervalo);
-            }
-            barra.style.width = atual + '%';
-            texto.textContent = `${atual}% das vagas preenchidas.`;
-            atual++;
-          }, 25);
-        </script>
+<script>
+  function getPorcentagemDia() {
+    const dia = new Date().getDay();
+
+    switch (dia) {
+      case 5: return 91; // Sexta
+      case 6: return 95; // Sábado
+      case 0: return 97; // Domingo
+      case 1: return 99; // Segunda
+      default: return 88; // Terça a quinta
+    }
+  }
+
+  const porcentagemFinal = getPorcentagemDia();
+  const barra = document.getElementById('barra-loading');
+  const texto = document.getElementById('texto-loading');
+
+  let atual = 0;
+
+  const intervalo = setInterval(() => {
+    if (atual >= porcentagemFinal) {
+      atual = porcentagemFinal;
+      clearInterval(intervalo);
+    }
+
+    barra.style.width = atual + '%';
+    texto.textContent = `${atual}% das vagas preenchidas.`;
+    atual++;
+  }, 25);
+</script>
 
       </div>
 
