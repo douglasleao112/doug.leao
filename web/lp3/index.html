@@ -235,16 +235,21 @@
       // SCRIPT DO CRONÔMETRO
       const customTargetDate = null;
 
-      function getNextSundayAt19h() {
-        const now = new Date();
-        const dayOfWeek = now.getDay();
-        const daysUntilSunday = (7 - dayOfWeek) % 7;
-        const nextSunday = new Date(now);
-        nextSunday.setDate(now.getDate() + daysUntilSunday);
-        nextSunday.setHours(19, 0, 0, 0);
-        if (now > nextSunday) nextSunday.setDate(nextSunday.getDate() + 7);
-        return nextSunday;
-      }
+function getNextMondayAt19h() {
+  const now = new Date();
+  const dayOfWeek = now.getDay();
+  const daysUntilMonday = (1 - dayOfWeek + 7) % 7;
+
+  const nextMonday = new Date(now);
+  nextMonday.setDate(now.getDate() + daysUntilMonday);
+  nextMonday.setHours(19, 0, 0, 0);
+
+  if (now > nextMonday) {
+    nextMonday.setDate(nextMonday.getDate() + 7);
+  }
+
+  return nextMonday;
+}
 
       function formatarDataEvento(date) {
         const diasSemana = [
@@ -259,7 +264,7 @@
       }
 
       function updateCountdown() {
-        const targetDate = customTargetDate || getNextSundayAt19h();
+        const targetDate = customTargetDate || getNextMondayAt19h();
         const now = new Date();
         const diff = targetDate - now;
         if (diff <= 0) return;
