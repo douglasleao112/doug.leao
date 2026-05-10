@@ -482,12 +482,25 @@
     6: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao'
   };
 
-// Atualiza todos os botões e dispara Subscribe ao clicar
+// Atualiza todos os botões, repassa UTMs e dispara Subscribe ao clicar
 const diaHoje = new Date().getDay();
 const linkAtual = linksPorDia[diaHoje];
 
+function adicionarParametrosDaURL(linkDestino) {
+  const urlAtual = new URL(window.location.href);
+  const urlFinal = new URL(linkDestino);
+
+  urlAtual.searchParams.forEach((valor, chave) => {
+    urlFinal.searchParams.set(chave, valor);
+  });
+
+  return urlFinal.toString();
+}
+
+const linkAtualComUTM = adicionarParametrosDaURL(linkAtual);
+
 document.querySelectorAll('a.btn').forEach(botao => {
-  botao.setAttribute('href', linkAtual);
+  botao.setAttribute('href', linkAtualComUTM);
 
   botao.addEventListener('click', function(e) {
     e.preventDefault();
@@ -499,7 +512,7 @@ document.querySelectorAll('a.btn').forEach(botao => {
 
     // Delay curto para o pixel disparar antes de redirecionar
     setTimeout(() => {
-      window.location.href = linkAtual;
+      window.location.href = linkAtualComUTM;
     }, 400);
   });
 });

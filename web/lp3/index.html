@@ -306,21 +306,30 @@ function getNextMondayAt19h() {
       6: 'https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao'
     };
 
-      // Detecta o dia atual
-    const diaAtual = new Date().getDay();         
-    const linkDoDia = linksPorDia[diaAtual];
+// Detecta o dia atual
+const diaAtual = new Date().getDay();         
+const linkDoDia = linksPorDia[diaAtual];
 
-    const cta = document.getElementById('cta-btn');
-    if (cta && linkDoDia) {
-      cta.href = linkDoDia;                      
-    }
+// Repasse de UTMs e demais parâmetros da URL
+function adicionarParametrosDaURL(linkDestino) {
+  const urlAtual = new URL(window.location.href);
+  const urlFinal = new URL(linkDestino);
 
-if (cta && linkDoDia) {
-  cta.href = linkDoDia;
+  urlAtual.searchParams.forEach((valor, chave) => {
+    urlFinal.searchParams.set(chave, valor);
+  });
+
+  return urlFinal.toString();
 }
 
+const linkDoDiaComUTM = adicionarParametrosDaURL(linkDoDia);
 
-  
+const cta = document.getElementById('cta-btn');
+
+if (cta && linkDoDiaComUTM) {
+  cta.href = linkDoDiaComUTM;
+}
+
 cta?.addEventListener('click', (e) => {
   e.preventDefault();
 
@@ -329,7 +338,7 @@ cta?.addEventListener('click', (e) => {
   }
 
   setTimeout(() => {
-    window.location.href = linkDoDia;
+    window.location.href = linkDoDiaComUTM;
   }, 400);
 });
 

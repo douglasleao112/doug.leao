@@ -709,10 +709,23 @@ function formatDate(date) {
 
 
 
-  const LINK_GLOBAL = "https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao";
+const LINK_GLOBAL = "https://typebot-chat-viewer.vexhyt.easypanel.host/webnar-qualificacao";
+
+function adicionarUTMsNoLink(baseUrl) {
+  const urlAtual = new URL(window.location.href);
+  const urlDestino = new URL(baseUrl);
+
+  urlAtual.searchParams.forEach((valor, chave) => {
+    urlDestino.searchParams.set(chave, valor);
+  });
+
+  return urlDestino.toString();
+}
+
+const LINK_FINAL_COM_UTM = adicionarUTMsNoLink(LINK_GLOBAL);
 
 document.querySelectorAll('.btn').forEach(btn => {
-  btn.setAttribute('href', LINK_GLOBAL);
+  btn.setAttribute('href', LINK_FINAL_COM_UTM);
 
   btn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -722,7 +735,7 @@ document.querySelectorAll('.btn').forEach(btn => {
     }
 
     setTimeout(() => {
-      window.location.href = LINK_GLOBAL;
+      window.location.href = LINK_FINAL_COM_UTM;
     }, 400);
   });
 });
