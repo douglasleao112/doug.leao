@@ -436,8 +436,8 @@ img, a {
 <div id="nameFormWrapper">
 <div id="nameForm">
     <img class="logo" src="https://static.wixstatic.com/media/7f5efc_e6c47774387b4355a3f0c7b475436863~mv2.webp">
-   <h3 style="font-size: 20px;">Descubra como Eliminar 16kg em 6 Semanas com a Fórmula do Abacate</h3>
-    <p>Por favor, entre com o mesmo <b>Nome</b> e <b>WhatsApp</b> que você informou na inscrição.</p><br/>
+   <h3 style="font-size: 20px;">Você vai aprender todo o passo a passo para transformar seu físico completamente</h3>
+  
 <input type="text" id="userNameInput" placeholder="Nome"
   autocomplete="name"
   style="width: 100%; padding: 10px; margin: 8px 0; box-sizing: border-box;">
@@ -456,7 +456,7 @@ img, a {
 
 
     <button onclick="saveUserName()">ENTRAR</button>
-    <a href="https://www.dougleao.com.br/cadastrar-replay" class="link">Ou, clique aqui para se inscrever agora.</a>
+    
 </div>
 </div>
 
@@ -591,10 +591,11 @@ a[href*="eduzz"] {
 
 
 <script>  //PROGRAMAR LIVE IMPORTANTE!
-    const configDay = 1;        // dom0  seg1  ter2  qua3   qui4   sex5   sab6     
-    const configHour = 9;         // HORA                                  
-    const configMinute = 0;      // MINUTO                                   
-    const durationMinutes = 63;    // duração do video                        
+const configDay = 2;        // terça-feira
+const configHour = 0;       // meia-noite
+const configMinute = 0;
+const durationMinutes = 1440; // 24 horas
+const REPLAY_MODE = false;        // vídeo sempre liberado   IMPORTANTE!             
 
     const video = document.getElementById('customVideo');
     const playButton = document.getElementById('playButton');
@@ -605,7 +606,7 @@ a[href*="eduzz"] {
     const nextSession = document.getElementById('nextSession');
     const nameForm = document.getElementById('nameForm');
     const videoDuration = durationMinutes * 60;
-    const REPLAY_MODE = true; // vídeo sempre liberado   IMPORTANTE!
+
 
 
 
@@ -626,13 +627,10 @@ function hhmmssToSeconds(hhmmss) {
     let userName = "";
 	let monitoramentoAtivo = false;
 
-    function isWebinarTime() {
-        const now = new Date();
-        const day = now.getDay();
-        const webinarStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), configHour, configMinute, 0);
-        const webinarEnd = new Date(webinarStart.getTime() + (durationMinutes * 60000));
-        return day === configDay && now >= webinarStart && now <= webinarEnd;
-    }
+function isWebinarTime() {
+  const now = new Date();
+  return now.getDay() === configDay;
+}
 
     function getNextSessionDate() {
         const now = new Date();
@@ -839,9 +837,12 @@ function limparDDI(input) {
   
 
 window.addEventListener('DOMContentLoaded', function () {
-  // Mostra o formulário logo que abrir a página
-  document.getElementById('nameFormWrapper').style.display = "flex";
-  document.getElementById('nameForm').style.display = "block";
+  if (isWebinarTime()) {
+    document.getElementById('nameFormWrapper').style.display = "flex";
+    document.getElementById('nameForm').style.display = "block";
+  } else {
+    showCountdown();
+  }
 });
 
 
