@@ -1041,7 +1041,7 @@ video.addEventListener('loadedmetadata', () => {
     });
   } else {
     // Se expirou ou não tem tempo salvo
-    video.currentTime = 0;
+    video.currentTime = 180;
     tempoJaDefinido = true;
     localStorage.removeItem('webinarVideoTime');
     localStorage.setItem('webinarFirstVisit', Date.now());
