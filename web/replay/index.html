@@ -1122,6 +1122,13 @@ function getBrowserId() {
 
 const browserId = getBrowserId();
 
+
+// Recupera dados salvos quando a pessoa volta para a página
+window.userName = localStorage.getItem('webinarUserName') || '';
+window.userWhatsapp = localStorage.getItem('webinarUserWhatsapp') || '';
+
+
+
 function enviarDados() {
   const agora = new Date();
   const tempoPagina = Math.floor((agora - horaEntrada) / 1000);   // IMPORTANTE! APPSCRIPT GOOGLE
