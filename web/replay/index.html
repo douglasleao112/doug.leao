@@ -657,7 +657,7 @@ function isWebinarTime() {
     // Replay: começa do início. Se já tiver tempo salvo no localStorage,
     // o trecho "loadedmetadata" mais abaixo já cuida de posicionar. tempo aonde começa
     if (!tempoJaDefinido) {
-      video.currentTime = 120;
+      video.currentTime = 130;
       tempoJaDefinido = true;
     }
   } else {
@@ -1041,7 +1041,7 @@ video.addEventListener('loadedmetadata', () => {
     });
   } else {
     // inicia neste tempo
-    video.currentTime = 120;
+    video.currentTime = 130;
     tempoJaDefinido = true;
     localStorage.removeItem('webinarVideoTime');
     localStorage.setItem('webinarFirstVisit', Date.now());
