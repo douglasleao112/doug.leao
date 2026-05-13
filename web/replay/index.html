@@ -654,10 +654,9 @@ function isWebinarTime() {
   chatContainer.style.display = "block";
 
   if (REPLAY_MODE) {
-    // Replay: começa do início. Se já tiver tempo salvo no localStorage,
-    // o trecho "loadedmetadata" mais abaixo já cuida de posicionar. tempo aonde começa
+    // tempo aonde começa !IMPORTANTE
     if (!tempoJaDefinido) {
-      video.currentTime = 130;
+      video.currentTime = 140;
       tempoJaDefinido = true;
     }
   } else {
@@ -1040,8 +1039,8 @@ video.addEventListener('loadedmetadata', () => {
       }
     });
   } else {
-    // inicia neste tempo
-    video.currentTime = 130;
+    // tempo aonde começa o video  !IMPORTANTE
+    video.currentTime = 140;
     tempoJaDefinido = true;
     localStorage.removeItem('webinarVideoTime');
     localStorage.setItem('webinarFirstVisit', Date.now());
