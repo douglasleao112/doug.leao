@@ -1131,7 +1131,8 @@ window.userWhatsapp = localStorage.getItem('webinarUserWhatsapp') || '';
 
 function enviarDados() {
   const agora = new Date();
-  const tempoPagina = Math.floor((agora - horaEntrada) / 1000);   // IMPORTANTE! APPSCRIPT GOOGLE
+  const tempoPagina = Math.floor((agora - horaEntrada) / 1000);
+  const tempoVideo = Math.floor(video.currentTime || 0);
   const horaSaida = agora.toLocaleTimeString();
 
   fetch('https://script.google.com/macros/s/AKfycbyz-E7Ko2Ywh8ckUCSJAFhzGnM8IAKyP1GCV2i3tPkQ85bPRL-Bh32XzWnq9zJ1jlMQ/exec', {
@@ -1141,14 +1142,15 @@ function enviarDados() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-  browserId: browserId,
-  nome: window.userName || 'Desconhecido',
-  whatsapp: window.userWhatsapp || 'sem-whatsapp',
-  horaEntrada: horaEntrada.toLocaleTimeString(),
-  tempoPagina: tempoPagina,
-  horaSaida: horaSaida,
-  paginaOrigem: 'replay'
-})
+      browserId: browserId,
+      nome: window.userName || 'Desconhecido',
+      whatsapp: window.userWhatsapp || 'sem-whatsapp',
+      horaEntrada: horaEntrada.toLocaleTimeString(),
+      tempoPagina: tempoPagina,
+      tempoVideo: tempoVideo,
+      horaSaida: horaSaida,
+      paginaOrigem: 'replay'
+    })
   });
 }
 
