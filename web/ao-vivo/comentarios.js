@@ -1,7 +1,7 @@
 const programmedMessages = [
-{ time: "00:00:00", name: "Nubia", text: "Nossa, não sabia disso." },
-{ time: "00:00:33", name: "Katiane", text: "Verdade, faz todo sentido." },
-{ time: "00:01:11", name: "Dani", text: "Verdade, realmente." },
+{ time: "00:00:00", name: "Nubia", text: "Muito boa noite." },
+{ time: "00:00:33", name: "Katiane", text: "Como vai Douglas." },
+{ time: "00:01:11", name: "Dani", text: "posso enviar o link para outras?" },
 { time: "00:01:56", name: "Samanta", text: "Verdade, entendi." },
 { time: "00:02:46", name: "Manu", text: "Déficit calórico é muito difícil de manter." },
 { time: "00:03:19", name: "Pietra", text: "Muito boa essa explicação." },
