@@ -215,15 +215,15 @@
       margin-bottom: 26px;
     }
 
-    .fade-item {
+.fade-item {
   opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.6s ease;
+  transform: translateX(-28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .fade-item.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
     .lesson {
@@ -234,18 +234,23 @@
       border-bottom: 1px solid #222;
     }
 
-    .lesson-number {
-      width: 36px;
-      height: 36px;
-      background: #2b2b2b;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
+.lesson-number {
+  width: 38px;
+  height: 38px;
+  background: #174d1d;
+  border: 1px solid rgba(0, 255, 32, 0.25);
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #00ff20;
+  font-weight: 800;
+  flex-shrink: 0;
+
+  box-shadow: 0 0 18px rgba(0, 255, 32, 0.22);
+}
 
 .resultados {
   padding: 30px 0 10px;
@@ -785,13 +790,23 @@
 
 
   <script>
-  const items = document.querySelectorAll('.fade-item');
+ const lessonItems = document.querySelectorAll('.fade-item');
 
-  items.forEach((item, index) => {
-    setTimeout(() => {
-      item.classList.add('show');
-    }, index * 1500); // 1.5s entre cada
+const lessonObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      lessonObserver.unobserve(entry.target);
+    }
   });
+}, {
+  threshold: 0.25
+});
+
+lessonItems.forEach((item, index) => {
+  item.style.transitionDelay = `${index * 0.18}s`;
+  lessonObserver.observe(item);
+});
 
 
 
