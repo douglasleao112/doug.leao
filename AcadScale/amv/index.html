@@ -471,7 +471,20 @@
 }
 
 
+.speaker-fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
 
+.speaker-fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.speaker-card {
+  margin-bottom: 14px;
+}
 
 #ctaGradient {
   position: fixed;
@@ -660,15 +673,11 @@
 
 
 
-    <div class="divider"></div>
-
-
-
     <!-- PALESTRANTES -->
 <section class="section speakers">
   <div class="section-label">Palestrantes confirmados</div>
 
-  <div class="speaker-card">
+<div class="speaker-card speaker-fade">
     <img 
       class="speaker-img" 
       src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" 
@@ -689,7 +698,7 @@
   </div>
 
 
-   <div class="speaker-card">
+ <div class="speaker-card speaker-fade">
     <img 
       class="speaker-img" 
       src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" 
@@ -710,7 +719,7 @@
   </div>
 
 
-  <div class="speaker-card">
+<div class="speaker-card speaker-fade">
     <img 
       class="speaker-img" 
       src="https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg" 
@@ -730,11 +739,6 @@
     </div>
   </div>
 </section>
-
-
-
-
-<div class="divider"></div>
 
 
 
@@ -803,6 +807,26 @@ function getNextMondayWithTime(horaEvento) {
 
   return result;
 }
+
+
+const speakerCards = document.querySelectorAll('.speaker-fade');
+
+const speakerObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      speakerObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.2
+});
+
+speakerCards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.15}s`;
+  speakerObserver.observe(card);
+});
+
 
 function formatDate(date) {
   const dias = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
