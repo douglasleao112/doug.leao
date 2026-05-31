@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <script>
+  (function () {
+    const savedAcademy = localStorage.getItem("academy_name") || "";
+    if (savedAcademy) {
+      document.documentElement.classList.add("academy-known");
+    }
+  })();
+</script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Oscar das Academias 2026</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      background: #000;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+      cursor: pointer;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .video-box {
+      position: relative;
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    video {
+      width: 100%;
+      display: block;
+    }
+
+    .cta {
+      display: none;
+      width: 100%;
+      margin-top: 16px;
+      text-align: center;
+      background: #18b84a;
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      animation: pulse 1.5s infinite;
+    }
+
+    .cta.show {
+      display: block;
+    }
+
+    .urgencia {
+      display: none;
+      margin-top: 10px;
+      text-align: center;
+      color: #fff;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .urgencia.show {
+      display: block;
+    }
+
+    .barra-urgencia {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 3px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+
+    .barra-fill {
+      width: 0;
+      height: 100%;
+      background: #ffffff;
+      border-radius: 3px;
+      transition: width 2s ease;
+    }
+
+
+.headline-box {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.headline {
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.subheadline {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f7ad59;
+  height: 24px;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#dynamicText {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+
+
+
+.academy-box button:disabled {
+  background: #0f7a30;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+
+
+.barra-fill.animate {
+  width: var(--urgency-width, 75%);
+}
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    #progressBar {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 14px;
+      width: 0%;
+      background: red;
+      z-index: 6;
+      transition: width 0.15s linear;
+      pointer-events: none;
+    }
+
+    /* camada clicável na página toda */
+    #pageClickLayer {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    /* imagem em cima do poster */
+    #thumbOverlay {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+#thumbOverlay img {
+  width: 65%;          /* aumentei aqui */
+  max-width: 230px;    /* limite maior */
+  min-width: 120px;
+  animation: zoomInOut 1.8s ease-in-out infinite;
+  filter: drop-shadow(0 8px 30px rgba(0,0,0,0.6));
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+
+.academy-gate {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+html.academy-known .academy-gate {
+  display: none !important;
+}
+
+.academy-box {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.academy-box h2 {
+  color: #fff;
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+.academy-box input {
+  width: 100%;
+  height: 54px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  outline: none;
+  background: #111;
+  color: #fff;
+  font-size: 18px;
+  padding: 0 16px;
+  text-align: center; /* Centraliza o texto digitado */
+}
+
+.academy-box input::placeholder {
+  color: #ababab;
+  text-align: center; /* Centraliza o placeholder */
+}
+
+.academy-box button {
+  display: none;
+  width: 100%;
+  margin-top: 14px;
+  height: 52px;
+  border: 0;
+  border-radius: 12px;
+  background: #18b84a;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.academy-box button.show {
+  display: block;
+}
+
+
+
+
+    @keyframes zoomInOut {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.14);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style>
+
+ 
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "tmugztuwhn");
+</script>
+
+
+</head>
+<body>
+
+  <div id="academyGate" class="academy-gate">
+  <div class="academy-box">
+    <input
+      type="text"
+      id="academyInput"
+      placeholder="Digite o Nome da Academia Indicada"
+      autocomplete="off"
+    />
+    <button id="academyOk">OK</button>
+  </div>
+</div>
+
+
+
+
+  <div id="pageClickLayer"></div>
+
+  <div class="wrap">
+
+
+    <!-- HEADLINE E SUBHEADLINE -->
+<div class="headline-box">
+  <h1 class="headline">
+   Toda academia terá a chance de estar entre as MELHORES.
+  </h1>
+  <h2 class="subheadline">
+    <span id="dynamicText">Melhor atendimento</span>
+  </h2>
+</div>
+
+
+
+    <div class="video-box">
+
+      <!-- POSTER -->
+<video 
+  id="previewVideo"
+  muted
+  loop
+  playsinline
+  webkit-playsinline
+  preload="auto">
+
+        <source src="https://video.wixstatic.com/video/7f5efc_61d265f796224f709c61e052e9194fd9/720p/mp4/file.mp4" type="video/mp4">
+      </video>
+
+      <!-- VÍDEO PRINCIPAL -->
+      <video 
+  id="mainVideo"
+  playsinline
+  preload="metadata"
+  style="display:none;">
+        <source src="https://video.wixstatic.com/video/7f5efc_61d265f796224f709c61e052e9194fd9/720p/mp4/file.mp4" type="video/mp4">
+      </video>
+
+      <!-- IMAGEM POR CIMA DO POSTER -->
+      <div id="thumbOverlay">
+        <img 
+          src="https://gizelemenezes.com.br/wp-content/uploads/2025/01/preplaypng.png" 
+          alt="Play"
+        >
+      </div>
+
+      <div id="progressBar"></div>
+    </div>
+
+    <div id="urgencia" class="urgencia">
+      <span id="urgencyText">75% DAS VAGAS PREENCHIDAS</span>
+      <div class="barra-urgencia">
+        <div class="barra-fill"></div>
+      </div>
+    </div>
+
+
+    <a 
+  id="cta" 
+  class="cta" 
+  href="/evento"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Participar do OSCAR das Academias
+</a>
+
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmJrFyDQuIRuMVbnOxrSF6R0WYXS0g18N9sS6X7gip1Tc54fjuZrSy7EKVR6Pqq9Mz/exec";
+const SHEET_NAME = "PAP";
+const PAGE_NAME = "/oscar2026";
+
+
+let stayUpdaterStarted = false;
+
+function getSavedAcademyName() {
+  return localStorage.getItem("academy_name") || "";
+}
+
+function saveAcademyName(name) {
+  localStorage.setItem("academy_name", name);
+}
+
+
+function getBrowserId() {
+  let id = localStorage.getItem("browser_id");
+  if (!id) {
+    id = "br_" + Date.now() + "_" + Math.random().toString(36).slice(2, 10);
+    localStorage.setItem("browser_id", id);
+  }
+  return id;
+}
+
+function getVisitId() {
+  let id = sessionStorage.getItem("visit_id");
+  if (!id) {
+    id = "vs_" + Date.now() + "_" + Math.random().toString(36).slice(2, 10);
+    sessionStorage.setItem("visit_id", id);
+  }
+  return id;
+}
+
+function getDeviceType() {
+  const ua = navigator.userAgent.toLowerCase();
+
+  if (/android/.test(ua)) return "Android";
+  if (/iphone|ipad|ipod/.test(ua)) return "iPhone/iOS";
+  return "PC";
+}
+
+function getUTMs() {
+  const params = new URLSearchParams(window.location.search);
+
+  return {
+    utm_source: params.get("utm_source") || "",
+    utm_medium: params.get("utm_medium") || "",
+    utm_campaign: params.get("utm_campaign") || "",
+    utm_content: params.get("utm_content") || "",
+    utm_term: params.get("utm_term") || ""
+  };
+}
+
+async function getApproxLocation() {
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    const city = data.city || "";
+    const region = data.region || "";
+    const country = data.country_name || "";
+
+    return [city, region, country].filter(Boolean).join(" - ");
+  } catch (e) {
+    return "Não identificada";
+  }
+}
+
+async function sendTracking(payload) {
+  try {
+    const formData = new FormData();
+    formData.append("sheet", SHEET_NAME);
+    formData.append("visit_id", payload.visit_id || "");
+    formData.append("browser_id", payload.browser_id || "");
+    formData.append("academy_name", payload.academy_name || "");
+    formData.append("access_time", payload.access_time || "");
+    formData.append("stay_time", payload.stay_time || "");
+    formData.append("location", payload.location || "");
+    formData.append("device", payload.device || "");
+    formData.append("click_time", payload.click_time || "");
+    formData.append("page", payload.page || "");
+    formData.append("utm_source", payload.utm_source || "");
+    formData.append("utm_medium", payload.utm_medium || "");
+    formData.append("utm_campaign", payload.utm_campaign || "");
+    formData.append("utm_content", payload.utm_content || "");
+    formData.append("utm_term", payload.utm_term || "");
+
+    await fetch(SCRIPT_URL, {
+      method: "POST",
+      body: formData,
+      mode: "no-cors"
+    });
+  } catch (err) {
+    console.log("Erro no tracking:", err);
+  }
+}
+
+const browserId = getBrowserId();
+const visitId = getVisitId();
+const accessTime = new Date().toLocaleString("pt-BR");
+const pageStartTime = Date.now();
+const utms = getUTMs();
+
+let locationText = "Carregando...";
+let clickSent = false;
+let academyName = getSavedAcademyName();
+
+
+async function registerInitialAccess() {
+  locationText = await getApproxLocation();
+
+  await sendTracking({
+    visit_id: visitId,
+    browser_id: browserId,
+    academy_name: academyName || "",
+    access_time: accessTime,
+    stay_time: getSavedVideoTime(),
+    location: locationText || "",
+    device: getDeviceType(),
+    click_time: "",
+    page: PAGE_NAME,
+    utm_source: utms.utm_source,
+    utm_medium: utms.utm_medium,
+    utm_campaign: utms.utm_campaign,
+    utm_content: utms.utm_content,
+    utm_term: utms.utm_term
+  });
+}
+
+
+async function registerAccess() {
+  if (!locationText || locationText === "Carregando...") {
+    locationText = await getApproxLocation();
+  }
+
+  await sendTracking({
+    visit_id: visitId,
+    browser_id: browserId,
+    academy_name: academyName || "",
+    access_time: accessTime,
+    stay_time: getStaySeconds(),
+    location: locationText,
+    device: getDeviceType(),
+    click_time: "",
+    page: PAGE_NAME,
+    utm_source: utms.utm_source,
+    utm_medium: utms.utm_medium,
+    utm_campaign: utms.utm_campaign,
+    utm_content: utms.utm_content,
+    utm_term: utms.utm_term
+  });
+}
+
+
+function getSavedVideoTime() {
+  const saved = localStorage.getItem("videoTime");
+  if (!saved || isNaN(saved)) return "";
+  return Math.floor(parseFloat(saved));
+}
+
+
+function getStaySeconds() {
+  if (!main || isNaN(main.currentTime)) return 0;
+  return Math.floor(main.currentTime);
+}
+
+function startStayUpdater() {
+  if (stayUpdaterStarted) return;
+  stayUpdaterStarted = true;
+
+  setInterval(() => {
+    sendTracking({
+      visit_id: visitId,
+      browser_id: browserId,
+      academy_name: academyName,
+      access_time: accessTime,
+      stay_time: getStaySeconds(),
+      location: locationText,
+      device: getDeviceType(),
+      click_time: "",
+      page: PAGE_NAME,
+      utm_source: utms.utm_source,
+      utm_medium: utms.utm_medium,
+      utm_campaign: utms.utm_campaign,
+      utm_content: utms.utm_content,
+      utm_term: utms.utm_term
+    });
+  }, 10000);
+}
+
+function trackButtonClick() {
+  if (clickSent) return;
+  clickSent = true;
+
+  sendTracking({
+    visit_id: visitId,
+    browser_id: browserId,
+    academy_name: academyName,
+    access_time: accessTime,
+    stay_time: getStaySeconds(),
+    location: locationText,
+    device: getDeviceType(),
+    click_time: getStaySeconds(),
+    page: PAGE_NAME,
+    utm_source: utms.utm_source,
+    utm_medium: utms.utm_medium,
+    utm_campaign: utms.utm_campaign,
+    utm_content: utms.utm_content,
+    utm_term: utms.utm_term
+  });
+}
+
+
+    const urgencyText = document.getElementById("urgencyText");
+    const barraFill = document.querySelector(".barra-fill");
+    const urgencia = document.getElementById("urgencia");
+    const preview = document.getElementById("previewVideo");
+    const main = document.getElementById("mainVideo");
+    const cta = document.getElementById("cta");
+    const progressBar = document.getElementById("progressBar");
+    const thumbOverlay = document.getElementById("thumbOverlay");
+    const pageClickLayer = document.getElementById("pageClickLayer");
+
+    let started = false;
+    let shown = false;
+
+
+function showPosterOnly() {
+  started = false;
+
+  main.pause();
+  main.style.display = "none";
+
+  preview.style.display = "block";
+  thumbOverlay.style.display = "flex";
+  pageClickLayer.style.display = "block";
+
+  preview.currentTime = 0;
+  preview.muted = true;
+  preview.play().catch(() => {});
+}
+
+
+function startVideo() {
+  if (started) return;
+  started = true;
+
+  const savedTime = localStorage.getItem("videoTime");
+
+  preview.pause();
+  preview.currentTime = 0;
+  preview.style.display = "none";
+
+  thumbOverlay.style.display = "none";
+  pageClickLayer.style.display = "none";
+
+  main.style.display = "block";
+
+  if (savedTime) {
+    main.currentTime = parseFloat(savedTime);
+  }
+
+  main.play().then(() => {
+    preview.style.display = "none";
+    thumbOverlay.style.display = "none";
+  }).catch((err) => {
+    console.log("Erro ao reproduzir:", err);
+    started = false;
+    showPosterOnly();
+  });
+}
+
+
+preview.addEventListener("playing", () => {
+  if (!started) {
+    preview.style.display = "block";
+    thumbOverlay.style.display = "flex";
+  }
+});
+
+main.addEventListener("playing", () => {
+  preview.pause();
+  preview.style.display = "none";
+  thumbOverlay.style.display = "none";
+  pageClickLayer.style.display = "none";
+  main.style.display = "block";
+});
+
+
+function getUrgencyPercent() {
+  const now = new Date();
+
+  // data do evento
+  const eventDate = new Date(2026, 4, 9); // mês 4 = maio
+
+  // diferença em dias
+  const diffMs = eventDate - now;
+  const diffDays = diffMs / (1000 * 60 * 60 * 24);
+
+  if (diffDays <= 2) {
+    return 95;
+  } else if (diffDays <= 4) {
+    return 90;
+  } else if (diffDays <= 7) {
+    return 85;
+  } else {
+    return 75;
+  }
+}
+
+const urgencyPercent = getUrgencyPercent();
+
+urgencyText.textContent = `${urgencyPercent}% DAS VAGAS PREENCHIDAS`;
+document.documentElement.style.setProperty("--urgency-width", `${urgencyPercent}%`);
+
+
+    function showCTA() {
+      if (!shown && main.currentTime >= 30) {
+        shown = true;
+        cta.classList.add("show");
+        urgencia.classList.add("show");
+
+        setTimeout(() => {
+          barraFill.classList.add("animate");
+        }, 100);
+      }
+    }
+
+    function updateProgressBar() {
+      const t = main.currentTime;
+      const d = main.duration;
+
+      if (!d || isNaN(d)) return;
+
+      let percent = 0;
+
+      if (t <= 30) {
+        percent = (t / 30) * 50;
+      } else if (t <= 90) {
+        percent = 50 + ((t - 30) / 60) * 25;
+      } else {
+        percent = 75 + ((t - 90) / (d - 90)) * 25;
+      }
+
+      if (percent > 100) percent = 100;
+      if (percent < 0) percent = 0;
+
+      progressBar.style.width = percent + "%";
+    }
+
+
+    main.addEventListener("timeupdate", showCTA);
+    main.addEventListener("timeupdate", updateProgressBar);
+
+    main.addEventListener("ended", () => {
+      progressBar.style.width = "100%";
+    });
+
+
+
+
+
+// salva o tempo a cada 1s
+setInterval(() => {
+  if (!main.paused && main.currentTime > 0) {
+    localStorage.setItem("videoTime", main.currentTime);
+  }
+}, 1000);
+
+main.addEventListener("ended", () => {
+  localStorage.removeItem("videoTime");
+});
+
+
+pageClickLayer.addEventListener("click", () => {
+  if (!academyName) return;
+  if (started) return;
+  startVideo();
+  startStayUpdater();
+});
+
+
+
+
+cta.addEventListener("click", trackButtonClick);
+
+
+
+// Textos dinâmicos da subheadline
+const textos = [
+  "Melhor atendimento",
+  "Humanização",
+  "Melhor fachada",
+  "Melhor cafézinho",
+  "E muito mais..."
+];
+
+let index = 0;
+const dynamicText = document.getElementById("dynamicText");
+
+setInterval(() => {
+  dynamicText.style.opacity = 0;
+
+  setTimeout(() => {
+    index = (index + 1) % textos.length;
+    dynamicText.textContent = textos[index];
+    dynamicText.style.opacity = 1;
+  }, 500);
+}, 3000);
+
+
+const academyGate = document.getElementById("academyGate");
+const academyInput = document.getElementById("academyInput");
+const academyOk = document.getElementById("academyOk");
+
+// Exibe o botão somente quando houver texto
+academyInput.addEventListener("input", () => {
+  if (academyInput.value.trim().length > 0) {
+    academyOk.classList.add("show");
+  } else {
+    academyOk.classList.remove("show");
+  }
+});
+
+// Permite Enter
+academyInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && academyInput.value.trim() !== "") {
+    academyOk.click();
+  }
+});
+
+academyOk.addEventListener("click", async () => {
+  const value = academyInput.value.trim();
+  if (!value) return;
+
+  academyOk.disabled = true;
+  academyOk.textContent = "Carregando...";
+  academyOk.style.opacity = "0.7";
+  academyOk.style.cursor = "not-allowed";
+
+  academyName = value;
+  saveAcademyName(value);
+
+  academyGate.style.display = "none";
+  pageClickLayer.style.display = "none";
+
+  startVideo();
+  startStayUpdater();
+
+  registerAccess();
+});
+
+window.addEventListener("load", async () => {
+  await registerInitialAccess();
+
+  if (academyName) {
+    preview.load();
+    showPosterOnly();
+    return;
+  }
+
+  pageClickLayer.style.display = "none";
+  academyInput.focus();
+});
+
+
+  </script>
+</body>
+</html>
