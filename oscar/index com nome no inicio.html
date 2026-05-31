@@ -333,7 +333,7 @@ html.academy-known .academy-gate {
   webkit-playsinline
   preload="auto">
 
-        <source src="https://video.wixstatic.com/video/7f5efc_61d265f796224f709c61e052e9194fd9/720p/mp4/file.mp4" type="video/mp4">
+        <source src="https://video.wixstatic.com/video/7f5efc_7a2978bbaeea4c11ab58f10c42f63195/480p/mp4/file.mp4" type="video/mp4">
       </video>
 
       <!-- VÍDEO PRINCIPAL -->
@@ -342,7 +342,7 @@ html.academy-known .academy-gate {
   playsinline
   preload="metadata"
   style="display:none;">
-        <source src="https://video.wixstatic.com/video/7f5efc_61d265f796224f709c61e052e9194fd9/720p/mp4/file.mp4" type="video/mp4">
+        <source src="https://video.wixstatic.com/video/7f5efc_6cfd1170532244cba96d80910231c3c8/480p/mp4/file.mp4" type="video/mp4">
       </video>
 
       <!-- IMAGEM POR CIMA DO POSTER -->
@@ -379,7 +379,7 @@ html.academy-known .academy-gate {
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmJrFyDQuIRuMVbnOxrSF6R0WYXS0g18N9sS6X7gip1Tc54fjuZrSy7EKVR6Pqq9Mz/exec";
 const SHEET_NAME = "PAP";
-const PAGE_NAME = "/oscar2026";
+const PAGE_NAME = "/cartaoscar2026";
 
 
 let stayUpdaterStarted = false;
@@ -641,8 +641,11 @@ function startVideo() {
   }
 
   main.play().then(() => {
+    preview.pause();
     preview.style.display = "none";
     thumbOverlay.style.display = "none";
+    pageClickLayer.style.display = "none";
+    main.style.display = "block";
   }).catch((err) => {
     console.log("Erro ao reproduzir:", err);
     started = false;
@@ -651,12 +654,6 @@ function startVideo() {
 }
 
 
-preview.addEventListener("playing", () => {
-  if (!started) {
-    preview.style.display = "block";
-    thumbOverlay.style.display = "flex";
-  }
-});
 
 main.addEventListener("playing", () => {
   preview.pause();
@@ -693,9 +690,9 @@ const urgencyPercent = getUrgencyPercent();
 urgencyText.textContent = `${urgencyPercent}% DAS VAGAS PREENCHIDAS`;
 document.documentElement.style.setProperty("--urgency-width", `${urgencyPercent}%`);
 
-
+//tempo da CTA botão aparecer
     function showCTA() {
-      if (!shown && main.currentTime >= 30) {
+      if (!shown && main.currentTime >= 180) {
         shown = true;
         cta.classList.add("show");
         urgencia.classList.add("show");
