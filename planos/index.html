@@ -2108,7 +2108,17 @@ background: rgba(255, 255, 255, 0.08);
   }
 
   html[data-theme="dark"] .installments,
-  html[data-theme="dark"] .price,
+  html[data-theme="dark"] .price {
+    color: #39FF88;
+    text-shadow:
+      0 0 6px rgba(57, 255, 136, 0.62),
+      0 0 16px rgba(57, 255, 136, 0.28);
+  }
+
+  html[data-theme="dark"] .price {
+    filter: saturate(1.18) brightness(1.08);
+  }
+
   html[data-theme="dark"] .subscription-label a,
   html[data-theme="dark"] .contract-header span,
   html[data-theme="dark"] #contractScrollHint.ready,
