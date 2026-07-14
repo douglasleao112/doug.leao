@@ -1,0 +1,2574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090000" />
+  <title>Consultoria Douglas Leão</title>
+  <meta name="description" content="Consultoria personalizada de treino, dieta e acompanhamento com Douglas Leão." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;600;700;900&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #050000;
+      --bg-soft: #120003;
+      --card: #4a0711;
+      --card-2: #270006;
+      --red: #f20b34;
+      --red-2: #a90821;
+      --green: #00e64d;
+      --white: #ffffff;
+      --muted: #c9c9c9;
+      --line: rgba(255, 255, 255, .12);
+      --shadow: 0 18px 60px rgba(0, 0, 0, .55);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 4%, rgba(155, 0, 28, .22), transparent 34rem),
+        linear-gradient(180deg, #130004 0%, #030000 44%, #0e0002 100%);
+      font-family: "Roboto Condensed", Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page-shell {
+      width: min(100%, 760px);
+      margin: 0 auto;
+      background: rgba(0, 0, 0, .28);
+      box-shadow: 0 0 90px rgba(0, 0, 0, .7);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 720px;
+      isolation: isolate;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0 20px 42px;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, .02) 0%, rgba(0, 0, 0, .15) 45%, rgba(0, 0, 0, .96) 92%),
+        url('https://i.ibb.co/xqDf25T0/background-edited-edited.avif') center top / cover no-repeat;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(100, 0, 16, .25), transparent 34%, transparent 67%, rgba(0, 0, 0, .28)),
+        radial-gradient(circle at 50% 45%, transparent 10%, rgba(0, 0, 0, .45) 75%);
+    }
+
+    .hero-person {
+      position: absolute;
+      z-index: -1;
+      top: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(620px, 96vw);
+      height: 620px;
+      object-fit: contain;
+      object-position: center top;
+      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .45));
+      pointer-events: none;
+    }
+
+    .instagram-badge {
+      position: absolute;
+      top: 112px;
+      left: clamp(18px, 15vw, 120px);
+      width: clamp(150px, 27vw, 220px);
+      z-index: 3;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, .45));
+    }
+
+    .hero-content {
+      width: 100%;
+      max-width: 640px;
+      text-align: center;
+      text-shadow: 0 3px 14px rgba(0, 0, 0, .9);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      background: rgba(0, 0, 0, .46);
+      border-radius: 999px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 12px;
+      backdrop-filter: blur(7px);
+    }
+
+    .hero h1 {
+      margin: 13px 0 7px;
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(42px, 8.3vw, 72px);
+      line-height: .96;
+      letter-spacing: .01em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .hero h1 span {
+      display: block;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 560px;
+      color: #f0f0f0;
+      font-size: clamp(16px, 2.7vw, 20px);
+      line-height: 1.35;
+    }
+
+    .hero-highlight {
+      display: inline-block;
+      margin-top: 11px;
+      padding: 5px 9px;
+      border-radius: 4px;
+      background: var(--red);
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 34px 18px;
+    }
+
+    .benefit-card,
+    .coupon-card,
+    .authority-card {
+      width: min(100%, 610px);
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, .06);
+      background:
+        linear-gradient(145deg, rgba(115, 8, 25, .74), rgba(52, 0, 8, .95));
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .benefit-card {
+      padding: 27px 26px 24px;
+    }
+
+    .benefit-card h2,
+    .coupon-card h2 {
+      margin: 0 0 17px;
+      text-align: center;
+      font-size: clamp(22px, 4vw, 30px);
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+
+    .benefit-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 13px;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      font-size: clamp(17px, 2.8vw, 21px);
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .benefit-icon {
+      width: 27px;
+      flex: 0 0 27px;
+      text-align: center;
+      filter: drop-shadow(0 4px 7px rgba(0, 0, 0, .4));
+    }
+
+    .coupon-card {
+      margin-top: 22px;
+      padding: 23px;
+      background: linear-gradient(145deg, rgba(37, 0, 6, .94), rgba(10, 0, 2, .98));
+    }
+
+    .coupon-card p {
+      margin: -7px 0 15px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .coupon-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .coupon-input {
+      min-width: 0;
+      height: 52px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      background: rgba(255, 255, 255, .06);
+      color: white;
+      padding: 0 16px;
+      outline: none;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .coupon-input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 4px rgba(242, 11, 52, .14);
+    }
+
+    .coupon-button {
+      height: 52px;
+      padding: 0 20px;
+      border: 0;
+      border-radius: 14px;
+      color: white;
+      background: linear-gradient(180deg, #ff2148, #c40025);
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(242, 11, 52, .26);
+      transition: transform .18s ease, filter .18s ease;
+    }
+
+    .coupon-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+
+    .coupon-status {
+      min-height: 24px;
+      margin-top: 12px;
+      text-align: center;
+      font-weight: 800;
+      color: #cfcfcf;
+    }
+
+    .coupon-status.success {
+      color: #5cff8d;
+    }
+
+    .coupon-status.error {
+      color: #ff7c93;
+    }
+
+    .plans-section {
+      padding: 12px 18px 48px;
+    }
+
+    .down-arrows {
+      text-align: center;
+      font-size: 30px;
+      line-height: .6;
+      margin: 0 0 22px;
+      animation: arrowBounce 1.1s infinite alternate ease-in-out;
+    }
+
+    @keyframes arrowBounce {
+      to {
+        transform: translateY(7px);
+      }
+    }
+
+    .plans-title {
+      text-align: center;
+      margin-bottom: 23px;
+    }
+
+    .plans-title small {
+      display: block;
+      font-weight: 900;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: #dddddd;
+      margin-bottom: 5px;
+    }
+
+    .plans-title h2 {
+      margin: 0;
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(38px, 7vw, 61px);
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .025em;
+    }
+
+    .discount-pill {
+      display: none;
+      width: fit-content;
+      margin: 12px auto 0;
+      padding: 7px 13px;
+      background: var(--red);
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      box-shadow: 0 9px 22px rgba(242, 11, 52, .22);
+    }
+
+    .discount-pill.visible {
+      display: block;
+    }
+
+    .plans-grid {
+      width: min(100%, 650px);
+      margin: 0 auto;
+      display: grid;
+      gap: 17px;
+    }
+
+    .plan-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 18px;
+      min-height: 126px;
+      padding: 18px 25px;
+      text-decoration: none;
+      border-radius: 19px;
+      border: 1.5px solid var(--red);
+      background:
+        linear-gradient(115deg, rgba(78, 0, 12, .83), rgba(4, 0, 0, .96));
+      box-shadow: 0 14px 42px rgba(0, 0, 0, .46);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      overflow: hidden;
+    }
+
+    .plan-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, transparent 10%, rgba(255, 255, 255, .06) 45%, transparent 70%);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+      pointer-events: none;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-3px);
+      border-color: #ff4a69;
+      box-shadow: 0 20px 48px rgba(161, 0, 27, .25);
+    }
+
+    .plan-card:hover::after {
+      transform: translateX(120%);
+    }
+
+    .plan-card.disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      filter: grayscale(.45);
+    }
+
+    .plan-card.disabled:hover {
+      transform: none;
+      box-shadow: 0 14px 42px rgba(0, 0, 0, .46);
+    }
+
+    .plan-name {
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(39px, 7vw, 62px);
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+
+    .price-box {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .old-price {
+      display: none;
+      margin-bottom: 2px;
+      color: #bcbcbc;
+      font-size: 14px;
+      text-decoration: line-through;
+      font-weight: 700;
+    }
+
+    .old-price.visible {
+      display: block;
+    }
+
+    .installments {
+      color: var(--green);
+      font-weight: 900;
+      font-size: 17px;
+    }
+
+    .price {
+      color: var(--green);
+      font-size: clamp(35px, 6vw, 53px);
+      line-height: .95;
+      font-weight: 900;
+      letter-spacing: -.04em;
+    }
+
+    .price small {
+      font-size: .44em;
+      letter-spacing: 0;
+      margin-right: 3px;
+    }
+
+    .billing-note {
+      display: none;
+      margin-top: 5px;
+      color: #dbdbdb;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .billing-note.visible {
+      display: block;
+    }
+
+    .best-ribbon {
+      position: absolute;
+      top: 12px;
+      left: -45px;
+      transform: rotate(-42deg);
+      width: 170px;
+      padding: 5px 0;
+      text-align: center;
+      background: linear-gradient(180deg, #ff263e, #a90019);
+      color: white;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, .35);
+    }
+
+    .subscription-box {
+      display: none;
+      width: min(100%, 650px);
+      margin: 18px auto 0;
+      padding: 17px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .11);
+      background: rgba(255, 255, 255, .045);
+    }
+
+    .subscription-box.visible {
+      display: block;
+    }
+
+    .subscription-label {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1.35;
+      color: #e5e5e5;
+    }
+
+    .subscription-label input {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      accent-color: var(--red);
+      flex: 0 0 auto;
+    }
+
+    .subscription-label a {
+      color: #62cfff;
+      font-weight: 800;
+    }
+
+    .subscription-warning {
+      margin: 9px 0 0 30px;
+      color: #ff91a4;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .results-section {
+      padding: 20px 0 45px;
+      background: linear-gradient(180deg, transparent, rgba(73, 0, 12, .26), transparent);
+    }
+
+    .section-heading {
+      padding: 0 18px;
+      margin: 0 auto 20px;
+      text-align: center;
+      max-width: 650px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(36px, 7vw, 58px);
+      line-height: 1;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    .section-heading p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .slider-mask {
+      overflow: hidden;
+      position: relative;
+      padding: 8px 0 12px;
+    }
+
+    .slider-mask::before,
+    .slider-mask::after {
+      content: "";
+      position: absolute;
+      z-index: 3;
+      top: 0;
+      bottom: 0;
+      width: 55px;
+      pointer-events: none;
+    }
+
+    .slider-mask::before {
+      left: 0;
+      background: linear-gradient(90deg, #070000, transparent);
+    }
+
+    .slider-mask::after {
+      right: 0;
+      background: linear-gradient(-90deg, #070000, transparent);
+    }
+
+    .slider-track {
+      display: flex;
+      width: max-content;
+      gap: 10px;
+      animation: marquee 42s linear infinite;
+      will-change: transform;
+    }
+
+    .slider-track:hover {
+      animation-play-state: paused;
+    }
+
+    .result-image {
+      width: 205px;
+      height: 205px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .5);
+      background: #1a1a1a;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(calc(-50% - 5px));
+      }
+    }
+
+    .authority-section {
+      padding: 34px 18px 64px;
+    }
+
+    .authority-card {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: minmax(220px, .9fr) 1.1fr;
+      align-items: center;
+      gap: 24px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(164, 7, 31, .28), transparent 46%),
+        linear-gradient(145deg, rgba(22, 0, 4, .98), rgba(1, 0, 0, .99));
+    }
+
+    .authority-photo-wrap {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      min-height: 390px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 35%, rgba(255, 196, 109, .12), transparent 50%);
+    }
+
+    .authority-photo {
+      width: 100%;
+      max-width: 328px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .48));
+    }
+
+    .authority-copy small {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .authority-copy h2 {
+      margin: 2px 0 14px;
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(39px, 6vw, 57px);
+      font-weight: 400;
+      line-height: .96;
+    }
+
+    .authority-copy p {
+      margin: 0 0 14px;
+      color: #f1f1f1;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .authority-copy strong {
+      color: #ff3355;
+    }
+
+    .footer {
+      padding: 25px 20px 34px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      color: #8f8f8f;
+      font-size: 13px;
+      background: #020000;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 22px;
+      transform: translate(-50%, 18px);
+      width: min(calc(100% - 30px), 520px);
+      padding: 14px 17px;
+      border-radius: 14px;
+      color: white;
+      background: rgba(25, 0, 5, .96);
+      border: 1px solid rgba(255, 255, 255, .14);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .55);
+      text-align: center;
+      font-weight: 800;
+      opacity: 0;
+      visibility: hidden;
+      transition: .22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 650px) {
+      .hero {
+        min-height: 640px;
+        padding-bottom: 30px;
+      }
+
+      .hero-person {
+        top: 23px;
+        height: 540px;
+        width: 540px;
+      }
+
+      .instagram-badge {
+        top: 85px;
+        left: 18px;
+      }
+
+      .hero-content {
+        transform: translateY(4px);
+      }
+
+      .section {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .benefit-card {
+        padding: 23px 18px;
+        border-radius: 19px;
+      }
+
+      .coupon-card {
+        padding: 18px;
+        border-radius: 19px;
+      }
+
+      .plan-card {
+        padding: 17px 17px;
+        min-height: 112px;
+      }
+
+      .plan-name {
+        font-size: clamp(34px, 10vw, 48px);
+      }
+
+      .price {
+        font-size: clamp(31px, 9vw, 43px);
+      }
+
+      .authority-card {
+        grid-template-columns: 1fr;
+        padding: 19px;
+      }
+
+      .authority-photo-wrap {
+        min-height: auto;
+      }
+
+      .authority-copy {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .hero {
+        min-height: 590px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .hero-person {
+        width: 470px;
+        height: 485px;
+      }
+
+      .instagram-badge {
+        width: 135px;
+        top: 82px;
+      }
+
+      .hero h1 {
+        font-size: 41px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .coupon-row {
+        grid-template-columns: 1fr;
+      }
+
+      .coupon-button {
+        width: 100%;
+      }
+
+      .plan-card {
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        padding: 16px 12px 16px 16px;
+      }
+
+      .plan-name {
+        font-size: 35px;
+      }
+
+      .installments {
+        font-size: 13px;
+      }
+
+      .price {
+        font-size: 32px;
+      }
+
+      .result-image {
+        width: 170px;
+        height: 170px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <img class="hero-person" src="https://i.ibb.co/SD7n5x1z/doug.avif" alt="Douglas Leão" />
+      <img class="instagram-badge" src="https://i.ibb.co/xq7HSncJ/IMG-7491-PNG.avif" alt="Instagram Douglas Leão" />
+
+      <div class="hero-content">
+        <span class="eyebrow">🔥 Condição especial por tempo limitado</span>
+        <h1><span>Oferta exclusiva</span><span>mês de julho</span></h1>
+        <p><strong>Mais de 7.103 vidas transformadas.</strong> Agora é a sua vez de buscar a sua melhor versão.</p>
+        <span class="hero-highlight">Treino, dieta e acompanhamento em um só lugar</span>
+      </div>
+    </section>
+
+    <section class="section" id="beneficios">
+      <div class="benefit-card">
+        <h2 id="benefitTitle">Como será o atendimento:</h2>
+        <ul class="benefit-list" id="benefitList"></ul>
+      </div>
+
+      <div class="coupon-card">
+        <h2>Tem um cupom?</h2>
+        <p>Digite abaixo para liberar sua condição especial.</p>
+        <div class="coupon-row">
+          <input id="couponInput" class="coupon-input" type="text" inputmode="text" autocomplete="off" maxlength="20"
+            placeholder="Digite o cupom" aria-label="Cupom de desconto" />
+          <button id="couponButton" class="coupon-button" type="button">APLICAR</button>
+        </div>
+        <div id="couponStatus" class="coupon-status" aria-live="polite">Preços normais exibidos abaixo.</div>
+      </div>
+    </section>
+
+    <section class="plans-section" id="planos">
+      <div class="down-arrows" aria-hidden="true">⌄<br>⌄</div>
+      <div class="plans-title">
+        <small>Escolha a melhor opção</small>
+        <h2 id="plansHeading">Planos de atendimento</h2>
+        <div id="discountPill" class="discount-pill"></div>
+      </div>
+
+      <div class="plans-grid">
+        <a id="plan-trimestre" class="plan-card" href="https://chk.eduzz.com/gmu2ebua" target="_blank"
+          rel="noopener noreferrer">
+          <div class="plan-name">3 meses</div>
+          <div class="price-box">
+            <div class="old-price"></div>
+            <div class="installments">3x de</div>
+            <div class="price"><small>R$</small><span>239,00</span></div>
+            <div class="billing-note">Cobrança mensal</div>
+          </div>
+        </a>
+
+        <a id="plan-semestre" class="plan-card" href="https://chk.eduzz.com/7A74007F" target="_blank"
+          rel="noopener noreferrer">
+          <div class="plan-name">6 meses</div>
+          <div class="price-box">
+            <div class="old-price"></div>
+            <div class="installments">6x de</div>
+            <div class="price"><small>R$</small><span>225,00</span></div>
+            <div class="billing-note">Cobrança mensal</div>
+          </div>
+        </a>
+
+        <a id="plan-anual" class="plan-card" href="https://chk.eduzz.com/nsngrygs" target="_blank"
+          rel="noopener noreferrer">
+          <div class="best-ribbon">Mais escolhido</div>
+          <div class="plan-name">12 meses</div>
+          <div class="price-box">
+            <div class="old-price"></div>
+            <div class="installments">12x de</div>
+            <div class="price"><small>R$</small><span>165,00</span></div>
+            <div class="billing-note">Cobrança mensal</div>
+          </div>
+        </a>
+      </div>
+
+      <div id="subscriptionBox" class="subscription-box">
+        <label class="subscription-label">
+          <input id="subscriptionTerms" type="checkbox" />
+          <span>Concordo com o contrato de assinatura e com os <a
+              href="https://drive.google.com/file/d/1A10RMsSCKcviu2JNX6A3Z-WVOfPV1SVB/view?usp=sharing" target="_blank"
+              rel="noopener noreferrer">termos de prestação de serviço</a>.</span>
+        </label>
+
+        </p>
+      </div>
+    </section>
+
+    <section class="results-section">
+      <div class="section-heading">
+        <h2>Resultados reais</h2>
+        <p>Pessoas comuns que decidiram começar e transformaram seus hábitos e seus resultados.</p>
+      </div>
+      <div class="slider-mask">
+        <div id="sliderTrack" class="slider-track"></div>
+      </div>
+    </section>
+
+    <section class="authority-section">
+      <div class="authority-card">
+        <div class="authority-photo-wrap">
+          <img class="authority-photo"
+            src="https://static.wixstatic.com/media/7f5efc_dab67ba329d54135992da07512f6cff4~mv2.png/v1/fill/w_328,h_386,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/quem%20sou%20eu.png"
+            alt="Douglas Leão" loading="lazy" />
+        </div>
+        <div class="authority-copy">
+          <small>Quem é</small>
+          <h2>Douglas Leão?</h2>
+          <p>Trabalho há mais de dez anos com treinamento, avaliação física e acompanhamento de pessoas que buscam
+            melhorar a composição corporal.</p>
+          <p>Sou <strong>Doutor em Educação Física</strong> e especialista em Nutrição Esportiva. Já acompanhei milhares
+            de pessoas e também trabalho com atletas de fisiculturismo.</p>
+          <p><strong>Vou elaborar um plano claro e aplicável para você conquistar seus resultados.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Resultados variam de pessoa para pessoa. O acompanhamento não substitui atendimento médico quando
+      necessário.<br />
+      © <span id="year"></span> Douglas Leão. Todos os direitos reservados.
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const BASE_PRICES = {
+      trimestre: 239,
+      semestre: 225,
+      anual: 165
+    };
+
+    const CHECKOUT_LINKS = {
+      standard: {
+        trimestre: 'https://chk.eduzz.com/gmu2ebua',
+        semestre: 'https://chk.eduzz.com/7A74007F',
+        anual: 'https://chk.eduzz.com/nsngrygs'
+      },
+      subscription: {
+        trimestre: 'https://sun.eduzz.com/R9JYNV689X',
+        semestre: 'https://sun.eduzz.com/39YBYAVQWO',
+        anual: 'https://sun.eduzz.com/E0DBXZOY91'
+      }
+    };
+
+    const BENEFITS = {
+      standard: [
+        ['🤝', 'Consulta inicial individual'],
+        ['🥗', 'Dieta personalizada com substituições'],
+        ['💪', 'App de treino com vídeos explicativos'],
+        ['💊', 'Orientação de suplementação e protocolos'],
+        ['📄', 'Prescrição de exames de sangue'],
+        ['✅', 'Suporte via WhatsApp 24h*']
+      ],
+      form: [
+        ['📝', 'Atendimento inicial por formulário'],
+        ['🥗', 'Dieta personalizada com substituições'],
+        ['💪', 'App de treino com vídeos explicativos'],
+        ['💊', 'Orientação de suplementação e protocolos'],
+        ['📄', 'Prescrição de exames de sangue'],
+        ['✅', 'Suporte via WhatsApp 24h*']
+      ],
+      off10: [
+        ['🤝', 'Consulta inicial individual'],
+        ['🥗', 'Dieta personalizada com substituições'],
+        ['💪', 'App de treino com vídeos explicativos'],
+        ['💊', 'Orientação de suplementação e protocolos'],
+        ['📄', 'Prescrição de exames de sangue'],
+        ['✅', 'Suporte via WhatsApp 24h*']
+      ],
+      off30: [
+        ['🤝', 'Consulta inicial individual'],
+        ['🥗', 'Dieta personalizada com substituições'],
+        ['💪', 'App de treino com vídeos explicativos'],
+        ['💊', 'Orientação de suplementação e protocolos'],
+        ['📄', 'Prescrição de exames de sangue'],
+        ['✅', 'Suporte via WhatsApp 24h*']
+      ],
+      subscription: [
+        ['📝', 'Atendimento por formulário'],
+        ['🔁', 'Cobrança mensal recorrente durante o plano'],
+        ['🥗', 'Dieta personalizada com substituições'],
+        ['💪', 'App de treino com vídeos explicativos'],
+        ['💊', 'Orientação de suplementação e protocolos'],
+        ['✅', 'Suporte via WhatsApp 24h*']
+      ]
+    };
+
+    const COUPONS = {
+      FORM: {
+        discount: 0.599,
+        displayDiscount: 60,
+        queryValue: 'form',
+        benefitKey: 'form',
+        status: 'Cupom FORM aplicado: 60% de desconto liberado.'
+      },
+      OFF10: {
+        discount: 0.10,
+        displayDiscount: 10,
+        queryValue: 'off10',
+        benefitKey: 'off10',
+        status: 'Cupom OFF10 aplicado: 10% de desconto liberado.'
+      },
+      OFF30: {
+        discount: 0.30,
+        displayDiscount: 30,
+        queryValue: 'off30',
+        benefitKey: 'off30',
+        status: 'Cupom OFF30 aplicado: 30% de desconto liberado.'
+      },
+      '30OFF': {
+        discount: 0.30,
+        displayDiscount: 30,
+        queryValue: '30off',
+        benefitKey: 'off30',
+        status: 'Cupom 30OFF aplicado: 30% de desconto liberado.'
+      },
+      ASS: {
+        discount: 0,
+        displayDiscount: 0,
+        benefitKey: 'subscription',
+        subscription: true,
+        status: 'Cupom ASS aplicado: planos de assinatura mensal liberados.'
+      }
+    };
+
+    const planElements = {
+      trimestre: document.getElementById('plan-trimestre'),
+      semestre: document.getElementById('plan-semestre'),
+      anual: document.getElementById('plan-anual')
+    };
+
+    const couponInput = document.getElementById('couponInput');
+    const couponButton = document.getElementById('couponButton');
+    const couponStatus = document.getElementById('couponStatus');
+    const discountPill = document.getElementById('discountPill');
+    const plansHeading = document.getElementById('plansHeading');
+    const benefitList = document.getElementById('benefitList');
+    const benefitTitle = document.getElementById('benefitTitle');
+    const subscriptionBox = document.getElementById('subscriptionBox');
+    const subscriptionTerms = document.getElementById('subscriptionTerms');
+    const subscriptionWarning = document.getElementById('subscriptionWarning');
+    const toast = document.getElementById('toast');
+
+    let currentMode = 'standard';
+    let toastTimer;
+
+    function formatBRL(value) {
+      return value.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function renderBenefits(key) {
+      benefitList.innerHTML = BENEFITS[key].map(([icon, text]) => `
+        <li class="benefit-item">
+          <span class="benefit-icon" aria-hidden="true">${icon}</span>
+          <span>${text}</span>
+        </li>
+      `).join('');
+
+      benefitTitle.textContent = key === 'subscription'
+        ? 'Como funciona a assinatura:'
+        : 'Como será o atendimento:';
+    }
+
+    function buildCouponLink(base, couponValue) {
+      if (!couponValue) return base;
+      const separator = base.includes('?') ? '&' : '?';
+      return `${base}${separator}cupom=${encodeURIComponent(couponValue)}`;
+    }
+
+    function updatePlanCard(planKey, price, originalPrice, link, isSubscription) {
+      const card = planElements[planKey];
+      const priceText = card.querySelector('.price span');
+      const oldPrice = card.querySelector('.old-price');
+      const billingNote = card.querySelector('.billing-note');
+
+      priceText.textContent = formatBRL(price);
+      card.href = link;
+
+      if (price < originalPrice) {
+        oldPrice.textContent = `de R$ ${formatBRL(originalPrice)}`;
+        oldPrice.classList.add('visible');
+      } else {
+        oldPrice.textContent = '';
+        oldPrice.classList.remove('visible');
+      }
+
+      billingNote.classList.toggle('visible', isSubscription);
+    }
+
+    function setSubscriptionLock(locked) {
+      Object.values(planElements).forEach(card => {
+        card.classList.toggle('disabled', locked);
+        card.setAttribute('aria-disabled', locked ? 'true' : 'false');
+      });
+      subscriptionWarning.style.display = locked ? 'block' : 'none';
+    }
+
+    function resetPage() {
+      currentMode = 'standard';
+      subscriptionTerms.checked = false;
+      subscriptionBox.classList.remove('visible');
+      discountPill.classList.remove('visible');
+      discountPill.textContent = '';
+      couponStatus.className = 'coupon-status';
+      couponStatus.textContent = 'Preços normais exibidos abaixo.';
+      renderBenefits('standard');
+      plansHeading.textContent = 'Planos de atendimento';
+      setSubscriptionLock(false);
+
+      Object.keys(BASE_PRICES).forEach(planKey => {
+        updatePlanCard(
+          planKey,
+          BASE_PRICES[planKey],
+          BASE_PRICES[planKey],
+          CHECKOUT_LINKS.standard[planKey],
+          false
+        );
+      });
+    }
+
+    function applyCoupon() {
+      const code = couponInput.value.trim().toUpperCase();
+
+      if (!code) {
+        resetPage();
+        showToast('Cupom removido. Os preços normais foram restaurados.');
+        return;
+      }
+
+      const coupon = COUPONS[code];
+      if (!coupon) {
+        couponStatus.className = 'coupon-status error';
+        couponStatus.textContent = 'Cupom inválido. Confira o código digitado.';
+        showToast('Cupom não encontrado.');
+        return;
+      }
+
+      couponStatus.className = 'coupon-status success';
+      couponStatus.textContent = coupon.status;
+      renderBenefits(coupon.benefitKey);
+
+      if (coupon.subscription) {
+        currentMode = 'subscription';
+        plansHeading.textContent = 'Planos de assinatura';
+        subscriptionTerms.checked = false;
+        subscriptionBox.classList.add('visible');
+        discountPill.classList.remove('visible');
+        discountPill.textContent = '';
+        setSubscriptionLock(true);
+
+        Object.keys(BASE_PRICES).forEach(planKey => {
+          updatePlanCard(
+            planKey,
+            BASE_PRICES[planKey],
+            BASE_PRICES[planKey],
+            CHECKOUT_LINKS.subscription[planKey],
+            true
+          );
+        });
+      } else {
+        currentMode = 'discount';
+        plansHeading.textContent = 'Planos de atendimento';
+        subscriptionTerms.checked = false;
+        subscriptionBox.classList.remove('visible');
+        setSubscriptionLock(false);
+
+        discountPill.textContent = `${coupon.displayDiscount}% de desconto aplicado`;
+        discountPill.classList.add('visible');
+
+        Object.keys(BASE_PRICES).forEach(planKey => {
+          const discountedPrice = BASE_PRICES[planKey] * (1 - coupon.discount);
+          updatePlanCard(
+            planKey,
+            discountedPrice,
+            BASE_PRICES[planKey],
+            buildCouponLink(CHECKOUT_LINKS.standard[planKey], coupon.queryValue),
+            false
+          );
+        });
+      }
+
+      document.getElementById('planos').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showToast(coupon.status);
+    }
+
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add('show');
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    subscriptionTerms.addEventListener('change', () => {
+      if (currentMode !== 'subscription') return;
+      setSubscriptionLock(!subscriptionTerms.checked);
+      if (subscriptionTerms.checked) {
+        showToast('Contrato aceito. Os planos de assinatura estão liberados.');
+      }
+    });
+
+    Object.values(planElements).forEach(card => {
+      card.addEventListener('click', event => {
+        if (currentMode === 'subscription' && !subscriptionTerms.checked) {
+          event.preventDefault();
+          subscriptionBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          showToast('Marque a caixa do contrato antes de escolher o plano.');
+        }
+      });
+    });
+
+    couponButton.addEventListener('click', applyCoupon);
+    couponInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter') applyCoupon();
+    });
+
+    const resultImages = [
+      'https://static.wixstatic.com/media/7f5efc_8321cca748374898bb7b9580ae3df1f8~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_8321cca748374898bb7b9580ae3df1f8~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_3bf0c7e214a64380b132c06e5e2a2415~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_3bf0c7e214a64380b132c06e5e2a2415~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_21cfe39966dd4c9f8d6390e386479502~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_21cfe39966dd4c9f8d6390e386479502~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_c085a5048f7c467cbe975bf4303bb3ee~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_c085a5048f7c467cbe975bf4303bb3ee~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_7dadc4b9d89c4d078598436076bddf75~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_7dadc4b9d89c4d078598436076bddf75~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_31ee52a4407842acaaacd42d136f3435~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_31ee52a4407842acaaacd42d136f3435~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_9531f2ad6a58403d8fc62eedf8a0d779~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_9531f2ad6a58403d8fc62eedf8a0d779~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_6aafe98fc50c466a9551bd5f0aecd41c~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_6aafe98fc50c466a9551bd5f0aecd41c~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_3c63b1a91c8745e5b0865170039ef45e~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_3c63b1a91c8745e5b0865170039ef45e~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_c24e3b8c3378465bb8e9b1e01073ea4f~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_c24e3b8c3378465bb8e9b1e01073ea4f~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_13b34fd84ba941cfba4229347afdbf4b~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_13b34fd84ba941cfba4229347afdbf4b~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_627413d4c7444b6fa4412d0747147099~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_627413d4c7444b6fa4412d0747147099~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_e2b29635f5fa4f77a11164594ade0fd6~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_e2b29635f5fa4f77a11164594ade0fd6~mv2.jpg',
+      'https://static.wixstatic.com/media/7f5efc_5340e0302fe74383aa07c63d4f621a5d~mv2.jpg/v1/fit/w_240,h_216,q_90,enc_avif,quality_auto/7f5efc_5340e0302fe74383aa07c63d4f621a5d~mv2.jpg'
+    ];
+
+    const sliderTrack = document.getElementById('sliderTrack');<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090000" />
+  <title>Consultoria Douglas Leão</title>
+  <meta name="description" content="Consultoria personalizada de treino, dieta e acompanhamento com Douglas Leão." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;600;700;900&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #050000;
+      --bg-soft: #120003;
+      --card: #4a0711;
+      --card-2: #270006;
+      --red: #f20b34;
+      --red-2: #a90821;
+      --green: #00e64d;
+      --white: #ffffff;
+      --muted: #c9c9c9;
+      --line: rgba(255, 255, 255, .12);
+      --shadow: 0 18px 60px rgba(0, 0, 0, .55);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 20% 4%, rgba(155, 0, 28, .22), transparent 34rem),
+        linear-gradient(180deg, #130004 0%, #030000 44%, #0e0002 100%);
+      font-family: "Roboto Condensed", Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page-shell {
+      width: min(100%, 760px);
+      margin: 0 auto;
+      background: rgba(0, 0, 0, .28);
+      box-shadow: 0 0 90px rgba(0, 0, 0, .7);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 720px;
+      isolation: isolate;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0 20px 42px;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, .02) 0%, rgba(0, 0, 0, .15) 45%, rgba(0, 0, 0, .96) 92%),
+        url('https://i.ibb.co/xqDf25T0/background-edited-edited.avif') center top / cover no-repeat;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(100, 0, 16, .25), transparent 34%, transparent 67%, rgba(0, 0, 0, .28)),
+        radial-gradient(circle at 50% 45%, transparent 10%, rgba(0, 0, 0, .45) 75%);
+    }
+
+    .hero-person {
+      position: absolute;
+      z-index: -1;
+      top: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(620px, 96vw);
+      height: 620px;
+      object-fit: contain;
+      object-position: center top;
+      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .45));
+      pointer-events: none;
+    }
+
+    .instagram-badge {
+      position: absolute;
+      top: 112px;
+      left: clamp(18px, 15vw, 120px);
+      width: clamp(150px, 27vw, 220px);
+      z-index: 3;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, .45));
+    }
+
+    .hero-content {
+      width: 100%;
+      max-width: 640px;
+      text-align: center;
+      text-shadow: 0 3px 14px rgba(0, 0, 0, .9);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      background: rgba(0, 0, 0, .46);
+      border-radius: 999px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 12px;
+      backdrop-filter: blur(7px);
+    }
+
+    .hero h1 {
+      margin: 13px 0 7px;
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(42px, 8.3vw, 72px);
+      line-height: .96;
+      letter-spacing: .01em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .hero h1 span {
+      display: block;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 560px;
+      color: #f0f0f0;
+      font-size: clamp(16px, 2.7vw, 20px);
+      line-height: 1.35;
+    }
+
+    .hero-highlight {
+      display: inline-block;
+      margin-top: 11px;
+      padding: 5px 9px;
+      border-radius: 4px;
+      background: var(--red);
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 34px 18px;
+    }
+
+    .benefit-card,
+    .coupon-card,
+    .authority-card {
+      width: min(100%, 610px);
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, .06);
+      background:
+        linear-gradient(145deg, rgba(115, 8, 25, .74), rgba(52, 0, 8, .95));
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .benefit-card {
+      padding: 27px 26px 24px;
+    }
+
+    .benefit-card h2,
+    .coupon-card h2 {
+      margin: 0 0 17px;
+      text-align: center;
+      font-size: clamp(22px, 4vw, 30px);
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+
+    .benefit-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 13px;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      font-size: clamp(17px, 2.8vw, 21px);
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .benefit-icon {
+      width: 27px;
+      flex: 0 0 27px;
+      text-align: center;
+      filter: drop-shadow(0 4px 7px rgba(0, 0, 0, .4));
+    }
+
+    .coupon-card {
+      margin-top: 22px;
+      padding: 23px;
+      background: linear-gradient(145deg, rgba(37, 0, 6, .94), rgba(10, 0, 2, .98));
+    }
+
+    .coupon-card p {
+      margin: -7px 0 15px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .coupon-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .coupon-input {
+      min-width: 0;
+      height: 52px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      background: rgba(255, 255, 255, .06);
+      color: white;
+      padding: 0 16px;
+      outline: none;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .coupon-input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 4px rgba(242, 11, 52, .14);
+    }
+
+    .coupon-button {
+      height: 52px;
+      padding: 0 20px;
+      border: 0;
+      border-radius: 14px;
+      color: white;
+      background: linear-gradient(180deg, #ff2148, #c40025);
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(242, 11, 52, .26);
+      transition: transform .18s ease, filter .18s ease;
+    }
+
+    .coupon-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+
+    .coupon-status {
+      min-height: 24px;
+      margin-top: 12px;
+      text-align: center;
+      font-weight: 800;
+      color: #cfcfcf;
+    }
+
+    .coupon-status.success {
+      color: #5cff8d;
+    }
+
+    .coupon-status.error {
+      color: #ff7c93;
+    }
+
+    .plans-section {
+      padding: 12px 18px 48px;
+    }
+
+    .down-arrows {
+      text-align: center;
+      font-size: 30px;
+      line-height: .6;
+      margin: 0 0 22px;
+      animation: arrowBounce 1.1s infinite alternate ease-in-out;
+    }
+
+    @keyframes arrowBounce {
+      to {
+        transform: translateY(7px);
+      }
+    }
+
+    .plans-title {
+      text-align: center;
+      margin-bottom: 23px;
+    }
+
+    .plans-title small {
+      display: block;
+      font-weight: 900;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: #dddddd;
+      margin-bottom: 5px;
+    }
+
+    .plans-title h2 {
+      margin: 0;
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(38px, 7vw, 61px);
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .025em;
+    }
+
+    .discount-pill {
+      display: none;
+      width: fit-content;
+      margin: 12px auto 0;
+      padding: 7px 13px;
+      background: var(--red);
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 14px;
+      text-transform: uppercase;
+      box-shadow: 0 9px 22px rgba(242, 11, 52, .22);
+    }
+
+    .discount-pill.visible {
+      display: block;
+    }
+
+    .plans-grid {
+      width: min(100%, 650px);
+      margin: 0 auto;
+      display: grid;
+      gap: 17px;
+    }
+
+    .plan-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 18px;
+      min-height: 126px;
+      padding: 18px 25px;
+      text-decoration: none;
+      border-radius: 19px;
+      border: 1.5px solid var(--red);
+      background:
+        linear-gradient(115deg, rgba(78, 0, 12, .83), rgba(4, 0, 0, .96));
+      box-shadow: 0 14px 42px rgba(0, 0, 0, .46);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      overflow: hidden;
+    }
+
+    .plan-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, transparent 10%, rgba(255, 255, 255, .06) 45%, transparent 70%);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+      pointer-events: none;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-3px);
+      border-color: #ff4a69;
+      box-shadow: 0 20px 48px rgba(161, 0, 27, .25);
+    }
+
+    .plan-card:hover::after {
+      transform: translateX(120%);
+    }
+
+    .plan-card.disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      filter: grayscale(.45);
+    }
+
+    .plan-card.disabled:hover {
+      transform: none;
+      box-shadow: 0 14px 42px rgba(0, 0, 0, .46);
+    }
+
+    .plan-name {
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(39px, 7vw, 62px);
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+
+    .price-box {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .old-price {
+      display: none;
+      margin-bottom: 2px;
+      color: #bcbcbc;
+      font-size: 14px;
+      text-decoration: line-through;
+      font-weight: 700;
+    }
+
+    .old-price.visible {
+      display: block;
+    }
+
+    .installments {
+      color: var(--green);
+      font-weight: 900;
+      font-size: 17px;
+    }
+
+    .price {
+      color: var(--green);
+      font-size: clamp(35px, 6vw, 53px);
+      line-height: .95;
+      font-weight: 900;
+      letter-spacing: -.04em;
+    }
+
+    .price small {
+      font-size: .44em;
+      letter-spacing: 0;
+      margin-right: 3px;
+    }
+
+    .billing-note {
+      display: none;
+      margin-top: 5px;
+      color: #dbdbdb;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .billing-note.visible {
+      display: block;
+    }
+
+    .best-ribbon {
+      position: absolute;
+      top: 12px;
+      left: -45px;
+      transform: rotate(-42deg);
+      width: 170px;
+      padding: 5px 0;
+      text-align: center;
+      background: linear-gradient(180deg, #ff263e, #a90019);
+      color: white;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, .35);
+    }
+
+    .subscription-box {
+      display: none;
+      width: min(100%, 650px);
+      margin: 18px auto 0;
+      padding: 17px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .11);
+      background: rgba(255, 255, 255, .045);
+    }
+
+    .subscription-box.visible {
+      display: block;
+    }
+
+    .subscription-label {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1.35;
+      color: #e5e5e5;
+    }
+
+    .subscription-label input {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      accent-color: var(--red);
+      flex: 0 0 auto;
+    }
+
+    .subscription-label a {
+      color: #62cfff;
+      font-weight: 800;
+    }
+
+    .subscription-warning {
+      margin: 9px 0 0 30px;
+      color: #ff91a4;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .results-section {
+      padding: 20px 0 45px;
+      background: linear-gradient(180deg, transparent, rgba(73, 0, 12, .26), transparent);
+    }
+
+    .section-heading {
+      padding: 0 18px;
+      margin: 0 auto 20px;
+      text-align: center;
+      max-width: 650px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(36px, 7vw, 58px);
+      line-height: 1;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    .section-heading p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .slider-mask {
+      overflow: hidden;
+      position: relative;
+      padding: 8px 0 12px;
+    }
+
+    .slider-mask::before,
+    .slider-mask::after {
+      content: "";
+      position: absolute;
+      z-index: 3;
+      top: 0;
+      bottom: 0;
+      width: 55px;
+      pointer-events: none;
+    }
+
+    .slider-mask::before {
+      left: 0;
+      background: linear-gradient(90deg, #070000, transparent);
+    }
+
+    .slider-mask::after {
+      right: 0;
+      background: linear-gradient(-90deg, #070000, transparent);
+    }
+
+    .slider-track {
+      display: flex;
+      width: max-content;
+      gap: 10px;
+      animation: marquee 42s linear infinite;
+      will-change: transform;
+    }
+
+    .slider-track:hover {
+      animation-play-state: paused;
+    }
+
+    .result-image {
+      width: 205px;
+      height: 205px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .5);
+      background: #1a1a1a;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(calc(-50% - 5px));
+      }
+    }
+
+    .authority-section {
+      padding: 34px 18px 64px;
+    }
+
+    .authority-card {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: minmax(220px, .9fr) 1.1fr;
+      align-items: center;
+      gap: 24px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(164, 7, 31, .28), transparent 46%),
+        linear-gradient(145deg, rgba(22, 0, 4, .98), rgba(1, 0, 0, .99));
+    }
+
+    .authority-photo-wrap {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      min-height: 390px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 35%, rgba(255, 196, 109, .12), transparent 50%);
+    }
+
+    .authority-photo {
+      width: 100%;
+      max-width: 328px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .48));
+    }
+
+    .authority-copy small {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .authority-copy h2 {
+      margin: 2px 0 14px;
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(39px, 6vw, 57px);
+      font-weight: 400;
+      line-height: .96;
+    }
+
+    .authority-copy p {
+      margin: 0 0 14px;
+      color: #f1f1f1;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .authority-copy strong {
+      color: #ff3355;
+    }
+
+    .footer {
+      padding: 25px 20px 34px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      color: #8f8f8f;
+      font-size: 13px;
+      background: #020000;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 1000;
+      left: 50%;
+      bottom: 22px;
+      transform: translate(-50%, 18px);
+      width: min(calc(100% - 30px), 520px);
+      padding: 14px 17px;
+      border-radius: 14px;
+      color: white;
+      background: rgba(25, 0, 5, .96);
+      border: 1px solid rgba(255, 255, 255, .14);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .55);
+      text-align: center;
+      font-weight: 800;
+      opacity: 0;
+      visibility: hidden;
+      transition: .22s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 650px) {
+      .hero {
+        min-height: 640px;
+        padding-bottom: 30px;
+      }
+
+      .hero-person {
+        top: 23px;
+        height: 540px;
+        width: 540px;
+      }
+
+      .instagram-badge {
+        top: 85px;
+        left: 18px;
+      }
+
+      .hero-content {
+        transform: translateY(4px);
+      }
+
+      .section {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .benefit-card {
+        padding: 23px 18px;
+        border-radius: 19px;
+      }
+
+      .coupon-card {
+        padding: 18px;
+        border-radius: 19px;
+      }
+
+      .plan-card {
+        padding: 17px 17px;
+        min-height: 112px;
+      }
+
+      .plan-name {
+        font-size: clamp(34px, 10vw, 48px);
+      }
+
+      .price {
+        font-size: clamp(31px, 9vw, 43px);
+      }
+
+      .authority-card {
+        grid-template-columns: 1fr;
+        padding: 19px;
+      }
+
+      .authority-photo-wrap {
+        min-height: auto;
+      }
+
+      .authority-copy {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .hero {
+        min-height: 590px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .hero-person {
+        width: 470px;
+        height: 485px;
+      }
+
+      .instagram-badge {
+        width: 135px;
+        top: 82px;
+      }
+
+      .hero h1 {
+        font-size: 41px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .coupon-row {
+        grid-template-columns: 1fr;
+      }
+
+      .coupon-button {
+        width: 100%;
+      }
+
+      .plan-card {
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        padding: 16px 12px 16px 16px;
+      }
+
+      .plan-name {
+        font-size: 35px;
+      }
+
+      .installments {
+        font-size: 13px;
+      }
+
+      .price {
+        font-size: 32px;
+      }
+
+      .result-image {
+        width: 170px;
+        height: 170px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <img class="hero-person" src="https://i.ibb.co/SD7n5x1z/doug.avif" alt="Douglas Leão" />
+      <img class="instagram-badge" src="https://i.ibb.co/xq7HSncJ/IMG-7491-PNG.avif" alt="Instagram Douglas Leão" />
+
+      <div class="hero-content">
+        <span class="eyebrow">🔥 Condição especial por tempo limitado</span>
+        <h1><span>Oferta exclusiva</span><span>mês de julho</span></h1>
+        <p><strong>Mais de 7.103 vidas transformadas.</strong> Agora é a sua vez de buscar a sua melhor versão.</p>
+        <span class="hero-highlight">Treino, dieta e acompanhamento em um só lugar</span>
+      </div>
+    </section>
+
+    <section class="section" id="beneficios">
+      <div class="benefit-card">
+        <h2 id="benefitTitle">Como será o atendimento:</h2>
+        <ul class="benefit-list" id="benefitList"></ul>
+      </div>
+
+      <div class="coupon-card">
+        <h2>Tem um cupom?</h2>
+        <p>Digite abaixo para liberar sua condição especial.</p>
+        <div class="coupon-row">
+          <input id="couponInput" class="coupon-input" type="text" inputmode="text" autocomplete="off" maxlength="20"
+            placeholder="Digite o cupom" aria-label="Cupom de desconto" />
+          <button id="couponButton" class="coupon-button" type="button">APLICAR</button>
+        </div>
+        <div id="couponStatus" class="coupon-status" aria-live="polite">Preços normais exibidos abaixo.</div>
+      </div>
+    </section>
+
+    <section class="plans-section" id="planos">
+      <div class="down-arrows" aria-hidden="true">⌄<br>⌄</div>
+      <div class="plans-title">
+        <small>Escolha a melhor opção</small>
+        <h2 id="plansHeading">Planos de atendimento</h2>
+        <div id="discountPill" class="discount-pill"></div>
+      </div>
+
+      <div class="plans-grid">
+        <a id="plan-trimestre" class="plan-card" href="https://chk.eduzz.com/gmu2ebua" target="_blank"
+          rel="noopener noreferrer">
+          <div class="plan-name">3 meses</div>
+          <div class="price-box">
+            <div class="old-price"></div>
+            <div class="installments">3x de</div>
+            <div class="price"><small>R$</small><span>239,00</span></div>
+            <div class="billing-note">Cobrança mensal</div>
+          </div>
+        </a>
+
+        <a id="plan-semestre" class="plan-card" href="https://chk.eduzz.com/7A74007F" target="_blank"
+          rel="noopener noreferrer">
+          <div class="plan-name">6 meses</div>
+          <div class="price-box">
+            <div class="old-price"></div>
+            <div class="installments">6x de</div>
+            <div class="price"><small>R$</small><span>225,00</span></div>
+            <div class="billing-note">Cobrança mensal</div>
+          </div>
+        </a>
+
+        <a id="plan-anual" class="plan-card" href="https://chk.eduzz.com/nsngrygs" target="_blank"
+          rel="noopener noreferrer">
+          <div class="best-ribbon">Mais escolhido</div>
+          <div class="plan-name">12 meses</div>
+          <div class="price-box">
+            <div class="old-price"></div>
+            <div class="installments">12x de</div>
+            <div class="price"><small>R$</small><span>165,00</span></div>
+            <div class="billing-note">Cobrança mensal</div>
+          </div>
+        </a>
+      </div>
+
+      <div id="subscriptionBox" class="subscription-box">
+        <label class="subscription-label">
+          <input id="subscriptionTerms" type="checkbox" />
+          <span>Concordo com o contrato de assinatura e com os <a
+              href="https://drive.google.com/file/d/1A10RMsSCKcviu2JNX6A3Z-WVOfPV1SVB/view?usp=sharing" target="_blank"
+              rel="noopener noreferrer">termos de prestação de serviço</a>.</span>
+        </label>
+
+        </p>
+      </div>
+    </section>
+
+    <section class="results-section">
+      <div class="section-heading">
+        <h2>Resultados reais</h2>
+        <p>Pessoas comuns que decidiram começar e transformaram seus hábitos e seus resultados.</p>
+      </div>
+      <div class="slider-mask">
+        <div id="sliderTrack" class="slider-track"></div>
+      </div>
+    </section>
+
+    <section class="authority-section">
+      <div class="authority-card">
+        <div class="authority-photo-wrap">
+          <img class="authority-photo"
+            src="https://static.wixstatic.com/media/7f5efc_dab67ba329d54135992da07512f6cff4~mv2.png/v1/fill/w_328,h_386,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/quem%20sou%20eu.png"
+            alt="Douglas Leão" loading="lazy" />
+        </div>
+        <div class="authority-copy">
+          <small>Quem é</small>
+          <h2>Douglas Leão?</h2>
+          <p>Trabalho há mais de dez anos com treinamento, avaliação física e acompanhamento de pessoas que buscam
+            melhorar a composição corporal.</p>
+          <p>Sou <strong>Doutor em Educação Física</strong> e especialista em Nutrição Esportiva. Já acompanhei milhares
+            de pessoas e também trabalho com atletas de fisiculturismo.</p>
+          <p><strong>Vou elaborar um plano claro e aplicável para você conquistar seus resultados.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Resultados variam de pessoa para pessoa. O acompanhamento não substitui atendimento médico quando
+      necessário.<br />
+      © <span id="year"></span> Douglas Leão. Todos os direitos reservados.
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const BASE_PRICES = {
+      trimestre: 239,
+      semestre: 225,
+      anual: 165
+    };
+
+    const CHECKOUT_LINKS = {
+      standard: {
+        trimestre: 'https://chk.eduzz.com/gmu2ebua',
+        semestre: 'https://chk.eduzz.com/7A74007F',
+        anual: 'https://chk.eduzz.com/nsngrygs'
+      },
+      subscription: {
+        trimestre: 'https://sun.eduzz.com/R9JYNV689X',
+        semestre: 'https://sun.eduzz.com/39YBYAVQWO',
+        anual: 'https://sun.eduzz.com/E0DBXZOY91'
+      }
+    };
+
+    const BENEFITS = {
+      standard: [
+        ['🤝', 'Consulta inicial individual'],
+        ['🥗', 'Dieta personalizada com substituições'],
+        ['💪', 'App de treino com vídeos explicativos'],
+        ['💊', 'Orientação de suplementação e protocolos'],
+        ['📄', 'Prescrição de exames de sangue'],
+        ['✅', 'Suporte via WhatsApp 24h*']
+      ],
+      form: [
+        ['📝', 'Atendimento inicial por formulário'],
+        ['🥗', 'Dieta personalizada com substituições'],
+        ['💪', 'App de treino com vídeos explicativos'],
+        ['💊', 'Orientação de suplementação e protocolos'],
+        ['📄', 'Prescrição de exames de sangue'],
+        ['✅', 'Suporte via WhatsApp 24h*']
+      ],
+      off10: [
+        ['🤝', 'Consulta inicial individual'],
+        ['🥗', 'Dieta personalizada com substituições'],
+        ['💪', 'App de treino com vídeos explicativos'],
+        ['💊', 'Orientação de suplementação e protocolos'],
+        ['📄', 'Prescrição de exames de sangue'],
+        ['✅', 'Suporte via WhatsApp 24h*']
+      ],
+      off30: [
+        ['🤝', 'Consulta inicial individual'],
+        ['🥗', 'Dieta personalizada com substituições'],
+        ['💪', 'App de treino com vídeos explicativos'],
+        ['💊', 'Orientação de suplementação e protocolos'],
+        ['📄', 'Prescrição de exames de sangue'],
+        ['✅', 'Suporte via WhatsApp 24h*']
+      ],
+      subscription: [
+        ['📝', 'Atendimento por formulário'],
+        ['🔁', 'Cobrança mensal recorrente durante o plano'],
+        ['🥗', 'Dieta personalizada com substituições'],
+        ['💪', 'App de treino com vídeos explicativos'],
+        ['💊', 'Orientação de suplementação e protocolos'],
+        ['✅', 'Suporte via WhatsApp 24h*']
+      ]
+    };
+
+    const COUPONS = {
+      FORM: {
+        discount: 0.599,
+        displayDiscount: 60,
+        queryValue: 'form',
+        benefitKey: 'form',
+        status: 'Cupom FORM aplicado: 60% de desconto liberado.'
+      },
+      OFF10: {
+        discount: 0.10,
+        displayDiscount: 10,
+        queryValue: 'off10',
+        benefitKey: 'off10',
+        status: 'Cupom OFF10 aplicado: 10% de desconto liberado.'
+      },
+      OFF30: {
+        discount: 0.30,
+        displayDiscount: 30,
+        queryValue: 'off30',
+        benefitKey: 'off30',
+        status: 'Cupom OFF30 aplicado: 30% de desconto liberado.'
+      },
+      '30OFF': {
+        discount: 0.30,
+        displayDiscount: 30,
+        queryValue: '30off',
+        benefitKey: 'off30',
+        status: 'Cupom 30OFF aplicado: 30% de desconto liberado.'
+      },
+      ASS: {
+        discount: 0,
+        displayDiscount: 0,
+        benefitKey: 'subscription',
+        subscription: true,
+        status: 'Cupom ASS aplicado: planos de assinatura mensal liberados.'
+      }
+    };
+
+    const planElements = {
+      trimestre: document.getElementById('plan-trimestre'),
+      semestre: document.getElementById('plan-semestre'),
+      anual: document.getElementById('plan-anual')
+    };
+
+    const couponInput = document.getElementById('couponInput');
+    const couponButton = document.getElementById('couponButton');
+    const couponStatus = document.getElementById('couponStatus');
+    const discountPill = document.getElementById('discountPill');
+    const plansHeading = document.getElementById('plansHeading');
+    const benefitList = document.getElementById('benefitList');
+    const benefitTitle = document.getElementById('benefitTitle');
+    const subscriptionBox = document.getElementById('subscriptionBox');
+    const subscriptionTerms = document.getElementById('subscriptionTerms');
+    const subscriptionWarning = document.getElementById('subscriptionWarning');
+    const toast = document.getElementById('toast');
+
+    let currentMode = 'standard';
+    let toastTimer;
+
+    function formatBRL(value) {
+      return value.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function renderBenefits(key) {
+      benefitList.innerHTML = BENEFITS[key].map(([icon, text]) => `
+        <li class="benefit-item">
+          <span class="benefit-icon" aria-hidden="true">${icon}</span>
+          <span>${text}</span>
+        </li>
+      `).join('');
+
+      benefitTitle.textContent = key === 'subscription'
+        ? 'Como funciona a assinatura:'
+        : 'Como será o atendimento:';
+    }
+
+    function buildCouponLink(base, couponValue) {
+      if (!couponValue) return base;
+      const separator = base.includes('?') ? '&' : '?';
+      return `${base}${separator}cupom=${encodeURIComponent(couponValue)}`;
+    }
+
+    function updatePlanCard(planKey, price, originalPrice, link, isSubscription) {
+      const card = planElements[planKey];
+      const priceText = card.querySelector('.price span');
+      const oldPrice = card.querySelector('.old-price');
+      const billingNote = card.querySelector('.billing-note');
+
+      priceText.textContent = formatBRL(price);
+      card.href = link;
+
+      if (price < originalPrice) {
+        oldPrice.textContent = `de R$ ${formatBRL(originalPrice)}`;
+        oldPrice.classList.add('visible');
+      } else {
+        oldPrice.textContent = '';
+        oldPrice.classList.remove('visible');
+      }
+
+      billingNote.classList.toggle('visible', isSubscription);
+    }
+
+    function setSubscriptionLock(locked) {
+      Object.values(planElements).forEach(card => {
+        card.classList.toggle('disabled', locked);
+        card.setAttribute('aria-disabled', locked ? 'true' : 'false');
+      });
+      subscriptionWarning.style.display = locked ? 'block' : 'none';
+    }
+
+    function resetPage() {
+      currentMode = 'standard';
+      subscriptionTerms.checked = false;
+      subscriptionBox.classList.remove('visible');
+      discountPill.classList.remove('visible');
+      discountPill.textContent = '';
+      couponStatus.className = 'coupon-status';
+      couponStatus.textContent = 'Preços normais exibidos abaixo.';
+      renderBenefits('standard');
+      plansHeading.textContent = 'Planos de atendimento';
+      setSubscriptionLock(false);
+
+      Object.keys(BASE_PRICES).forEach(planKey => {
+        updatePlanCard(
+          planKey,
+          BASE_PRICES[planKey],
+          BASE_PRICES[planKey],
+          CHECKOUT_LINKS.standard[planKey],
+          false
+        );
+      });
+    }
+
+    function applyCoupon() {
+      const code = couponInput.value.trim().toUpperCase();
+
+      if (!code) {
+        resetPage();
+        showToast('Cupom removido. Os preços normais foram restaurados.');
+        return;
+      }
+
+      const coupon = COUPONS[code];
+      if (!coupon) {
+        couponStatus.className = 'coupon-status error';
+        couponStatus.textContent = 'Cupom inválido. Confira o código digitado.';
+        showToast('Cupom não encontrado.');
+        return;
+      }
+
+      couponStatus.className = 'coupon-status success';
+      couponStatus.textContent = coupon.status;
+      renderBenefits(coupon.benefitKey);
+
+      if (coupon.subscription) {
+        currentMode = 'subscription';
+        plansHeading.textContent = 'Planos de assinatura';
+        subscriptionTerms.checked = false;
+        subscriptionBox.classList.add('visible');
+        discountPill.classList.remove('visible');
+        discountPill.textContent = '';
+        setSubscriptionLock(true);
+
+        Object.keys(BASE_PRICES).forEach(planKey => {
+          updatePlanCard(
+            planKey,
+            BASE_PRICES[planKey],
+            BASE_PRICES[planKey],
+            CHECKOUT_LINKS.subscription[planKey],
+            true
+          );
+        });
+      } else {
+        currentMode = 'discount';
+        plansHeading.textContent = 'Planos de atendimento';
+        subscriptionTerms.checked = false;
+        subscriptionBox.classList.remove('visible');
+        setSubscriptionLock(false);
+
+        discountPill.textContent = `${coupon.displayDiscount}% de desconto aplicado`;
+        discountPill.classList.add('visible');
+
+        Object.keys(BASE_PRICES).forEach(planKey => {
+          const discountedPrice = BASE_PRICES[planKey] * (1 - coupon.discount);
+          updatePlanCard(
+            planKey,
+            discountedPrice,
+            BASE_PRICES[planKey],
+            buildCouponLink(CHECKOUT_LINKS.standard[planKey], coupon.queryValue),
+            false
+          );
+        });
+      }
+
+      document.getElementById('planos').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showToast(coupon.status);
+    }
+
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add('show');
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    subscriptionTerms.addEventListener('change', () => {
+      if (currentMode !== 'subscription') return;
+      setSubscriptionLock(!subscriptionTerms.checked);
+      if (subscriptionTerms.checked) {
+        showToast('Contrato aceito. Os planos de assinatura estão liberados.');
+      }
+    });
+
+    Object.values(planElements).forEach(card => {
+      card.addEventListener('click', event => {
+        if (currentMode === 'subscription' && !subscriptionTerms.checked) {
+          event.preventDefault();
+          subscriptionBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          showToast('Marque a caixa do contrato antes de escolher o plano.');
+        }
+      });
+    });
+
+    couponButton.addEventListener('click', applyCoupon);
+    couponInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter') applyCoupon();
+    });
+
+const resultImages = [
+  'https://static.wixstatic.com/media/7f5efc_e84ee0a6c57746988d42a08cc8ec65f3~mv2.jpg',
+  'https://static.wixstatic.com/media/7f5efc_fff3885bd776421fa1e3b2dbc214280d~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_4552cee2f4484546bf003b7759771d45~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_06d10e47822d49ccbc0f32187e2af5bb~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_d7565999f85d499297c03784bf7ef7ac~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_73006a3b73b9449fa3a06cda8b3b5871~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_b7fc59d6747c4c5c8299e521cd494c56~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_9ac3e899b5994d909b4abc5c71b59b55~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_740223f02a0243ff93b437764a0a7f80~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_a3977c2ab8d046ca9f4783f092c46460~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_e41a1bf84b5c405fa07553f0c307e780~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_fd20f825600f435ba394adf7d9d3c3d2~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_88455dbf6c5243359136839d2a750ba0~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_1c667a39aa3e44b48a216a20f6391ab1~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_a25fd737dd224ff0aa0270d03319532e~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_29a19204fa4f4d02a76d9eaec4027530~mv2.jpeg',
+  'https://static.wixstatic.com/media/7f5efc_9454c293eab640d6a00843433279fc7c~mv2.jpg',
+  'https://static.wixstatic.com/media/7f5efc_e5e4e48ef53849e9b9066a046040e58c~mv2.jpg',
+  'https://static.wixstatic.com/media/7f5efc_967d91feadac4afabf38446aba011c5b~mv2.jpg'
+];
+
+    const sliderTrack = document.getElementById('sliderTrack');
+    const duplicatedImages = [...resultImages, ...resultImages];
+    sliderTrack.innerHTML = duplicatedImages.map((url, index) => `
+      <img class="result-image" src="${url}" alt="Resultado de aluno ${index % resultImages.length + 1}" loading="lazy" />
+    `).join('');
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    resetPage();
+
+    const couponFromUrl = new URLSearchParams(window.location.search).get('cupom');
+    if (couponFromUrl) {
+      couponInput.value = couponFromUrl;
+      applyCoupon();
+    }
+  </script>
+</body>
+
+</html>
+    const duplicatedImages = [...resultImages, ...resultImages];
+    sliderTrack.innerHTML = duplicatedImages.map((url, index) => `
+      <img class="result-image" src="${url}" alt="Resultado de aluno ${index % resultImages.length + 1}" loading="lazy" />
+    `).join('');
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    resetPage();
+
+    const couponFromUrl = new URLSearchParams(window.location.search).get('cupom');
+    if (couponFromUrl) {
+      couponInput.value = couponFromUrl;
+      applyCoupon();
+    }
+  </script>
+</body>
+
+</html>
