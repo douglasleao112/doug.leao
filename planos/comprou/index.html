@@ -1,10 +1,396 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0;url=https://forms.gle/osEkRBBwK2ng7B5Y6">
-  <script>
-    location.replace("https://forms.gle/osEkRBBwK2ng7B5Y6")
-  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+
+  <title>Obrigado pela sua compra | Dr. Douglas Leão</title>
+  <meta
+    name="description"
+    content="Obrigado por adquirir o plano de acompanhamento com o Dr. Douglas Leão."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;600;700;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      color-scheme: dark;
+
+      --bg: #111827;
+      --surface: #1F2937;
+      --surface-soft: #374151;
+      --border: #374151;
+      --border-strong: #4B5563;
+
+      --text-primary: #F3F4F6;
+      --text-secondary: #D1D5DB;
+      --text-muted: #9CA3AF;
+
+      --green: #10B981;
+      --green-hover: #059669;
+      --green-vivid: #39FF88;
+      --white: #FFFFFF;
+
+      --shadow:
+        0 24px 70px rgba(0, 0, 0, 0.38);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      margin: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding:
+        max(24px, env(safe-area-inset-top))
+        18px
+        max(24px, env(safe-area-inset-bottom));
+
+      color: var(--text-primary);
+      background:
+        radial-gradient(
+          circle at 50% 8%,
+          rgba(16, 185, 129, 0.12),
+          transparent 34%
+        ),
+        radial-gradient(
+          circle at 12% 90%,
+          rgba(99, 102, 241, 0.07),
+          transparent 36%
+        ),
+        linear-gradient(
+          180deg,
+          #111827 0%,
+          #0F172A 100%
+        );
+
+      font-family: "Roboto Condensed", Arial, sans-serif;
+    }
+
+    .page {
+      width: min(100%, 560px);
+      margin: 0 auto;
+    }
+
+    .thank-you-card {
+      position: relative;
+      overflow: hidden;
+
+      padding: 34px 26px 28px;
+
+      text-align: center;
+
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 26px;
+
+      background:
+        radial-gradient(
+          circle at 15% 5%,
+          rgba(255, 255, 255, 0.09),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 90% 100%,
+          rgba(16, 185, 129, 0.12),
+          transparent 42%
+        ),
+        linear-gradient(
+          145deg,
+          rgba(31, 41, 55, 0.96),
+          rgba(15, 23, 42, 0.98)
+        );
+
+      box-shadow: var(--shadow);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .thank-you-card::before {
+      content: "";
+      position: absolute;
+      top: -75%;
+      left: -28%;
+
+      width: 70%;
+      height: 220%;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          110deg,
+          transparent 25%,
+          rgba(255, 255, 255, 0.08) 49%,
+          transparent 74%
+        );
+
+      transform: rotate(12deg);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .success-icon {
+      display: grid;
+      place-items: center;
+
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 20px;
+
+      color: #062F24;
+      border: 1px solid rgba(57, 255, 136, 0.52);
+      border-radius: 50%;
+
+      background: var(--green-vivid);
+
+      font-size: 38px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      margin-bottom: 12px;
+      padding: 7px 12px;
+
+      color: #D1FAE5;
+      border: 1px solid rgba(110, 231, 183, 0.30);
+      border-radius: 999px;
+
+      background: rgba(17, 24, 39, 0.66);
+
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+
+      color: var(--white);
+
+      font-family: Anton, Impact, sans-serif;
+      font-size: clamp(40px, 12vw, 62px);
+      font-weight: 400;
+      line-height: 0.98;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+    }
+
+    .lead {
+      margin: 17px auto 0;
+      max-width: 440px;
+
+      color: var(--text-secondary);
+
+      font-size: clamp(17px, 4.5vw, 20px);
+      line-height: 1.45;
+    }
+
+    .lead strong {
+      color: var(--white);
+    }
+
+    .next-step {
+      margin: 18px auto 0;
+      max-width: 420px;
+
+      color: var(--text-muted);
+
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .whatsapp-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      width: 100%;
+      min-height: 58px;
+      margin-top: 25px;
+      padding: 15px 20px;
+
+      color: var(--white);
+      border: 0;
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          180deg,
+          var(--green),
+          var(--green-hover)
+        );
+
+      box-shadow:
+        0 14px 30px rgba(16, 185, 129, 0.24);
+
+      text-decoration: none;
+
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.01em;
+
+      transition:
+        transform 0.18s ease,
+        filter 0.18s ease,
+        box-shadow 0.18s ease;
+    }
+
+    .whatsapp-button:hover {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 18px 36px rgba(16, 185, 129, 0.30);
+    }
+
+    .whatsapp-button:active {
+      transform: scale(0.985);
+    }
+
+    .whatsapp-icon {
+      width: 23px;
+      height: 23px;
+      flex: 0 0 23px;
+    }
+
+    .security-note {
+      margin: 14px 0 0;
+
+      color: var(--text-muted);
+
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .footer {
+      margin-top: 18px;
+
+      color: #6B7280;
+
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media (max-width: 430px) {
+      body {
+        align-items: center;
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+
+      .thank-you-card {
+        padding: 30px 18px 23px;
+        border-radius: 21px;
+      }
+
+      .success-icon {
+        width: 68px;
+        height: 68px;
+        font-size: 34px;
+      }
+
+      h1 {
+        font-size: 43px;
+      }
+
+      .lead {
+        font-size: 17px;
+      }
+
+      .whatsapp-button {
+        min-height: 56px;
+        font-size: 17px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .whatsapp-button {
+        transition: none;
+      }
+    }
+  </style>
 </head>
+
+<body>
+  <main class="page">
+    <section class="thank-you-card">
+      <div class="content">
+        <div class="success-icon" aria-hidden="true">✓</div>
+
+        <span class="eyebrow">Compra confirmada</span>
+
+        <h1>Obrigado!</h1>
+
+        <p class="lead">
+          Obrigado por adquirir o
+          <strong>plano de acompanhamento com o Dr. Douglas Leão.</strong>
+        </p>
+
+        <p class="next-step">
+          Toque no botão abaixo para prosseguir para a próxima etapa e iniciar seu atendimento.
+        </p>
+
+        <a
+          class="whatsapp-button"
+          href="https://wa.me/5562998746623?text=Ol%C3%A1%2C%20acabei%20de%20adquirir%20ao%20plano%20de%20acompanhamento."
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Prosseguir pelo WhatsApp"
+        >
+          <svg
+            class="whatsapp-icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            fill="currentColor"
+          >
+            <path d="M20.52 3.48A11.82 11.82 0 0 0 12.08 0C5.5 0 .15 5.35.15 11.93c0 2.1.55 4.15 1.6 5.96L.05 24l6.26-1.64a11.9 11.9 0 0 0 5.76 1.47h.01C18.65 23.83 24 18.48 24 11.9c0-3.18-1.24-6.17-3.48-8.42ZM12.08 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.22-3.71.98.99-3.62-.24-.37a9.83 9.83 0 0 1-1.52-5.26c0-5.45 4.44-9.89 9.9-9.89a9.8 9.8 0 0 1 7 2.9 9.8 9.8 0 0 1 2.89 7c-.01 5.45-4.45 9.88-9.9 9.88Zm5.43-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.47a8.96 8.96 0 0 1-1.65-2.05c-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.3 1.27.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
+          </svg>
+
+          Prosseguir para o WhatsApp
+        </a>
+
+        <p class="security-note">
+          Você será direcionado para uma conversa no WhatsApp para continuar seu atendimento.
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © <span id="year"></span> Douglas Leão. Todos os direitos reservados.
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
 </html>
