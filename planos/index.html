@@ -74,7 +74,7 @@
       padding: 0 20px 42px;
       background:
         linear-gradient(180deg, rgba(0, 0, 0, .02) 0%, rgba(0, 0, 0, .15) 45%, rgba(0, 0, 0, .96) 92%),
-        url('https://i.ibb.co/xqDf25T0/background-edited-edited.avif') center top / cover no-repeat;
+        
     }
 
     .hero::before {
@@ -477,22 +477,21 @@
       display: block;
     }
 
-    .best-ribbon {
-      position: absolute;
-      top: 12px;
-      left: -45px;
-      transform: rotate(-42deg);
-      width: 170px;
-      padding: 5px 0;
-      text-align: center;
-      background: linear-gradient(180deg, #ff263e, #a90019);
-      color: white;
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-      box-shadow: 0 5px 12px rgba(0, 0, 0, .35);
-    }
-
+.best-ribbon {
+  position: absolute;
+  top: 10px;
+  left: -61px;
+  transform: rotate(-42deg);
+  width: 175px;
+  padding: 4px 0;
+  text-align: center;
+  background: linear-gradient(180deg, #ff263e, #a90019);
+  color: white;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, .35);
+}
     .subscription-box {
       display: none;
       width: min(100%, 650px);
@@ -834,15 +833,251 @@
         height: 170px;
       }
     }
+	
+	
+	body.contract-open {
+  overflow: hidden;
+}
+
+.contract-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.contract-modal.visible {
+  display: flex;
+}
+
+.contract-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(4px);
+}
+
+.contract-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 620px);
+  max-height: min(90vh, 820px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  background: #0b0b0b;
+  box-shadow: 0 25px 90px rgba(0, 0, 0, 0.85);
+}
+
+.contract-close {
+  position: absolute;
+  z-index: 5;
+  top: 9px;
+  right: 11px;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.09);
+  font-size: 26px;
+  line-height: 35px;
+  cursor: pointer;
+}
+
+.contract-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.contract-header {
+  flex: 0 0 auto;
+  padding: 21px 55px 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contract-header span {
+  color: #ff3658;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.contract-header h2 {
+  margin: 3px 0 4px;
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.contract-header p {
+  margin: 0;
+  color: #a8a8a8;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.contract-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 20px 26px;
+  outline: none;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #d7193f #1b1b1b;
+}
+
+.contract-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.contract-scroll::-webkit-scrollbar-track {
+  background: #1b1b1b;
+}
+
+.contract-scroll::-webkit-scrollbar-thumb {
+  background: #d7193f;
+  border-radius: 20px;
+}
+
+.contract-text {
+  color: #dddddd;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12.5px;
+  font-weight: 300;
+  line-height: 1.28;
+}
+
+.contract-text h3 {
+  margin: 0 0 13px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.contract-text h4 {
+  margin: 16px 0 5px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.contract-text p {
+  margin: 0 0 7px;
+}
+
+.contract-text strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.contract-end {
+  margin-top: 22px;
+  padding: 11px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #8d8d8d;
+  font-size: 11px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.contract-accept {
+  flex: 0 0 auto;
+  padding: 14px 18px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  background: #121212;
+}
+
+.contract-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.contract-checkbox-label.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.contract-checkbox-label input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: #00c84b;
+}
+
+#contractScrollHint {
+  display: block;
+  margin: 7px 0 0 30px;
+  color: #ff8095;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+#contractScrollHint.ready {
+  color: #4dff8d;
+}
+
+@media (max-width: 650px) {
+  .contract-modal {
+    padding: 8px;
+  }
+
+  .contract-dialog {
+    max-height: 94vh;
+    border-radius: 14px;
+  }
+
+  .contract-header {
+    padding: 17px 47px 12px 15px;
+  }
+
+  .contract-header h2 {
+    font-size: 19px;
+  }
+
+  .contract-scroll {
+    padding: 15px 15px 23px;
+  }
+
+  .contract-text {
+    font-size: 11.5px;
+    line-height: 1.25;
+  }
+
+  .contract-text p {
+    margin-bottom: 6px;
+  }
+
+  .contract-accept {
+    padding: 12px 14px 14px;
+  }
+}
+
   </style>
 </head>
 
 <body>
   <main class="page-shell">
     <section class="hero">
-      <img class="hero-person" src="https://i.ibb.co/SD7n5x1z/doug.avif" alt="Douglas Leão" />
-      <img class="instagram-badge" src="https://i.ibb.co/xq7HSncJ/IMG-7491-PNG.avif" alt="Instagram Douglas Leão" />
-
+      <img class="hero-person" src="https://static.wixstatic.com/media/7f5efc_bc82390371114722a01ed56d8018314e~mv2.webp" alt="Douglas Leão" />
+      
       <div class="hero-content">
         <span class="eyebrow">🔥 Condição especial por tempo limitado</span>
         <h1><span>Oferta exclusiva</span><span>mês de julho</span></h1>
@@ -857,20 +1092,37 @@
         <ul class="benefit-list" id="benefitList"></ul>
       </div>
 
-      <div class="coupon-card">
-        <h2>Tem um cupom?</h2>
-        <p>Digite abaixo para liberar sua condição especial.</p>
-        <div class="coupon-row">
-          <input id="couponInput" class="coupon-input" type="text" inputmode="text" autocomplete="off" maxlength="20"
-            placeholder="Digite o cupom" aria-label="Cupom de desconto" />
-          <button id="couponButton" class="coupon-button" type="button">APLICAR</button>
-        </div>
-        <div id="couponStatus" class="coupon-status" aria-live="polite">Preços normais exibidos abaixo.</div>
-      </div>
+ <div class="coupon-card">
+  <h2>Tem um cupom?</h2>
+
+  <div class="coupon-row">
+    <input
+      id="couponInput"
+      class="coupon-input"
+      type="text"
+      inputmode="text"
+      autocomplete="off"
+      maxlength="20"
+      placeholder="Digite o cupom"
+      aria-label="Cupom de desconto"
+    />
+
+    <button id="couponButton" class="coupon-button" type="button">
+      APLICAR
+    </button>
+  </div>
+
+  <div
+    id="couponStatus"
+    class="coupon-status"
+    aria-live="polite"
+    hidden
+  ></div>
+</div>
     </section>
 
     <section class="plans-section" id="planos">
-      <div class="down-arrows" aria-hidden="true">⌄<br>⌄</div>
+      <div class="down-arrows" aria-hidden="true">⌄</div>
       <div class="plans-title">
         <small>Escolha a melhor opção</small>
         <h2 id="plansHeading">Planos de atendimento</h2>
@@ -902,7 +1154,7 @@
 
         <a id="plan-anual" class="plan-card" href="https://chk.eduzz.com/nsngrygs" target="_blank"
           rel="noopener noreferrer">
-          <div class="best-ribbon">Mais escolhido</div>
+          <div class="best-ribbon">+ escolhido</div>
           <div class="plan-name">12 meses</div>
           <div class="price-box">
             <div class="old-price"></div>
@@ -913,32 +1165,13 @@
         </a>
       </div>
 
- <div id="subscriptionBox" class="subscription-box">
-  <label class="subscription-label">
-    <input id="subscriptionTerms" type="checkbox" />
-
-    <span>
-      Concordo com o contrato de assinatura e com os
-      <a
-        href="https://drive.google.com/file/d/1A10RMsSCKcviu2JNX6A3Z-WVOfPV1SVB/view?usp=sharing"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        termos de prestação de serviço
-      </a>.
-    </span>
-  </label>
-
-  <p id="subscriptionWarning" class="subscription-warning">
-    Marque a caixa acima para liberar os planos de assinatura.
-  </p>
-</div>
+ 
     </section>
 
     <section class="results-section">
       <div class="section-heading">
         <h2>Resultados reais</h2>
-        <p>Pessoas comuns que decidiram começar e transformaram seus hábitos e seus resultados.</p>
+        <p>Pessoas comuns que decidiram começar e transformaram em Super Humanos.</p>
       </div>
       <div class="slider-mask">
         <div id="sliderTrack" class="slider-track"></div>
@@ -965,20 +1198,364 @@
     </section>
 
     <footer class="footer">
-      Resultados variam de pessoa para pessoa. O acompanhamento não substitui atendimento médico quando
-      necessário.<br />
-      © <span id="year"></span> Douglas Leão. Todos os direitos reservados.
+        © <span id="year"></span> Douglas Leão. Todos os direitos reservados.
     </footer>
   </main>
+
+
+<div
+  id="contractModal"
+  class="contract-modal"
+  aria-hidden="true"
+>
+  <div id="contractBackdrop" class="contract-backdrop"></div>
+
+  <div
+    class="contract-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="contractTitle"
+  >
+    <button
+      id="contractClose"
+      class="contract-close"
+      type="button"
+      aria-label="Fechar contrato"
+    >
+      ×
+    </button>
+
+    <div class="contract-header">
+      <span>Contrato de assinatura</span>
+      <h2 id="contractTitle">Leia os termos para continuar</h2>
+      <p>Role o documento até o final para liberar o campo de aceite.</p>
+    </div>
+
+    <div
+      id="contractScroll"
+      class="contract-scroll"
+      tabindex="0"
+    >
+      <div class="contract-text">
+        <h3>CONTRATO DE PRESTAÇÃO DE SERVIÇOS</h3>
+
+        <p>
+          Este documento é disponibilizado em virtude da contratação do Plano de Consultoria
+          Fitness fornecido pelo Dr. Douglas Leão, de forma presencial em consultório ou através de
+          meios digitais (consultoria online). Razão Social: DN Saúde &amp; Fitness LTDA. CNPJ:
+          37.526.958/0001-20.
+        </p>
+
+        <p>
+          Caso o contratante não concorde com as disposições a seguir, é facultado o direito de
+          solicitar o reembolso no prazo de 7 dias, conforme estabelecido no Artigo 49 da Lei nº
+          8.078, de 11 de setembro de 1990.
+        </p>
+
+        <p>
+          Para efetuar tal solicitação, bastará encaminhar um e-mail para
+          doug.leaop@gmail.com ou estabelecer contato via WhatsApp por meio do número
+          +55 (62) 98488-8498. O reembolso será efetuado de forma imediata e isenta de
+          questionamentos.
+        </p>
+
+        <h4>1. Planos de Consultoria</h4>
+
+        <p>
+          <strong>1.1.</strong> O Plano Mensal inclui uma primeira consulta, que pode ser realizada
+          presencialmente ou por videochamada, e suporte online por 30 (trinta) dias, sem retorno
+          agendado.
+        </p>
+
+        <p>
+          <strong>1.2.</strong> O Plano Trimestral inclui uma primeira consulta presencial ou por
+          videochamada e mais dois encontros adicionais, que poderão ser realizados por
+          videochamada ou de forma assíncrona, por meio de questionário, conforme a preferência do
+          contratante. O suporte online estará disponível por 90 (noventa) dias.
+        </p>
+
+        <p>
+          <strong>1.3.</strong> O Plano Semestral inclui uma primeira consulta presencial ou por
+          videochamada e mais cinco encontros adicionais, com a mesma flexibilidade de formato,
+          além de suporte online por 180 (cento e oitenta) dias.
+        </p>
+
+        <p>
+          <strong>1.4.</strong> O Plano Anual inclui uma primeira consulta presencial ou por
+          videochamada e mais onze encontros ao longo do período contratado, que também poderão
+          ser realizados por videochamada ou via questionário, conforme conveniência. O suporte
+          online será prestado por 365 (trezentos e sessenta e cinco) dias.
+        </p>
+
+        <h4>2. Tempo de Contrato</h4>
+
+        <p>
+          <strong>2.1.</strong> Durante o período contratado, mensal, trimestral, semestral ou anual,
+          o cliente pode utilizar o suporte online para esclarecer dúvidas sobre treinamento e
+          dieta. Após o término do contrato, será necessária uma nova contratação para continuar o
+          atendimento.
+        </p>
+
+        <p>
+          <strong>2.2.</strong> O contrato não pode ser suspenso ou pausado, a menos que seja
+          apresentado um atestado médico válido, de acordo com o período especificado no atestado.
+        </p>
+
+        <p>
+          <strong>2.3.</strong> A consultoria não pode ser transferida para outra pessoa.
+        </p>
+
+        <h4>2.4. Forma de Pagamento e Assinatura Recorrente</h4>
+
+        <p>
+          <strong>2.4.1.</strong> O pagamento do plano contratado poderá ser realizado por meio de
+          assinatura recorrente, em que o valor será debitado automaticamente no cartão de crédito
+          ou pago via boleto mensal ou Pix, conforme a opção escolhida pelo CONTRATANTE.
+        </p>
+
+        <p>
+          <strong>2.4.2.</strong> O pagamento em formato de recorrência não caracteriza contrato
+          mensal independente, mas sim o fracionamento do valor total do plano contratado,
+          mensal, trimestral, semestral ou anual, dividido em parcelas para facilitar o acesso ao
+          serviço.
+        </p>
+
+        <p>
+          <strong>2.4.3.</strong> O CONTRATANTE reconhece que, ao optar pelo plano em formato
+          recorrente, assume a obrigação de permanência durante todo o período contratado.
+        </p>
+
+        <p>
+          <strong>2.4.4.</strong> A solicitação de cancelamento da recorrência de pagamento não
+          isenta o CONTRATANTE do cumprimento das obrigações assumidas neste contrato, incluindo
+          o pagamento de multa rescisória prevista na Cláusula 11 em caso de encerramento
+          antecipado.
+        </p>
+
+        <p>
+          <strong>2.4.5.</strong> O valor total do plano contratado é devido no ato da contratação,
+          sendo a cobrança mensal apenas uma forma de parcelamento disponibilizada para facilitar
+          o pagamento.
+        </p>
+
+        <p>
+          <strong>2.4.6.</strong> A interrupção ou não pagamento das parcelas não extingue as
+          obrigações do contrato, ficando o CONTRATANTE sujeito à cobrança do saldo devedor,
+          acrescido de multa de 2% (dois por cento), juros de 1% (um por cento) ao mês e eventuais
+          custos de cobrança.
+        </p>
+
+        <p>
+          O CONTRATANTE concorda que, em caso de inadimplemento, poderá ser inscrito em órgãos de
+          proteção ao crédito, SPC/Serasa, e estar sujeito a cobrança judicial ou extrajudicial
+          para recuperação do valor devido.
+        </p>
+
+        <h4>3. Agendamento e Prazo</h4>
+
+        <p>
+          <strong>3.1.</strong> Ao contratar, o cliente tem até 1 mês para agendar a primeira
+          consulta. Após esse prazo, se não houver o agendamento, é deduzido um mês do plano
+          contratado. Para o plano mensal, será necessária uma nova contratação para continuar o
+          atendimento.
+        </p>
+
+        <p>
+          <strong>3.2.</strong> O prazo máximo para solicitar reembolso é de 7 dias a partir da
+          data da contratação, conforme a Lei nº 8.078.
+        </p>
+
+        <h4>4. Atendimento e Respostas</h4>
+
+        <p>
+          <strong>4.1.</strong> A consultoria não inclui retornos, uma vez que todo o atendimento é
+          realizado na primeira consulta e por meio do suporte online durante o período de
+          contratação, não sendo necessário agendar retornos.
+        </p>
+
+        <p>
+          <strong>4.2.</strong> As mensagens podem ser enviadas a qualquer momento, todos os dias
+          da semana, inclusive feriados e fins de semana.
+        </p>
+
+        <p>
+          <strong>4.3.</strong> As mensagens costumam ser respondidas durante o horário comercial,
+          com um tempo de espera de até 3 dias úteis.
+        </p>
+
+        <h4>5. Exames e Opiniões de Terceiros</h4>
+
+        <p>
+          <strong>5.1.</strong> Não somos obrigados a analisar exames prescritos por outros
+          profissionais.
+        </p>
+
+        <p>
+          <strong>5.2.</strong> Também não somos obrigados a emitir opiniões sobre protocolos,
+          medicamentos ou tratamentos prescritos por outros profissionais.
+        </p>
+
+        <h4>6. Comparecimento e Atrasos no Atendimento Presencial</h4>
+
+        <p>
+          <strong>6.1.</strong> O CONTRATANTE deverá comparecer ao local do atendimento presencial
+          com pelo menos 5 (cinco) minutos de antecedência. Em caso de atraso superior a 15
+          (quinze) minutos, a consulta poderá ser considerada realizada, a critério do CONSULTOR.
+        </p>
+
+        <p>
+          A não apresentação sem aviso prévio será tratada como ausência injustificada, sendo
+          aplicadas as regras de reagendamento previstas neste contrato.
+        </p>
+
+        <h4>7. Agendamento e Cancelamento de Consultas</h4>
+
+        <p>
+          <strong>7.1.</strong> O agendamento de consultas deve ser feito com pelo menos 24 horas
+          de antecedência.
+        </p>
+
+        <p>
+          <strong>7.2.</strong> Caso o paciente deseje cancelar uma consulta, é necessário avisar
+          com 24 horas de antecedência. O paciente tem até duas oportunidades para reagendar a
+          consulta. Após três tentativas de agendamento sem sucesso, um mês é deduzido do contrato
+          do paciente.
+        </p>
+
+        <h4>8. Alterações de Treino e Dieta</h4>
+
+        <p>
+          <strong>8.1.</strong> Alterações no plano de treino e dieta podem ser feitas após o plano
+          inicial ser entregue, com um limite de até três alterações válidas em um mês.
+        </p>
+
+        <h4>9. Uso de Áudios</h4>
+
+        <p>
+          <strong>9.1.</strong> Evite enviar mensagens de áudio, pois nossas conversas são
+          armazenadas como um banco de dados, dificultando a revisão das informações. O áudio só
+          deve ser usado em casos excepcionais, com a compreensão de que pode haver atraso nas
+          respostas.
+        </p>
+
+        <h4>10. Fila de Atendimento</h4>
+
+        <p>
+          <strong>10.1.</strong> Os clientes podem enviar quantas dúvidas desejarem, mas é
+          importante respeitar a ordem de envio, uma vez que as mensagens são atendidas na ordem em
+          que são recebidas, de baixo para cima no WhatsApp.
+        </p>
+
+        <p>
+          Cada nova mensagem enviada coloca a conversa no topo da fila, o que pode resultar em um
+          tempo de resposta um pouco mais longo.
+        </p>
+
+        <h4>11. Rescisão Antecipada e Multa Compensatória</h4>
+
+        <p>
+          <strong>11.1.</strong> Ao contratar o plano por recorrência e em razão do compromisso de
+          permanência por período determinado, trimestral, semestral ou anual, o CONTRATANTE
+          reconhece que os valores mensais praticados são inferiores aos do plano mensal, em
+          virtude da fidelização contratual.
+        </p>
+
+        <p>
+          <strong>11.2.</strong> Em caso de cancelamento antecipado por iniciativa do CONTRATANTE,
+          antes do término do período contratado, será aplicada multa compensatória correspondente
+          a 60% (sessenta por cento) do valor das mensalidades restantes até o final do contrato.
+        </p>
+
+        <p>
+          Essa multa visa compensar os descontos concedidos e será exigida no momento do pedido de
+          cancelamento.
+        </p>
+
+        <p>
+          <strong>11.3.</strong> A rescisão antecipada não será permitida sem o pagamento da
+          referida multa, salvo nos casos em que se comprove, mediante documentação adequada,
+          motivo de força maior que torne impossível a continuidade do contrato, como enfermidade
+          comprovada por laudo médico.
+        </p>
+
+        <p>
+          <strong>11.4.</strong> Qualquer desconto concedido é condicionado ao cumprimento integral
+          do período contratado. Em caso de rescisão antecipada, os valores serão recalculados com
+          base no preço do plano mensal vigente, sendo devidos pelo CONTRATANTE além da multa
+          compensatória já prevista.
+        </p>
+
+        <h4>12. Alteração deste contrato</h4>
+
+        <p>
+          <strong>12.1.</strong> Os termos deste contrato poderão ser modificados sem aviso prévio.
+          A vigência das normas deste termo será determinada com base na data da contratação mais
+          recente do cliente.
+        </p>
+
+        <h4>13. Foro</h4>
+
+        <p>
+          Para dirimir quaisquer dúvidas ou controvérsias oriundas deste contrato, as partes elegem
+          o foro da Comarca de Aparecida de Goiânia/GO, com renúncia a qualquer outro, por mais
+          privilegiado que seja.
+        </p>
+
+        <p>
+          Ao efetuar a contratação, o CONTRATANTE declara estar ciente e de acordo com todos os
+          termos aqui estabelecidos, inclusive quanto à política de cancelamento e à multa
+          compensatória em caso de rescisão antecipada.
+        </p>
+
+        <p>
+          O CONTRATANTE declara estar ciente de que o plano contratado possui fidelidade pelo
+          período escolhido, trimestral, semestral ou anual, e que o pagamento em formato
+          recorrente representa apenas o parcelamento do valor total do plano, não caracterizando
+          contrato mensal independente.
+        </p>
+
+        <div id="contractEnd" class="contract-end">
+          Fim do contrato
+        </div>
+      </div>
+    </div>
+
+    <div class="contract-accept">
+      <label
+        id="contractCheckboxLabel"
+        class="contract-checkbox-label disabled"
+      >
+        <input
+          id="subscriptionTerms"
+          type="checkbox"
+          disabled
+        />
+
+        <span>
+          Li todo o contrato e aceito.
+        </span>
+      </label>
+
+      <small id="contractScrollHint">
+        Role o contrato até o final para liberar o aceite.
+      </small>
+    </div>
+  </div>
+</div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script>
-    const BASE_PRICES = {
-      trimestre: 239,
-      semestre: 225,
-      anual: 165
-    };
+ const BASE_PRICES = {
+  trimestre: 239,
+  semestre: 225,
+  anual: 165
+};
+const STANDARD_ANCHOR_PRICES = {
+  trimestre: 600,
+  semestre: 550,
+  anual: 500
+};
 
     const CHECKOUT_LINKS = {
       standard: {
@@ -1051,20 +1628,13 @@
         benefitKey: 'off10',
         status: 'Cupom OFF10 aplicado: 10% de desconto liberado.'
       },
-      OFF30: {
-        discount: 0.30,
-        displayDiscount: 30,
-        queryValue: 'off30',
-        benefitKey: 'off30',
-        status: 'Cupom OFF30 aplicado: 30% de desconto liberado.'
-      },
-      '30OFF': {
-        discount: 0.30,
-        displayDiscount: 30,
-        queryValue: '30off',
-        benefitKey: 'off30',
-        status: 'Cupom 30OFF aplicado: 30% de desconto liberado.'
-      },
+ VIP: {
+  discount: 0.30,
+  displayDiscount: 30,
+  queryValue: 'vip',
+  benefitKey: 'off30',
+  status: 'Cupom VIP aplicado: 30% de desconto liberado.'
+},
       ASS: {
         discount: 0,
         displayDiscount: 0,
@@ -1087,13 +1657,18 @@
     const plansHeading = document.getElementById('plansHeading');
     const benefitList = document.getElementById('benefitList');
     const benefitTitle = document.getElementById('benefitTitle');
-    const subscriptionBox = document.getElementById('subscriptionBox');
-    const subscriptionTerms = document.getElementById('subscriptionTerms');
-    const subscriptionWarning = document.getElementById('subscriptionWarning');
-    const toast = document.getElementById('toast');
+ const contractModal = document.getElementById('contractModal');
+const contractBackdrop = document.getElementById('contractBackdrop');
+const contractClose = document.getElementById('contractClose');
+const contractScroll = document.getElementById('contractScroll');
+const contractCheckboxLabel = document.getElementById('contractCheckboxLabel');
+const contractScrollHint = document.getElementById('contractScrollHint');
+const subscriptionTerms = document.getElementById('subscriptionTerms');
+const toast = document.getElementById('toast');
 
-    let currentMode = 'standard';
-    let toastTimer;
+let currentMode = 'standard';
+let toastTimer;
+let pendingCheckoutUrl = '';
 
     function formatBRL(value) {
       return value.toLocaleString('pt-BR', {
@@ -1160,115 +1735,226 @@
       billingNote.classList.toggle('visible', isSubscription);
     }
 
- function setSubscriptionLock(locked) {
-  Object.values(planElements).forEach(card => {
-    card.classList.toggle('disabled', locked);
-    card.setAttribute('aria-disabled', locked ? 'true' : 'false');
-  });
+ 
+function checkContractScroll() {
+  const distanceFromBottom =
+    contractScroll.scrollHeight -
+    contractScroll.scrollTop -
+    contractScroll.clientHeight;
 
-  if (subscriptionWarning) {
-    subscriptionWarning.style.display = locked ? 'block' : 'none';
+  const reachedBottom = distanceFromBottom <= 12;
+
+  if (!reachedBottom) {
+    return;
   }
+
+  subscriptionTerms.disabled = false;
+  contractCheckboxLabel.classList.remove('disabled');
+
+  contractScrollHint.textContent =
+    'Leitura concluída. Marque a caixa acima para continuar.';
+
+  contractScrollHint.classList.add('ready');
 }
 
-    function resetPage() {
-      currentMode = 'standard';
-      subscriptionTerms.checked = false;
-      subscriptionBox.classList.remove('visible');
-      discountPill.classList.remove('visible');
-      discountPill.textContent = '';
-      couponStatus.className = 'coupon-status';
-      couponStatus.textContent = 'Preços normais exibidos abaixo.';
-      renderBenefits('standard');
-      plansHeading.textContent = 'Planos de atendimento';
-      setSubscriptionLock(false);
+function openContractModal(checkoutUrl) {
+  pendingCheckoutUrl = checkoutUrl;
 
-      Object.keys(BASE_PRICES).forEach(planKey => {
-        updatePlanCard(
-          planKey,
-          BASE_PRICES[planKey],
-          BASE_PRICES[planKey],
-          CHECKOUT_LINKS.standard[planKey],
-          false
-        );
-      });
-    }
+  subscriptionTerms.checked = false;
+  subscriptionTerms.disabled = true;
 
-    function applyCoupon() {
-      const code = couponInput.value.trim().toUpperCase();
+  contractCheckboxLabel.classList.add('disabled');
 
-      if (!code) {
-        resetPage();
-        showToast('Cupom removido. Os preços normais foram restaurados.');
-        return;
-      }
+  contractScrollHint.textContent =
+    'Role o contrato até o final para liberar.';
 
-      const coupon = COUPONS[code];
-      if (!coupon) {
-        couponStatus.className = 'coupon-status error';
-        couponStatus.textContent = 'Cupom inválido. Confira o código digitado.';
-        showToast('Cupom não encontrado.');
-        return;
-      }
+  contractScrollHint.classList.remove('ready');
 
-      couponStatus.className = 'coupon-status success';
-      couponStatus.textContent = coupon.status;
-      renderBenefits(coupon.benefitKey);
+  contractScroll.scrollTop = 0;
 
-      if (coupon.subscription) {
-        currentMode = 'subscription';
-        plansHeading.textContent = 'Planos de assinatura';
-        subscriptionTerms.checked = false;
-        subscriptionBox.classList.add('visible');
-        discountPill.classList.remove('visible');
-        discountPill.textContent = '';
-        setSubscriptionLock(true);
+  contractModal.classList.add('visible');
+  contractModal.setAttribute('aria-hidden', 'false');
 
-        Object.keys(BASE_PRICES).forEach(planKey => {
-          updatePlanCard(
-            planKey,
-            BASE_PRICES[planKey],
-            BASE_PRICES[planKey],
-            CHECKOUT_LINKS.subscription[planKey],
-            true
-          );
-        });
-      } else {
-        currentMode = 'discount';
-        plansHeading.textContent = 'Planos de atendimento';
-        subscriptionTerms.checked = false;
-        subscriptionBox.classList.remove('visible');
-        setSubscriptionLock(false);
+  document.body.classList.add('contract-open');
 
-        discountPill.textContent = `${coupon.displayDiscount}% de desconto aplicado`;
-        discountPill.classList.add('visible');
+  requestAnimationFrame(() => {
+    contractScroll.focus();
+    checkContractScroll();
+  });
+}
 
-        Object.keys(BASE_PRICES).forEach(planKey => {
-          const discountedPrice = BASE_PRICES[planKey] * (1 - coupon.discount);
-          updatePlanCard(
-            planKey,
-            discountedPrice,
-            BASE_PRICES[planKey],
-            buildCouponLink(CHECKOUT_LINKS.standard[planKey], coupon.queryValue),
-            false
-          );
-        });
-      }
+function closeContractModal() {
+  contractModal.classList.remove('visible');
+  contractModal.setAttribute('aria-hidden', 'true');
 
-      document.getElementById('planos').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      showToast(coupon.status, 'success');
-    }
+  document.body.classList.remove('contract-open');
 
+  pendingCheckoutUrl = '';
 
+  subscriptionTerms.checked = false;
+  subscriptionTerms.disabled = true;
 
-    subscriptionTerms.addEventListener('change', () => {
-      if (currentMode !== 'subscription') return;
-      setSubscriptionLock(!subscriptionTerms.checked);
-      if (subscriptionTerms.checked) {
-        showToast('Contrato aceito. Os planos de assinatura estão liberados.');
-      }
+  contractCheckboxLabel.classList.add('disabled');
+  contractScrollHint.classList.remove('ready');
+}
+
+function resetPage() {
+  currentMode = 'standard';
+
+  closeContractModal();
+
+  discountPill.classList.remove('visible');
+  discountPill.textContent = '';
+
+  couponStatus.className = 'coupon-status';
+  couponStatus.textContent = 'Preços normais exibidos abaixo.';
+
+  renderBenefits('standard');
+
+  plansHeading.textContent = 'Planos de atendimento';
+
+  Object.keys(BASE_PRICES).forEach(planKey => {
+    updatePlanCard(
+      planKey,
+      BASE_PRICES[planKey],
+      STANDARD_ANCHOR_PRICES[planKey],
+      CHECKOUT_LINKS.standard[planKey],
+      false
+    );
+  });
+}
+   function applyCoupon() {
+  const code = couponInput.value.trim().toUpperCase();
+
+  if (!code) {
+    resetPage();
+
+    showToast(
+      'Cupom removido. Os preços normais foram restaurados.'
+    );
+
+    return;
+  }
+
+  const coupon = COUPONS[code];
+
+  if (!coupon) {
+    couponStatus.className = 'coupon-status error';
+    couponStatus.textContent =
+      'Cupom inválido. Confira o código digitado.';
+
+    showToast('Cupom não encontrado.');
+
+    return;
+  }
+
+  couponStatus.className = 'coupon-status success';
+  couponStatus.textContent = coupon.status;
+
+  renderBenefits(coupon.benefitKey);
+
+  closeContractModal();
+
+  if (coupon.subscription) {
+    currentMode = 'subscription';
+
+    plansHeading.textContent = 'Planos de assinatura';
+
+    discountPill.classList.remove('visible');
+    discountPill.textContent = '';
+
+    Object.keys(BASE_PRICES).forEach(planKey => {
+      updatePlanCard(
+        planKey,
+        BASE_PRICES[planKey],
+        BASE_PRICES[planKey],
+        CHECKOUT_LINKS.subscription[planKey],
+        true
+      );
     });
+  } else {
+    currentMode = 'discount';
 
+    plansHeading.textContent = 'Planos de atendimento';
+
+    discountPill.textContent =
+      `${coupon.displayDiscount}% de desconto aplicado`;
+
+    discountPill.classList.add('visible');
+
+    Object.keys(BASE_PRICES).forEach(planKey => {
+      const discountedPrice =
+        BASE_PRICES[planKey] * (1 - coupon.discount);
+
+      updatePlanCard(
+        planKey,
+        discountedPrice,
+        BASE_PRICES[planKey],
+        buildCouponLink(
+          CHECKOUT_LINKS.standard[planKey],
+          coupon.queryValue
+        ),
+        false
+      );
+    });
+  }
+
+  document.getElementById('planos').scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+
+  showToast(coupon.status, 'success');
+}
+
+contractScroll.addEventListener('scroll', checkContractScroll);
+
+contractClose.addEventListener('click', closeContractModal);
+
+contractBackdrop.addEventListener('click', closeContractModal);
+
+document.addEventListener('keydown', event => {
+  if (
+    event.key === 'Escape' &&
+    contractModal.classList.contains('visible')
+  ) {
+    closeContractModal();
+  }
+});
+
+subscriptionTerms.addEventListener('change', () => {
+  if (
+    !subscriptionTerms.checked ||
+    !pendingCheckoutUrl
+  ) {
+    return;
+  }
+
+  const checkoutUrl = pendingCheckoutUrl;
+
+  showToast(
+    'Contrato aceito. Abrindo a página do plano.',
+    'success'
+  );
+
+  setTimeout(() => {
+    window.location.href = checkoutUrl;
+  }, 100);
+});
+
+Object.values(planElements).forEach(card => {
+  card.addEventListener('click', event => {
+    if (currentMode !== 'subscription') {
+      return;
+    }
+
+    event.preventDefault();
+
+    openContractModal(card.href);
+  });
+});
+
+   
     Object.values(planElements).forEach(card => {
       card.addEventListener('click', event => {
         if (currentMode === 'subscription' && !subscriptionTerms.checked) {
