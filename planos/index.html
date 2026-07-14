@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#090000" />
+  <meta name="theme-color" content="#FFFFFF" />
   <title>Consultoria Douglas Leão</title>
   <meta name="description" content="Consultoria personalizada de treino, dieta e acompanhamento com Douglas Leão." />
 
@@ -110,12 +110,15 @@
       filter: drop-shadow(0 8px 16px rgba(0, 0, 0, .45));
     }
 
-    .hero-content {
-      width: 100%;
-      max-width: 640px;
-      text-align: center;
-      text-shadow: 0 3px 14px rgba(0, 0, 0, .9);
-    }
+.hero-content {
+  width: 100%;
+  max-width: 640px;
+  text-align: center;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, .9);
+
+  /* Sobe a badge e todo o conteúdo abaixo dela */
+  transform: translateY(-20px);
+}
 
     .eyebrow {
       display: inline-flex;
@@ -240,6 +243,7 @@
 
     .coupon-input {
       min-width: 0;
+	  text-align: center;
       height: 52px;
       border-radius: 14px;
       border: 1px solid rgba(255, 255, 255, .16);
@@ -731,9 +735,9 @@
         left: 18px;
       }
 
-      .hero-content {
-        transform: translateY(4px);
-      }
+.hero-content {
+  transform: translateY(-16px);
+}
 
       .section {
         padding-left: 12px;
@@ -1070,6 +1074,11 @@
   }
 }
 
+
+
+
+
+
   </style>
 </head>
 
@@ -1081,7 +1090,7 @@
       <div class="hero-content">
         <span class="eyebrow">🔥 Condição especial por tempo limitado</span>
         <h1><span>Oferta exclusiva</span><span>mês de julho</span></h1>
-        <p><strong>Mais de 7.103 vidas transformadas.</strong> Agora é a sua vez de buscar a sua melhor versão.</p>
+        <p><strong>Mais de 8mil atendimentos de sucesso.</strong> Agora é a sua vez de buscar a sua melhor versão.</p>
         <span class="hero-highlight">Treino, dieta e acompanhamento em um só lugar</span>
       </div>
     </section>
@@ -1092,7 +1101,56 @@
         <ul class="benefit-list" id="benefitList"></ul>
       </div>
 
- <div class="coupon-card">
+
+    </section>
+
+    <section class="plans-section" id="planos">
+      <div class="down-arrows" aria-hidden="true">⌄</div>
+      <div class="plans-title">
+        <small>Escolha a melhor opção</small>
+        <h2 id="plansHeading">Planos de atendimento</h2>
+        <div id="discountPill" class="discount-pill"></div>
+      </div>
+
+      <div class="plans-grid">
+        <a id="plan-trimestre" class="plan-card" href="https://chk.eduzz.com/gmu2ebua" target="_blank"
+          rel="noopener noreferrer">
+          <div class="plan-name">3 meses</div>
+          <div class="price-box">
+            <div class="old-price"></div>
+            <div class="installments">12x de</div>
+            <div class="price"><small>R$</small><span>239</span></div>
+            <div class="billing-note">Cobrança mensal</div>
+          </div>
+        </a>
+
+        <a id="plan-semestre" class="plan-card" href="https://chk.eduzz.com/7A74007F" target="_blank"
+          rel="noopener noreferrer">
+          <div class="plan-name">6 meses</div>
+          <div class="price-box">
+            <div class="old-price"></div>
+            <div class="installments">12x de</div>
+            <div class="price"><small>R$</small><span>225</span></div>
+            <div class="billing-note">Cobrança mensal</div>
+          </div>
+        </a>
+
+        <a id="plan-anual" class="plan-card" href="https://chk.eduzz.com/nsngrygs" target="_blank"
+          rel="noopener noreferrer">
+          <div class="best-ribbon">+ escolhido</div>
+          <div class="plan-name">12 meses</div>
+          <div class="price-box">
+            <div class="old-price"></div>
+            <div class="installments">12x de</div>
+            <div class="price"><small>R$</small><span>165</span></div>
+            <div class="billing-note">Cobrança mensal</div>
+          </div>
+        </a>
+      </div>
+
+ 
+ <br>
+  <div class="coupon-card">
   <h2>Tem um cupom?</h2>
 
   <div class="coupon-row">
@@ -1119,53 +1177,6 @@
     hidden
   ></div>
 </div>
-    </section>
-
-    <section class="plans-section" id="planos">
-      <div class="down-arrows" aria-hidden="true">⌄</div>
-      <div class="plans-title">
-        <small>Escolha a melhor opção</small>
-        <h2 id="plansHeading">Planos de atendimento</h2>
-        <div id="discountPill" class="discount-pill"></div>
-      </div>
-
-      <div class="plans-grid">
-        <a id="plan-trimestre" class="plan-card" href="https://chk.eduzz.com/gmu2ebua" target="_blank"
-          rel="noopener noreferrer">
-          <div class="plan-name">3 meses</div>
-          <div class="price-box">
-            <div class="old-price"></div>
-            <div class="installments">3x de</div>
-            <div class="price"><small>R$</small><span>239,00</span></div>
-            <div class="billing-note">Cobrança mensal</div>
-          </div>
-        </a>
-
-        <a id="plan-semestre" class="plan-card" href="https://chk.eduzz.com/7A74007F" target="_blank"
-          rel="noopener noreferrer">
-          <div class="plan-name">6 meses</div>
-          <div class="price-box">
-            <div class="old-price"></div>
-            <div class="installments">6x de</div>
-            <div class="price"><small>R$</small><span>225,00</span></div>
-            <div class="billing-note">Cobrança mensal</div>
-          </div>
-        </a>
-
-        <a id="plan-anual" class="plan-card" href="https://chk.eduzz.com/nsngrygs" target="_blank"
-          rel="noopener noreferrer">
-          <div class="best-ribbon">+ escolhido</div>
-          <div class="plan-name">12 meses</div>
-          <div class="price-box">
-            <div class="old-price"></div>
-            <div class="installments">12x de</div>
-            <div class="price"><small>R$</small><span>165,00</span></div>
-            <div class="billing-note">Cobrança mensal</div>
-          </div>
-        </a>
-      </div>
-
- 
     </section>
 
     <section class="results-section">
@@ -1547,9 +1558,9 @@
 
   <script>
  const BASE_PRICES = {
-  trimestre: 239,
-  semestre: 225,
-  anual: 165
+  trimestre: 173,
+  semestre: 274,
+  anual: 397
 };
 const STANDARD_ANCHOR_PRICES = {
   trimestre: 600,
